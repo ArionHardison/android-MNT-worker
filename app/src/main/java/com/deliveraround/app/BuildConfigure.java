@@ -6,6 +6,6 @@ package com.deliveraround.app;
 
 public class BuildConfigure {
 
-    public static String BASE_URL="https://orderaround.deliveryventure.com/";
+    public static String BASE_URL="https://foodie.deliveryventure.com/";
 
 }
