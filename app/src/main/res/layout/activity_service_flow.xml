@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    tools:context="com.deliveraround.app.activities.ServiceFlow">
+    tools:context="com.deliveraround.delivery.activities.ServiceFlow">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -547,7 +547,7 @@
         android:layout_gravity="bottom"
         android:layout_margin="16dp">
 
-        <com.deliveraround.app.helper.OnlySeekableSeekBar
+        <com.deliveraround.delivery.helper.OnlySeekableSeekBar
             android:id="@+id/shift_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
