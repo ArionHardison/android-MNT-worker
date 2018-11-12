@@ -41,6 +41,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.deliveraround.app.Application;
 import com.deliveraround.app.R;
 import com.deliveraround.app.adapter.ProductAdapter1;
@@ -661,8 +663,13 @@ public class ServiceFlow extends AppCompatActivity {
             Shop shop = GlobalData.order.getShop();
             shopName.setText(shop.getName());
             shopAddress.setText(shop.getAddress());
-            Glide.with(getApplicationContext()).load(shop.getAvatar()).placeholder(R.drawable.burg).into(shopAvatar);
-
+            Glide.with(getApplicationContext())
+                    .load(shop.getAvatar())
+                    .apply(new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.burg)
+                            .error(R.drawable.burg))
+                    .into(shopAvatar);
         }
     }
 
@@ -672,7 +679,13 @@ public class ServiceFlow extends AppCompatActivity {
             userName.setText(user.getName());
             Address address = GlobalData.order.getAddress();
             userAddress.setText(address.getMapAddress());
-            Glide.with(getApplicationContext()).load(user.getAvatar()).placeholder(R.drawable.burg).into(userAvatar);
+            Glide.with(getApplicationContext())
+                    .load(user.getAvatar())
+                    .apply(new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.burg)
+                            .error(R.drawable.burg))
+                    .into(shopAvatar);
         }
     }
 

@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.deliveraround.app.Application;
 import com.deliveraround.app.activities.OrderDetail;
 import com.deliveraround.app.helper.GlobalData;
@@ -52,8 +54,13 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         holder.orderStatus.setText(obj.getStatus());
         Shop shop = obj.getShop();
         holder.shopName.setText(shop.getName());
-        Glide.with(context).load(shop.getAvatar()).placeholder(R.drawable.cutlery_64).into(holder.shopAvatar);
-
+        Glide.with(context)
+                .load(shop.getAvatar())
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.cutlery_64)
+                        .error(R.drawable.cutlery_64))
+                .into(holder.shopAvatar);
         Invoice invoice = obj.getInvoice();
         holder.orderDeliveryTime.setText(GlobalData.getTimeFromString(invoice.getCreatedAt()));
         holder.quantity.setText(String.valueOf(invoice.getQuantity())+ " items");

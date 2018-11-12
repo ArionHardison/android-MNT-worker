@@ -24,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.deliveraround.app.api.APIError;
 import com.deliveraround.app.api.ErrorUtils;
 import com.deliveraround.app.helper.CustomDialog;
@@ -102,7 +104,13 @@ public class ProfileActivity extends AppCompatActivity {
             email.setText(GlobalData.profile.getEmail());
             mobileNo.setText(GlobalData.profile.getPhone());
             userId.setText(String.valueOf(GlobalData.profile.getId()));
-            Glide.with(getApplicationContext()).load(GlobalData.profile.getAvatar()).error(R.drawable.man).into(userAvatar);
+            Glide.with(this)
+                    .load(GlobalData.profile.getAvatar())
+                    .apply(new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.man)
+                            .error(R.drawable.man))
+                    .into(userAvatar);
             SharedHelper.putKey(this, "currency_code", GlobalData.profile.getCurrencyCode());
         }
     }
@@ -218,12 +226,16 @@ public class ProfileActivity extends AppCompatActivity {
             String imgDecodableString = cursor.getString(columnIndex);
             cursor.close();
 
-            Glide.with(this).load(imgDecodableString).into(userAvatar);
+            Glide.with(this)
+                    .load(imgDecodableString)
+                    .apply(new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.man)
+                            .error(R.drawable.man))
+                    .into(userAvatar);
             imgFile = new File(imgDecodableString);
-        } else if (resultCode == Activity.RESULT_CANCELED) {
+        } else if (resultCode == Activity.RESULT_CANCELED)
             Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_SHORT).show();
-        }
-
     }
 
     public void goToImageIntent() {

@@ -33,6 +33,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
 import com.deliveraround.app.R;
@@ -392,7 +394,13 @@ public class Home extends AppCompatActivity
         if (GlobalData.profile != null) {
             name.setText(GlobalData.profile.getName());
             userId.setText(String.valueOf(GlobalData.profile.getId()));
-            Glide.with(this).load(GlobalData.profile.getAvatar()).error(R.drawable.man).into(userAvatar);
+            Glide.with(this)
+                    .load(GlobalData.profile.getAvatar())
+                    .apply(new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.man)
+                            .error(R.drawable.man))
+                    .into(userAvatar);
         }
     }
 

@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.deliveraround.app.activities.Home;
 import com.deliveraround.app.activities.OrderDetail;
 import com.deliveraround.app.activities.ServiceFlow;
@@ -79,7 +81,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         Shop shop = obj.getShop();
         holder.shopName.setText(shop.getName());
         holder.shopAddress.setText(shop.getAddress());
-        Glide.with(context).load(shop.getAvatar()).placeholder(R.drawable.cutlery_64).into(holder.shopAvatar);
+        Glide.with(context)
+                .load(shop.getAvatar())
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.cutlery_64)
+                        .error(R.drawable.cutlery_64))
+                .into(holder.shopAvatar);
         if (isNewTask && obj.getStatus().equalsIgnoreCase("SEARCHING")) {
             Home.errorLayout.setVisibility(View.GONE);
             holder.acceptRejectLayout.setVisibility(View.VISIBLE);
