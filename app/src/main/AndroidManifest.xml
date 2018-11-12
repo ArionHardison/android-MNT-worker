@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.deliveraround.app">
+    package="com.deliveraround.delivery">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -15,14 +15,14 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
 
     <permission
-        android:name="com.deliveraround.app.permission.C2D_MESSAGE"
+        android:name="com.deliveraround.delivery.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.foodie.provider.permission.C2D_MESSAGE" />
 
 
     <application
-        android:name="com.deliveraround.app.Application"
+        android:name="com.deliveraround.delivery.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -32,17 +32,17 @@
         android:fullBackupContent="@xml/backup_descriptor">
 
         <service
-            android:name="com.deliveraround.app.service.GPSTracker"
+            android:name="com.deliveraround.delivery.service.GPSTracker"
             android:enabled="true"
             android:exported="false"/>
-        <receiver android:name="com.deliveraround.app.helper.SmsReceiver"
+        <receiver android:name="com.deliveraround.delivery.helper.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
         <activity
-            android:name="com.deliveraround.app.activities.Splash"
+            android:name="com.deliveraround.delivery.activities.Splash"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,60 +51,60 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.deliveraround.app.activities.Login"
+            android:name="com.deliveraround.delivery.activities.Login"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.deliveraround.app.activities.Home"
+            android:name="com.deliveraround.delivery.activities.Home"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.deliveraround.app.activities.ServiceFlow"
+            android:name="com.deliveraround.delivery.activities.ServiceFlow"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.deliveraround.app.activities.OTP"
+            android:name="com.deliveraround.delivery.activities.OTP"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.deliveraround.app.activities.ShiftStatus"
+            android:name="com.deliveraround.delivery.activities.ShiftStatus"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.deliveraround.app.activities.ProfileActivity"
+            android:name="com.deliveraround.delivery.activities.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.deliveraround.app.activities.OrderDetail"
+            android:name="com.deliveraround.delivery.activities.OrderDetail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.deliveraround.app.activities.Dispute"
+            android:name="com.deliveraround.delivery.activities.Dispute"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.deliveraround.app.activities.OrderHistory"
+            android:name="com.deliveraround.delivery.activities.OrderHistory"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.deliveraround.app.activities.Others"
+            android:name="com.deliveraround.delivery.activities.Others"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.deliveraround.app.activities.NoticeBoard"
+            android:name="com.deliveraround.delivery.activities.NoticeBoard"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.deliveraround.app.activities.TermsAndConditions"
+            android:name="com.deliveraround.delivery.activities.TermsAndConditions"
             android:theme="@style/AppTheme.NoActionBar" />
         <!-- Firebase Notifications -->
-        <service android:name="com.deliveraround.app.fcm.MyFirebaseMessagingService">
+        <service android:name="com.deliveraround.delivery.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="com.deliveraround.app.fcm.MyFirebaseInstanceIDService">
+        <service android:name="com.deliveraround.delivery.fcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <receiver android:name="com.deliveraround.app.receiver.NetworkChangeReceiver">
+        <receiver android:name="com.deliveraround.delivery.receiver.NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
