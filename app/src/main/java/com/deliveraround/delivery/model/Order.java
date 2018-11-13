@@ -10,6 +10,7 @@ import java.util.List;
  */
 
 public class Order {
+
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -19,6 +20,9 @@ public class Order {
     @SerializedName("user_id")
     @Expose
     private Integer userId;
+    @SerializedName("shift_id")
+    @Expose
+    private Integer shiftId;
     @SerializedName("user_address_id")
     @Expose
     private Integer userAddressId;
@@ -31,27 +35,45 @@ public class Order {
     @SerializedName("transporter_vehicle_id")
     @Expose
     private Integer transporterVehicleId;
+    @SerializedName("reason")
+    @Expose
+    private Object reason;
+    @SerializedName("note")
+    @Expose
+    private Object note;
     @SerializedName("route_key")
     @Expose
     private String routeKey;
     @SerializedName("dispute")
     @Expose
-    private Object dispute;
+    private String dispute;
+    @SerializedName("delivery_date")
+    @Expose
+    private String deliveryDate;
+    @SerializedName("order_otp")
+    @Expose
+    private Integer orderOtp;
+    @SerializedName("order_ready_time")
+    @Expose
+    private Integer orderReadyTime;
+    @SerializedName("order_ready_status")
+    @Expose
+    private Integer orderReadyStatus;
     @SerializedName("status")
     @Expose
     private String status;
+    @SerializedName("schedule_status")
+    @Expose
+    private Integer scheduleStatus;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
-    @SerializedName("updated_at")
-    @Expose
-    private String updatedAt;
     @SerializedName("response_time")
     @Expose
     private Integer responseTime;
     @SerializedName("dispute_manager")
     @Expose
-    private List<DisputeManager> disputeManager = null;
+    private List<DisputeManager> disputeManager;
     @SerializedName("user")
     @Expose
     private User user;
@@ -76,6 +98,12 @@ public class Order {
     @SerializedName("ordertiming")
     @Expose
     private List<Ordertiming> ordertiming = null;
+    @SerializedName("disputes")
+    @Expose
+    private List<Object> disputes = null;
+    @SerializedName("reviewrating")
+    @Expose
+    private Object reviewrating;
 
     public Integer getId() {
         return id;
@@ -83,11 +111,6 @@ public class Order {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Order withId(Integer id) {
-        this.id = id;
-        return this;
     }
 
     public String getInvoiceId() {
@@ -98,11 +121,6 @@ public class Order {
         this.invoiceId = invoiceId;
     }
 
-    public Order withInvoiceId(String invoiceId) {
-        this.invoiceId = invoiceId;
-        return this;
-    }
-
     public Integer getUserId() {
         return userId;
     }
@@ -111,9 +129,12 @@ public class Order {
         this.userId = userId;
     }
 
-    public Order withUserId(Integer userId) {
-        this.userId = userId;
-        return this;
+    public Integer getShiftId() {
+        return shiftId;
+    }
+
+    public void setShiftId(Integer shiftId) {
+        this.shiftId = shiftId;
     }
 
     public Integer getUserAddressId() {
@@ -124,22 +145,12 @@ public class Order {
         this.userAddressId = userAddressId;
     }
 
-    public Order withUserAddressId(Integer userAddressId) {
-        this.userAddressId = userAddressId;
-        return this;
-    }
-
     public Integer getShopId() {
         return shopId;
     }
 
     public void setShopId(Integer shopId) {
         this.shopId = shopId;
-    }
-
-    public Order withShopId(Integer shopId) {
-        this.shopId = shopId;
-        return this;
     }
 
     public Integer getTransporterId() {
@@ -150,11 +161,6 @@ public class Order {
         this.transporterId = transporterId;
     }
 
-    public Order withTransporterId(Integer transporterId) {
-        this.transporterId = transporterId;
-        return this;
-    }
-
     public Integer getTransporterVehicleId() {
         return transporterVehicleId;
     }
@@ -163,9 +169,20 @@ public class Order {
         this.transporterVehicleId = transporterVehicleId;
     }
 
-    public Order withTransporterVehicleId(Integer transporterVehicleId) {
-        this.transporterVehicleId = transporterVehicleId;
-        return this;
+    public Object getReason() {
+        return reason;
+    }
+
+    public void setReason(Object reason) {
+        this.reason = reason;
+    }
+
+    public Object getNote() {
+        return note;
+    }
+
+    public void setNote(Object note) {
+        this.note = note;
     }
 
     public String getRouteKey() {
@@ -176,22 +193,44 @@ public class Order {
         this.routeKey = routeKey;
     }
 
-    public Order withRouteKey(String routeKey) {
-        this.routeKey = routeKey;
-        return this;
-    }
-
-    public Object getDispute() {
+    public String getDispute() {
         return dispute;
     }
 
-    public void setDispute(Object dispute) {
+    public void setDispute(String dispute) {
         this.dispute = dispute;
     }
 
-    public Order withDispute(Object dispute) {
-        this.dispute = dispute;
-        return this;
+    public String getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(String deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public Integer getOrderOtp() {
+        return orderOtp;
+    }
+
+    public void setOrderOtp(Integer orderOtp) {
+        this.orderOtp = orderOtp;
+    }
+
+    public Integer getOrderReadyTime() {
+        return orderReadyTime;
+    }
+
+    public void setOrderReadyTime(Integer orderReadyTime) {
+        this.orderReadyTime = orderReadyTime;
+    }
+
+    public Integer getOrderReadyStatus() {
+        return orderReadyStatus;
+    }
+
+    public void setOrderReadyStatus(Integer orderReadyStatus) {
+        this.orderReadyStatus = orderReadyStatus;
     }
 
     public String getStatus() {
@@ -202,9 +241,12 @@ public class Order {
         this.status = status;
     }
 
-    public Order withStatus(String status) {
-        this.status = status;
-        return this;
+    public Integer getScheduleStatus() {
+        return scheduleStatus;
+    }
+
+    public void setScheduleStatus(Integer scheduleStatus) {
+        this.scheduleStatus = scheduleStatus;
     }
 
     public String getCreatedAt() {
@@ -215,35 +257,12 @@ public class Order {
         this.createdAt = createdAt;
     }
 
-    public Order withCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Order withUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-        return this;
-    }
-
     public Integer getResponseTime() {
         return responseTime;
     }
 
     public void setResponseTime(Integer responseTime) {
         this.responseTime = responseTime;
-    }
-
-    public Order withResponseTime(Integer responseTime) {
-        this.responseTime = responseTime;
-        return this;
     }
 
     public List<DisputeManager> getDisputeManager() {
@@ -254,22 +273,12 @@ public class Order {
         this.disputeManager = disputeManager;
     }
 
-    public Order withDisputeManager(List<DisputeManager> disputeManager) {
-        this.disputeManager = disputeManager;
-        return this;
-    }
-
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Order withUser(User user) {
-        this.user = user;
-        return this;
     }
 
     public Transporter getTransporter() {
@@ -280,22 +289,12 @@ public class Order {
         this.transporter = transporter;
     }
 
-    public Order withTransporter(Transporter transporter) {
-        this.transporter = transporter;
-        return this;
-    }
-
     public Vehicles getVehicles() {
         return vehicles;
     }
 
     public void setVehicles(Vehicles vehicles) {
         this.vehicles = vehicles;
-    }
-
-    public Order withVehicles(Vehicles vehicles) {
-        this.vehicles = vehicles;
-        return this;
     }
 
     public Invoice getInvoice() {
@@ -306,22 +305,12 @@ public class Order {
         this.invoice = invoice;
     }
 
-    public Order withInvoice(Invoice invoice) {
-        this.invoice = invoice;
-        return this;
-    }
-
     public Address getAddress() {
         return address;
     }
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public Order withAddress(Address address) {
-        this.address = address;
-        return this;
     }
 
     public Shop getShop() {
@@ -332,22 +321,12 @@ public class Order {
         this.shop = shop;
     }
 
-    public Order withShop(Shop shop) {
-        this.shop = shop;
-        return this;
-    }
-
     public List<Item> getItems() {
         return items;
     }
 
     public void setItems(List<Item> items) {
         this.items = items;
-    }
-
-    public Order withItems(List<Item> items) {
-        this.items = items;
-        return this;
     }
 
     public List<Ordertiming> getOrdertiming() {
@@ -358,8 +337,19 @@ public class Order {
         this.ordertiming = ordertiming;
     }
 
-    public Order withOrdertiming(List<Ordertiming> ordertiming) {
-        this.ordertiming = ordertiming;
-        return this;
+    public List<Object> getDisputes() {
+        return disputes;
+    }
+
+    public void setDisputes(List<Object> disputes) {
+        this.disputes = disputes;
+    }
+
+    public Object getReviewrating() {
+        return reviewrating;
+    }
+
+    public void setReviewrating(Object reviewrating) {
+        this.reviewrating = reviewrating;
     }
 }

@@ -43,6 +43,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.chaos.view.PinView;
 import com.deliveraround.delivery.Application;
 import com.deliveraround.delivery.R;
 import com.deliveraround.delivery.adapter.ProductAdapter1;
@@ -161,6 +162,7 @@ public class ServiceFlow extends AppCompatActivity {
     AlertDialog alertDialog;
     @BindView(R.id.wallet_detection)
     TextView walletDetection;
+    private String isPinView;
 
 
     @Override
@@ -278,7 +280,7 @@ public class ServiceFlow extends AppCompatActivity {
                         handler.postDelayed(runnable, 5000);
                     } else {
                         //If order status is completed then show feed back
-                        if (!previousStatus.equalsIgnoreCase("COMPLETED") &&! previousStatus.equalsIgnoreCase("ARRIVED")) {
+                        if (!previousStatus.equalsIgnoreCase("COMPLETED") && !previousStatus.equalsIgnoreCase("ARRIVED")) {
                             alertDialog();
                         }
                     }
@@ -314,7 +316,7 @@ public class ServiceFlow extends AppCompatActivity {
         Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
         pbutton.setTextColor(ContextCompat.getColor(ServiceFlow.this, R.color.colorAccent));
         pbutton.setTypeface(pbutton.getTypeface(), Typeface.BOLD);
-        if(!((ServiceFlow) this).isFinishing()) {
+        if (!((ServiceFlow) this).isFinishing()) {
             alert.show();
         }
     }
@@ -391,6 +393,7 @@ public class ServiceFlow extends AppCompatActivity {
             public void onResponse(@NonNull Call<Order> call, @NonNull Response<Order> response) {
                 if (response.isSuccessful()) {
                     GlobalData.order = response.body();
+                    Toast.makeText(ServiceFlow.this, "Amount Paid Successfully !", Toast.LENGTH_SHORT).show();
                     updateFlowUI(GlobalData.order.getStatus());
                 } else {
                     APIError error = ErrorUtils.parseError(response);
@@ -411,6 +414,7 @@ public class ServiceFlow extends AppCompatActivity {
             return;
         }
         final Invoice invoice = GlobalData.order.getInvoice();
+        final Order order = GlobalData.order;
 
         if (invoice.getPaid() != 1) {
             try {
@@ -424,11 +428,12 @@ public class ServiceFlow extends AppCompatActivity {
                 if (paymentOnce) {
                     paymentOnce = false;
                     final Button paid = (Button) dialogView.findViewById(R.id.paid);
+                    final PinView pinView = dialogView.findViewById(R.id.pinView);
                     TextView amount_paid_currency_symbol = (TextView) dialogView.findViewById(R.id.amount_paid_currency_symbol);
                     amount_paid_currency_symbol.setText(numberFormat.getCurrency().getSymbol());
                     TextView balance_currency_symbol = (TextView) dialogView.findViewById(R.id.balance_currency_symbol);
                     balance_currency_symbol.setText(numberFormat.getCurrency().getSymbol());
-                    TextView amount_to_pay = (TextView) dialogView.findViewById(R.id.amount_to_pay);
+                    final TextView amount_to_pay = (TextView) dialogView.findViewById(R.id.amount_to_pay);
                     final EditText amount_paid = (EditText) dialogView.findViewById(R.id.amount_paid);
                     final TextView balance = (TextView) dialogView.findViewById(R.id.balance);
 
@@ -453,12 +458,12 @@ public class ServiceFlow extends AppCompatActivity {
                                     paid.setEnabled(true);
                                     paid.getBackground().setAlpha(255);
                                 } else {
-                                    paid.setEnabled(false);
+                                    // paid.setEnabled(false);
                                     paid.getBackground().setAlpha(128);
                                 }
                             } else {
                                 balance.setText("0");
-                                paid.setEnabled(false);
+                                // paid.setEnabled(false);
                                 paid.getBackground().setAlpha(128);
                             }
 
@@ -467,21 +472,30 @@ public class ServiceFlow extends AppCompatActivity {
                     paid.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            map = new HashMap<>();
-                            map.put("status", status);
-                            map.put("total_pay", amount_paid.getText().toString());
-                            map.put("tender_pay", balance.getText().toString());
-                            map.put("payment_mode", invoice.getPaymentMode());
-                            map.put("payment_status", "success");
-                            updateStatus();
-                            alertDialog.dismiss();
+                            if (pinView.getText().toString().equals("")) {
+                                Toast.makeText(getApplicationContext(), getString(R.string.enter_otp), Toast.LENGTH_SHORT).show();
+                            } else if (!pinView.getText().toString().equals("") || !pinView.getText().toString().equals("null")) {
+                                if (order != null) {
+                                    if (!String.valueOf(order.getOrderOtp()).equals(pinView.getText().toString())) {
+                                        Toast.makeText(getApplicationContext(), getString(R.string.invalid_otp), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        map = new HashMap<>();
+                                        map.put("status", status);
+                                        map.put("total_pay", amount_paid.getText().toString());
+                                        map.put("tender_pay", balance.getText().toString());
+                                        map.put("payment_mode", invoice.getPaymentMode());
+                                        map.put("payment_status", "success");
+                                        updateStatus();
+                                        alertDialog.dismiss();
+                                    }
+                                }
+                            }
                             //service_flow.setText("PAYMENT RECEIVED");
                             //img_5.setColorFilter(ContextCompat.getColor(ServiceFlow.this, R.color.colorAccent), android.graphics.PorterDuff.Mode.MULTIPLY);
                             //startActivity(new Intent(ServiceFlow.this,Home.class));
                         }
                     });
                     alertDialog.show();
-
                 }
 
             } catch (Exception e) {

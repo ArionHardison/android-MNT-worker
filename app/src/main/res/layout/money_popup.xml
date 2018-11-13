@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:layout_gravity="center_horizontal">
@@ -12,6 +13,46 @@
         android:layout_height="200dp"
         android:src="@drawable/coin"
         android:padding="16dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            fontPath="fonts/Nunito-Bold.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_weight="1"
+            android:text="@string/otp"
+            android:textSize="16sp"
+            tools:ignore="MissingPrefix" />
+
+
+        <com.chaos.view.PinView
+            android:id="@+id/pinView"
+            style="@style/PinWidget.PinView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:inputType="number"
+            android:padding="2dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
+            android:cursorVisible="true"
+            app:cursorColor="@color/grey"
+            app:cursorWidth="2dp"
+            app:itemCount="6"
+            app:itemHeight="35dp"
+            app:itemRadius="2dp"
+            app:itemSpacing="3dp"
+            app:itemWidth="35dp"
+            app:lineColor="@color/grey"
+            app:lineWidth="2dp"
+            app:viewType="rectangle" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -117,7 +158,6 @@
         android:text="@string/paid"
         android:layout_marginTop="16dp"
         android:alpha="128"
-        android:enabled="false"
         android:textColor="@color/colorWhite" />
 
 </LinearLayout>

@@ -89,6 +89,10 @@
     <string name="dispute">"Dispute"</string>
     <string name="help">"Help"</string>
     <string name="amount_to_pay">"Amount to Pay"</string>
+    <string name="otp">Otp</string>
+    <string name="enter_otp">Please enter otp</string>
+    <string name="invalid_otp">Invalid Otp</string>
+    <string name="full_amount">Please enter full amount</string>
     <string name="enter_the_amount_paid">"Enter the amount paid"</string>
     <string name="balance">"Balance"</string>
     <string name="paid">"Paid"</string>
