@@ -393,7 +393,7 @@ public class ServiceFlow extends AppCompatActivity {
             public void onResponse(@NonNull Call<Order> call, @NonNull Response<Order> response) {
                 if (response.isSuccessful()) {
                     GlobalData.order = response.body();
-                    Toast.makeText(ServiceFlow.this, "Amount Paid Successfully !", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(ServiceFlow.this, "Amount Paid Successfully !", Toast.LENGTH_SHORT).show();
                     updateFlowUI(GlobalData.order.getStatus());
                 } else {
                     APIError error = ErrorUtils.parseError(response);
