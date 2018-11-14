@@ -1,58 +1,27 @@
 {
   "project_info": {
-    "project_number": "547463009938",
-    "firebase_url": "https://foodie-17d34.firebaseio.com",
-    "project_id": "foodie-17d34",
-    "storage_bucket": "foodie-17d34.appspot.com"
+    "project_number": "984481555319",
+    "firebase_url": "https://orderaround-222311.firebaseio.com",
+    "project_id": "orderaround-222311",
+    "storage_bucket": "orderaround-222311.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:547463009938:android:d8d0d47987f83cae",
-        "android_client_info": {
-          "package_name": "com.deliveraround.app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "547463009938-fh4on6rs3eqta37svhgid50n4o68ukuh.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCJ_oE0jidKQCBc5G798KCD7f189NsHUbc"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:547463009938:android:8403f0f0027bbd0a",
+        "mobilesdk_app_id": "1:984481555319:android:8403f0f0027bbd0a",
         "android_client_info": {
           "package_name": "com.deliveraround.delivery"
         }
       },
       "oauth_client": [
         {
-          "client_id": "547463009938-fh4on6rs3eqta37svhgid50n4o68ukuh.apps.googleusercontent.com",
+          "client_id": "984481555319-lic9v3dng51arq481t34tj62ro1tnbra.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCJ_oE0jidKQCBc5G798KCD7f189NsHUbc"
+          "current_key": "AIzaSyA_--4I4R7vDskcaZ2lbV5EwMGOJobyurw"
         }
       ],
       "services": {
@@ -70,75 +39,36 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:547463009938:android:73caa703d7e054d8",
+        "mobilesdk_app_id": "1:984481555319:android:92a880309d264537",
         "android_client_info": {
-          "package_name": "com.eataround.app"
+          "package_name": "com.orderaround.user"
         }
       },
       "oauth_client": [
         {
-          "client_id": "547463009938-fh4on6rs3eqta37svhgid50n4o68ukuh.apps.googleusercontent.com",
+          "client_id": "984481555319-0071jr82fiof06jtfs932dr7vs9ltjp6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.orderaround.user",
+            "certificate_hash": "d9bde3c7a50376ca6c38005e7146eff24e0c62f7"
+          }
+        },
+        {
+          "client_id": "984481555319-9mchlat2cdqpgb1uke5kgmr170t69hg1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.orderaround.user",
+            "certificate_hash": "dabad0aabeba0d137ec131a6c2549b6942511b8d"
+          }
+        },
+        {
+          "client_id": "984481555319-lic9v3dng51arq481t34tj62ro1tnbra.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCJ_oE0jidKQCBc5G798KCD7f189NsHUbc"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:547463009938:android:038ee2ac3cbdb406",
-        "android_client_info": {
-          "package_name": "com.foodie.app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "547463009938-6vo0fomdofg13dp0dialboolp1vnhig7.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.foodie.app",
-            "certificate_hash": "5f3995b5c6b4696575400e7fff4d391cf5acfa13"
-          }
-        },
-        {
-          "client_id": "547463009938-f8aimp1p2abn284cs0vflphkq11a70jd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.foodie.app",
-            "certificate_hash": "c1af8fe6224d4ec2448c56ee1d8d93b3095cb438"
-          }
-        },
-        {
-          "client_id": "547463009938-srvt7jtcthvdknj72b7q166obpcfhcfm.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.foodie.app",
-            "certificate_hash": "fec9fc6f4e080bfc78d9abed577273a4c9d48f18"
-          }
-        },
-        {
-          "client_id": "547463009938-fh4on6rs3eqta37svhgid50n4o68ukuh.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCJ_oE0jidKQCBc5G798KCD7f189NsHUbc"
+          "current_key": "AIzaSyA_--4I4R7vDskcaZ2lbV5EwMGOJobyurw"
         }
       ],
       "services": {
@@ -149,14 +79,14 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "547463009938-fh4on6rs3eqta37svhgid50n4o68ukuh.apps.googleusercontent.com",
+              "client_id": "984481555319-3ell4ke6nbaqr2n319lo9oj5gbbd9g3d.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "547463009938-jhvh55oeia0b4vivkl28h6ct21o1ehq9.apps.googleusercontent.com",
+              "client_id": "984481555319-uqdrnqh0blrkcrvcdsnh0fmoc8ks01il.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.foodieexpress.app"
+                "bundle_id": "com.restaurantaround.restaurant"
               }
             }
           ]
@@ -168,28 +98,44 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:547463009938:android:e7ada52f4efc0972",
+        "mobilesdk_app_id": "1:984481555319:android:1ee02187c231c5c4",
         "android_client_info": {
-          "package_name": "com.foodie.provider"
+          "package_name": "com.restaurantaround.restaurant"
         }
       },
       "oauth_client": [
         {
-          "client_id": "547463009938-f8gq83l454okua27jc35cd5ktgcgioa9.apps.googleusercontent.com",
+          "client_id": "984481555319-n53p6o13rdqsddcp7ige2s9uufkhd0uc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.foodie.provider",
-            "certificate_hash": "5f3995b5c6b4696575400e7fff4d391cf5acfa13"
+            "package_name": "com.restaurantaround.restaurant",
+            "certificate_hash": "d9bde3c7a50376ca6c38005e7146eff24e0c62f7"
           }
         },
         {
-          "client_id": "547463009938-fh4on6rs3eqta37svhgid50n4o68ukuh.apps.googleusercontent.com",
+          "client_id": "984481555319-avuj9rs55msfra21vnlq8alegv93f6u6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.restaurantaround.restaurant",
+            "certificate_hash": "92a3e86950cebc797a24ec5022be50376f9bf28a"
+          }
+        },
+        {
+          "client_id": "984481555319-27eq5rddfn5lfikqdo8velo099gqtqfb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.restaurantaround.restaurant",
+            "certificate_hash": "96019ad28bc6388ef77f526b2d2e1a116af3ad37"
+          }
+        },
+        {
+          "client_id": "984481555319-lic9v3dng51arq481t34tj62ro1tnbra.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCJ_oE0jidKQCBc5G798KCD7f189NsHUbc"
+          "current_key": "AIzaSyA_--4I4R7vDskcaZ2lbV5EwMGOJobyurw"
         }
       ],
       "services": {
@@ -200,79 +146,17 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "547463009938-fh4on6rs3eqta37svhgid50n4o68ukuh.apps.googleusercontent.com",
+              "client_id": "984481555319-3ell4ke6nbaqr2n319lo9oj5gbbd9g3d.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "547463009938-jhvh55oeia0b4vivkl28h6ct21o1ehq9.apps.googleusercontent.com",
+              "client_id": "984481555319-uqdrnqh0blrkcrvcdsnh0fmoc8ks01il.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.foodieexpress.app"
+                "bundle_id": "com.restaurantaround.restaurant"
               }
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:547463009938:android:8a3c674d7a540650",
-        "android_client_info": {
-          "package_name": "com.orderaround.app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "547463009938-fh4on6rs3eqta37svhgid50n4o68ukuh.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCJ_oE0jidKQCBc5G798KCD7f189NsHUbc"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:547463009938:android:36bf6938f33df463",
-        "android_client_info": {
-          "package_name": "com.restaurantaround.app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "547463009938-fh4on6rs3eqta37svhgid50n4o68ukuh.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCJ_oE0jidKQCBc5G798KCD7f189NsHUbc"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
