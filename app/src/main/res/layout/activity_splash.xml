@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#000000"
     android:gravity="center"
-    tools:context="com.deliveraround.delivery.activities.Splash">
+    tools:context="com.geteat.deliver.activities.Splash">
 
     <ImageView
         android:layout_width="180dp"
