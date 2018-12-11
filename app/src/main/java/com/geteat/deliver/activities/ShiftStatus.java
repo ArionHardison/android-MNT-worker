@@ -100,14 +100,14 @@ public class ShiftStatus extends AppCompatActivity {
     GoogleApiClient googleApiClient;
     public static final int REQUEST_LOCATION = 1450;
     Button endShift;
-    boolean isComesSplash=false;
+    boolean isComesSplash = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shift_status);
         ButterKnife.bind(this);
-        numberFormat= Application.getNumberFormat();
+        numberFormat = Application.getNumberFormat();
         customDialog = new CustomDialog(ShiftStatus.this);
         isComesSplash = getIntent().getBooleanExtra("is_splash", false);
 
@@ -150,7 +150,7 @@ public class ShiftStatus extends AppCompatActivity {
             owedAmount.setVisibility(View.VISIBLE);
             shiftBreakRv.setVisibility(View.VISIBLE);
             messageLayout.setVisibility(View.GONE);
-            CharSequence amount = color(Color.BLACK, getResources().getString(R.string.you_owed), color(Color.parseColor("#ff6d00"), numberFormat.format(GlobalData.shift.getTotalAmountPay())));
+            CharSequence amount = color(Color.BLACK, getResources().getString(R.string.you_owed), color(Color.parseColor("#ef4756"), numberFormat.format(GlobalData.shift.getTotalAmountPay())));
             owedAmount.setText(amount);
             refreshBreaksRV();
             if (GlobalData.shift.getShiftbreaktimes() != null && GlobalData.shift.getShiftbreaktimes().size() > 0) {
@@ -264,7 +264,7 @@ public class ShiftStatus extends AppCompatActivity {
                     ArrayAdapter<Vehicle> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, vehicles);
                     adapter.setDropDownViewResource(R.layout.spinner_item);
                     vehicleNumberSpinner.setAdapter(adapter);
-                } else{
+                } else {
                     APIError error = ErrorUtils.parseError(response);
                     Toast.makeText(ShiftStatus.this, error.getError(), Toast.LENGTH_SHORT).show();
                 }
@@ -654,10 +654,10 @@ public class ShiftStatus extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(isComesSplash){
-            startActivity(new Intent(ShiftStatus.this,Home.class));
+        if (isComesSplash) {
+            startActivity(new Intent(ShiftStatus.this, Home.class));
             finish();
-        }else
+        } else
             finish();
     }
 }
