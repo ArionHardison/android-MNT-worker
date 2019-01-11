@@ -163,6 +163,7 @@ public class ServiceFlow extends AppCompatActivity {
     @BindView(R.id.wallet_detection)
     TextView walletDetection;
     private String isPinView;
+    private double bal = 0;
 
 
     @Override
@@ -393,7 +394,7 @@ public class ServiceFlow extends AppCompatActivity {
             public void onResponse(@NonNull Call<Order> call, @NonNull Response<Order> response) {
                 if (response.isSuccessful()) {
                     GlobalData.order = response.body();
-                   // Toast.makeText(ServiceFlow.this, "Amount Paid Successfully !", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(ServiceFlow.this, "Amount Paid Successfully !", Toast.LENGTH_SHORT).show();
                     updateFlowUI(GlobalData.order.getStatus());
                 } else {
                     APIError error = ErrorUtils.parseError(response);
@@ -450,9 +451,9 @@ public class ServiceFlow extends AppCompatActivity {
                         @Override
                         public void afterTextChanged(Editable s) {
                             if (!s.toString().equals("")) {
-                                Integer amountPaid = Integer.parseInt(s.toString());
-                                Double bal = amountPaid - invoice.getPayable();
-                                balance.setText(String.valueOf(bal));
+                                Double amountPaid = Double.parseDouble(s.toString());
+                                bal = amountPaid - invoice.getPayable();
+                                balance.setText(String.format("%2f",bal));
 
                                 if (bal >= 0) {
                                     paid.setEnabled(true);
@@ -482,7 +483,7 @@ public class ServiceFlow extends AppCompatActivity {
                                         map = new HashMap<>();
                                         map.put("status", status);
                                         map.put("total_pay", amount_paid.getText().toString());
-                                        map.put("tender_pay", balance.getText().toString());
+                                        map.put("tender_pay", String.valueOf(bal));
                                         map.put("payment_mode", invoice.getPaymentMode());
                                         map.put("payment_status", "success");
                                         updateStatus();

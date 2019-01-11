@@ -128,7 +128,7 @@ public class Application extends android.app.Application {
 
     public static NumberFormat getNumberFormat() {
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
-        String currencyCode = SharedHelper.getKey(mInstance, "currency_code", "USD");
+        String currencyCode = SharedHelper.getKey(mInstance, "currency_code", "INR");
         numberFormat.setCurrency(Currency.getInstance(currencyCode));
         numberFormat.setMinimumFractionDigits(0);
         return numberFormat;

@@ -385,7 +385,7 @@ public class Home extends AppCompatActivity
             @Override
             public void onFailure(@NonNull Call<List<Order>> call, @NonNull Throwable t) {
                 skeletonScreen.hide();
-                Toast.makeText(Home.this, "Something wrong - getCompletedOrder", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Home.this, "Something wrong - getCompletedOrder", Toast.LENGTH_SHORT).show();
             }
         });
     }
