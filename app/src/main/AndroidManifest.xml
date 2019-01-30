@@ -87,6 +87,8 @@
             android:name="com.geteat.deliver.activities.Others"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
+
+
         <activity
             android:name="com.geteat.deliver.activities.NoticeBoard"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -146,9 +146,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="end"
-            android:padding="16dp"
+            android:padding="8dp"
             android:textColor="@color/colorAccent"
-            android:textSize="16sp"
+            android:textSize="14sp"
             tools:ignore="MissingPrefix" />
 
     </LinearLayout>

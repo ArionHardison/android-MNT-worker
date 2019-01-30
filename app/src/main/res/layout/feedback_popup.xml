@@ -118,7 +118,7 @@
         android:background="@drawable/shadow_view"
         android:lines="3"
         android:padding="8dp"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine|textCapCharacters" />
 
     <Button
         android:id="@+id/feedback_submit"

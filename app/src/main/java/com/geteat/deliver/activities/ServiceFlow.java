@@ -453,7 +453,7 @@ public class ServiceFlow extends AppCompatActivity {
                             if (!s.toString().equals("")) {
                                 Double amountPaid = Double.parseDouble(s.toString());
                                 bal = amountPaid - invoice.getPayable();
-                                balance.setText(String.format("%2f",bal));
+                                balance.setText(String.format("%.2f", bal));
 
                                 if (bal >= 0) {
                                     paid.setEnabled(true);

@@ -155,13 +155,13 @@ public class Home extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         orders = new ArrayList<>();
-        newTaskAdapter = new TaskAdapter(orders, this,true);
+        newTaskAdapter = new TaskAdapter(orders, this, true);
         newTaskRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         newTaskRv.setItemAnimator(new DefaultItemAnimator());
         newTaskRv.setAdapter(newTaskAdapter);
 
         completedOrders = new ArrayList<>();
-        completedTaskAdapter = new TaskAdapter(completedOrders, this,false);
+        completedTaskAdapter = new TaskAdapter(completedOrders, this, false);
         completedTaskRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         //completedTaskRv.setItemAnimator(new DefaultItemAnimator());
         completedTaskRv.setAdapter(completedTaskAdapter);
@@ -204,15 +204,19 @@ public class Home extends AppCompatActivity
     public void onResume() {
         super.onResume();
         initProfileView();
-        setErrorLayout();
+        orders.clear();
+        newTaskAdapter.notifyDataSetChanged();
+        completedOrders.clear();
+        completedTaskAdapter.notifyDataSetChanged();
         if (GlobalData.shift != null) {
-            getProfile();
             getOrder();
             getCompletedOrder();
-        } else {
-            getShift();
-            getProfile();
-        }
+        } else getShift();
+        getProfile();
+
+//        By Rajaganapathi
+        errorLayout.setVisibility(View.GONE);
+        newTaskRv.setVisibility(View.VISIBLE);
 
         getNetworkStatus();
     }
@@ -254,6 +258,7 @@ public class Home extends AppCompatActivity
                     List<Shift> list = response.body();
                     if (list != null && list.size() > 0) {
                         GlobalData.shift = list.get(0);
+                        getOrder();
                     } else {
                         /*startActivity(new Intent(Home.this, ShiftStatus.class));
                         finish();*/
@@ -348,11 +353,16 @@ public class Home extends AppCompatActivity
         if (!getNetworkStatus())
             return;
 
-        skeletonScreen = Skeleton.bind(completedTaskRootview)
-                .load(R.layout.skeloton_list_item_new_task)
-                .color(R.color.shimmer_color)
-                .angle(0)
-                .show();
+        if (skeletonScreen == null) {
+            skeletonScreen = Skeleton.bind(completedTaskRootview)
+                    .load(R.layout.skeloton_list_item_new_task)
+                    .color(R.color.shimmer_color)
+                    .angle(0)
+                    .show();
+        } else {
+            skeletonScreen.hide();
+            skeletonScreen.show();
+        }
 
         String header = SharedHelper.getKey(this, "token_type") + " " + SharedHelper.getKey(this, "access_token");
         Call<List<Order>> call = GlobalData.api.getCompletedOrder(header, "today");
@@ -410,9 +420,9 @@ public class Home extends AppCompatActivity
             System.out.println(value);
             switch (value) {
                 case "online":
+                    if (orders.size() <= 0) errorLayout.setVisibility(View.VISIBLE);
                     errorImg.setImageResource(R.drawable.hour_glass);
                     errorMessage.setText(getResources().getString(R.string.waiting_for_new_task));
-                    errorLayout.setVisibility(View.VISIBLE);
                     navigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
                     break;
                 case "unsettled":

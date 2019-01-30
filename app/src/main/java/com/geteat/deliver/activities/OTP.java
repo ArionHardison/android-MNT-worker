@@ -54,12 +54,12 @@ public class OTP extends AppCompatActivity {
 
         String mobile_number = SharedHelper.getKey(OTP.this, "mobile_number");
         phone.setText(mobile_number);
-        if(GlobalData.otp != null){
+/*        if(GlobalData.otp != null){
             otp.setText(String.valueOf(GlobalData.otp.getOtp()));
             System.out.println("OTP : " + GlobalData.otp.getOtp());
         }else{
             otp.setText("123456");
-        }
+        }*/
 
     }
 
@@ -156,7 +156,7 @@ public class OTP extends AppCompatActivity {
             if (intent.getAction().equalsIgnoreCase("otp")) {
                 final String message = intent.getStringExtra("message");
                 System.out.println("BroadcastReceiver"+message);
-                otp.setText(message);
+//                otp.setText(message);
             }
         }
     };

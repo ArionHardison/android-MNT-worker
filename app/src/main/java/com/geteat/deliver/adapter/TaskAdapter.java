@@ -1,5 +1,6 @@
 package com.geteat.deliver.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
@@ -19,8 +20,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.geteat.deliver.activities.Home;
+import com.geteat.deliver.activities.Login;
 import com.geteat.deliver.activities.OrderDetail;
 import com.geteat.deliver.activities.ServiceFlow;
+import com.geteat.deliver.activities.Splash;
 import com.geteat.deliver.helper.CustomDialog;
 import com.geteat.deliver.helper.GlobalData;
 import com.geteat.deliver.helper.SharedHelper;
@@ -143,11 +146,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         call.enqueue(new Callback<Order>() {
             @Override
             public void onResponse(Call<Order> call, Response<Order> response) {
+
                 customDialog.dismiss();
-                GlobalData.order = response.body();
-                countDownTimer.cancel();
-                update(order);
-                context.startActivity(new Intent(context, ServiceFlow.class));
+                if (response.isSuccessful()) {
+                    GlobalData.order = response.body();
+                    countDownTimer.cancel();
+                    update(order);
+                    context.startActivity(new Intent(context, ServiceFlow.class));
+                }else {
+
+                }
+
             }
 
             @Override

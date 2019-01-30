@@ -35,6 +35,7 @@ public class Splash extends AppCompatActivity {
     ApiInterface api = ApiClient.getRetrofit().create(ApiInterface.class);
     String device_token, device_UDID;
     Boolean isNotification = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,10 +89,10 @@ public class Splash extends AppCompatActivity {
                     GlobalData.profile = response.body();
                     SharedHelper.putKey(Splash.this, "logged_in", "1");
                     SharedHelper.putKey(Splash.this, "currency_code", GlobalData.profile.getCurrencyCode());
-                    if(isNotification)
-                        startActivity(new Intent(Splash.this, ShiftStatus.class).putExtra("is_splash",true));
+                    if (isNotification)
+                        startActivity(new Intent(Splash.this, Home.class).putExtra("is_splash", true));
                     else
-                        startActivity(new Intent(Splash.this, ShiftStatus.class).putExtra("is_splash",true));
+                        startActivity(new Intent(Splash.this, ShiftStatus.class).putExtra("is_splash", true));
 
                     finish();
                 } else {

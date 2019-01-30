@@ -1,7 +1,6 @@
 package com.geteat.deliver.fcm;
 
 
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,7 +13,9 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.geteat.deliver.R;
+import com.geteat.deliver.activities.Home;
 import com.geteat.deliver.activities.Splash;
+import com.geteat.deliver.helper.GlobalData;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -38,6 +39,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void sendNotification(String messageBody) {
         Log.d(TAG, "messageBody " + messageBody);
+
         Intent intent = new Intent(getApplicationContext(), Splash.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("Notification", messageBody);

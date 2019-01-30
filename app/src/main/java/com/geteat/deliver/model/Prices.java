@@ -11,7 +11,7 @@ public class Prices {
     private Integer id;
     @SerializedName("price")
     @Expose
-    private Integer price;
+    private Double price;
     @SerializedName("currency")
     @Expose
     private String currency;
@@ -35,15 +35,15 @@ public class Prices {
         return this;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public Prices withPrice(Integer price) {
+    public Prices withPrice(Double price) {
         this.price = price;
         return this;
     }

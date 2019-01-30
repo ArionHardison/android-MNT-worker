@@ -14,6 +14,7 @@ import com.geteat.deliver.helper.LocaleUtils;
 import com.geteat.deliver.helper.SharedHelper;
 
 import io.fabric.sdk.android.Fabric;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +25,7 @@ import java.util.Iterator;
 import java.util.Locale;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 import com.facebook.stetho.Stetho;
 
 public class Application extends android.app.Application {
