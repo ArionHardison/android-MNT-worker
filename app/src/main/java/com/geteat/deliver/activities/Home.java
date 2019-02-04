@@ -214,9 +214,9 @@ public class Home extends AppCompatActivity
         } else getShift();
         getProfile();
 
-//        By Rajaganapathi
         errorLayout.setVisibility(View.GONE);
         newTaskRv.setVisibility(View.VISIBLE);
+
 
         getNetworkStatus();
     }
