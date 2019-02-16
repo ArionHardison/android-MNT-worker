@@ -306,7 +306,7 @@ public class ServiceFlow extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
                         handler.removeCallbacks(runnable);
-                        startActivity(new Intent(ServiceFlow.this, Home.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        startActivity(new Intent(ServiceFlow.this, Home.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                         finish();
 
                     }

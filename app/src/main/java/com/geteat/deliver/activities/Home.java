@@ -531,7 +531,7 @@ public class Home extends AppCompatActivity
                     Toast.makeText(Home.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     SharedHelper.putKey(Home.this, "logged_in", "0");
                     Intent intent = new Intent(getApplicationContext(), Login.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 } else {
                     APIError error = ErrorUtils.parseError(response);

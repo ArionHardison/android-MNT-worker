@@ -23,8 +23,12 @@ import com.geteat.deliver.model.Profile;
 import com.geteat.deliver.model.Token;
 import com.geteat.deliver.R;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.stfalcon.smsverifycatcher.OnSmsCatchListener;
+import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +45,7 @@ public class OTP extends AppCompatActivity {
     TextView phone;
     @BindView(R.id.otp)
     PinEntryView otp;
+    SmsVerifyCatcher smsVerifyCatcher;
 
     CustomDialog customDialog;
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
@@ -61,6 +66,25 @@ public class OTP extends AppCompatActivity {
             otp.setText("123456");
         }*/
 
+        smsVerifyCatcher = new SmsVerifyCatcher(this, new OnSmsCatchListener<String>() {
+            @Override
+            public void onSmsCatch(String message) {
+                String code = parseCode(message);//Parse verification code
+                otp.setText(code);//set code in edit text
+//                Toast.makeText(context,code,Toast.LENGTH_LONG).show();
+                //then you can send verification code to server
+            }
+        });
+    }
+
+    private String parseCode(String message) {
+        Pattern p = Pattern.compile("(\\d{6})");
+        Matcher m = p.matcher(message);
+        String code = "";
+        while (m.find()) {
+            code = m.group(0);
+        }
+        return code;
     }
 
     private void login(HashMap<String, String> map) {
@@ -115,7 +139,7 @@ public class OTP extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     GlobalData.profile = response.body();
                     SharedHelper.putKey(OTP.this, "logged_in", "1");
-                    startActivity(new Intent(OTP.this, ShiftStatus.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    startActivity(new Intent(OTP.this, ShiftStatus.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();
                 } else {
                     APIError error = ErrorUtils.parseError(response);
@@ -194,6 +218,24 @@ public class OTP extends AppCompatActivity {
             e.printStackTrace();
             Log.d(TAG, "COULD NOT GET UDID");
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        smsVerifyCatcher.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        smsVerifyCatcher.onStop();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        smsVerifyCatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 

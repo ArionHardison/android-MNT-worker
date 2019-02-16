@@ -66,6 +66,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentIntent(pendingIntent)
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setStyle(inboxStyle)
+                .setAutoCancel(true)
                 .setWhen(when)
                 .setSmallIcon(getNotificationIcon(mBuilder))
                 .setContentText(messageBody)

@@ -111,14 +111,14 @@ public class Login extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     GlobalData.otp = response.body();
                     Toast.makeText(Login.this, "" + GlobalData.otp.getMessage(), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(Login.this, OTP.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    startActivity(new Intent(Login.this, OTP.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         if (jObjError.has("phone"))
                             Toast.makeText(Login.this, jObjError.optString("phone"), Toast.LENGTH_LONG).show();
                         else if (jObjError.has("error")) {
-                            startActivity(new Intent(Login.this, OTP.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                            startActivity(new Intent(Login.this, OTP.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             //Toast.makeText(Login.this, jObjError.optString("error"), Toast.LENGTH_LONG).show();
                         }
                     } catch (Exception e) {
