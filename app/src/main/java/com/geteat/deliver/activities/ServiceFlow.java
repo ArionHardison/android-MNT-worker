@@ -289,6 +289,11 @@ public class ServiceFlow extends AppCompatActivity {
                 } else {
                     APIError error = ErrorUtils.parseError(response);
                     Toast.makeText(ServiceFlow.this, error.getError(), Toast.LENGTH_SHORT).show();
+                    if (response.code() == 401) {
+                        SharedHelper.putKey(ServiceFlow.this, "logged_in", "0");
+                        startActivity(new Intent(ServiceFlow.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
+                    }
                 }
             }
 
@@ -399,6 +404,11 @@ public class ServiceFlow extends AppCompatActivity {
                 } else {
                     APIError error = ErrorUtils.parseError(response);
                     Toast.makeText(ServiceFlow.this, error.getError(), Toast.LENGTH_SHORT).show();
+                    if (response.code() == 401) {
+                        SharedHelper.putKey(ServiceFlow.this, "logged_in", "0");
+                        startActivity(new Intent(ServiceFlow.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
+                    }
                 }
             }
 

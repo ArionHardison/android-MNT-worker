@@ -133,6 +133,11 @@ public class ProfileActivity extends AppCompatActivity {
                 } else {
                     APIError error = ErrorUtils.parseError(response);
                     Toast.makeText(ProfileActivity.this, error.getError(), Toast.LENGTH_SHORT).show();
+                    if (response.code() == 401) {
+                        SharedHelper.putKey(ProfileActivity.this, "logged_in", "0");
+                        startActivity(new Intent(ProfileActivity.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
+                    }
                 }
             }
 

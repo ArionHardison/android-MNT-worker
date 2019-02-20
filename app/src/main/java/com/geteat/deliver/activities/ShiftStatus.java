@@ -315,6 +315,11 @@ public class ShiftStatus extends AppCompatActivity {
                 } else {
                     APIError error = ErrorUtils.parseError(response);
                     Toast.makeText(ShiftStatus.this, error.getError(), Toast.LENGTH_SHORT).show();
+                    if (response.code() == 401) {
+                        SharedHelper.putKey(ShiftStatus.this, "logged_in", "0");
+                        startActivity(new Intent(ShiftStatus.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
+                    }
                 }
             }
 
@@ -347,6 +352,11 @@ public class ShiftStatus extends AppCompatActivity {
                 } else {
                     APIError error = ErrorUtils.parseError(response);
                     Toast.makeText(ShiftStatus.this, error.getError(), Toast.LENGTH_SHORT).show();
+                    if (response.code() == 401) {
+                        SharedHelper.putKey(ShiftStatus.this, "logged_in", "0");
+                        startActivity(new Intent(ShiftStatus.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
+                    }
                 }
             }
 
@@ -384,6 +394,11 @@ public class ShiftStatus extends AppCompatActivity {
                 } else {
                     APIError error = ErrorUtils.parseError(response);
                     Toast.makeText(ShiftStatus.this, error.getError(), Toast.LENGTH_SHORT).show();
+                    if (response.code() == 401) {
+                        SharedHelper.putKey(ShiftStatus.this, "logged_in", "0");
+                        startActivity(new Intent(ShiftStatus.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
+                    }
                 }
             }
 
@@ -420,6 +435,11 @@ public class ShiftStatus extends AppCompatActivity {
                 } else {
                     APIError error = ErrorUtils.parseError(response);
                     Toast.makeText(ShiftStatus.this, error.getError(), Toast.LENGTH_SHORT).show();
+                    if (response.code() == 401) {
+                        SharedHelper.putKey(ShiftStatus.this, "logged_in", "0");
+                        startActivity(new Intent(ShiftStatus.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
+                    }
                 }
             }
 

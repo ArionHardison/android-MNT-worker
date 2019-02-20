@@ -270,6 +270,11 @@ public class Home extends AppCompatActivity
                 } else {
                     APIError error = ErrorUtils.parseError(response);
                     Toast.makeText(Home.this, error.getError(), Toast.LENGTH_SHORT).show();
+                    if (response.code() == 401) {
+                        SharedHelper.putKey(Home.this, "logged_in", "0");
+                        startActivity(new Intent(Home.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
+                    }
                 }
             }
 
@@ -307,6 +312,11 @@ public class Home extends AppCompatActivity
                     }
                 } else {
                     APIError error = ErrorUtils.parseError(response);
+                    if (response.code() == 401) {
+                        SharedHelper.putKey(Home.this, "logged_in", "0");
+                        startActivity(new Intent(Home.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
+                    }
                 }
             }
 
@@ -338,6 +348,11 @@ public class Home extends AppCompatActivity
                 } else {
                     APIError error = ErrorUtils.parseError(response);
                     Toast.makeText(Home.this, error.getError(), Toast.LENGTH_SHORT).show();
+                    if (response.code() == 401) {
+                        SharedHelper.putKey(Home.this, "logged_in", "0");
+                        startActivity(new Intent(Home.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
+                    }
                 }
             }
 
@@ -389,6 +404,11 @@ public class Home extends AppCompatActivity
                     skeletonScreen.hide();
                     APIError error = ErrorUtils.parseError(response);
                     Toast.makeText(Home.this, error.getError(), Toast.LENGTH_SHORT).show();
+                    if (response.code() == 401) {
+                        SharedHelper.putKey(Home.this, "logged_in", "0");
+                        startActivity(new Intent(Home.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
+                    }
                 }
             }
 

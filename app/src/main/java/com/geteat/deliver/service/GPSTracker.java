@@ -159,7 +159,7 @@ public class GPSTracker extends Service {
                         JSONObject jObjError = new JSONObject(response.errorBody().toString());
                         Toast.makeText(GPSTracker.this, jObjError.optString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(GPSTracker.this, e.getMessage(), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(GPSTracker.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 } else if (response.isSuccessful()) {
                     GlobalData.profile = response.body();

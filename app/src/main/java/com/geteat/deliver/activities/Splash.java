@@ -98,7 +98,7 @@ public class Splash extends AppCompatActivity {
                 } else {
                     if (response.code() == 401) {
                         SharedHelper.putKey(Splash.this, "logged_in", "0");
-                        startActivity(new Intent(Splash.this, Login.class));
+                        startActivity(new Intent(Splash.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                         finish();
                     }
                     APIError error = ErrorUtils.parseError(response);

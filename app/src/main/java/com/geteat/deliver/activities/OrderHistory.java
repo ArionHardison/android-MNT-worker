@@ -1,6 +1,7 @@
 package com.geteat.deliver.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -145,6 +146,11 @@ public class OrderHistory extends AppCompatActivity {
                 } else {
                     APIError error = ErrorUtils.parseError(response);
                     Toast.makeText(OrderHistory.this, error.getError(), Toast.LENGTH_SHORT).show();
+                    if (response.code() == 401) {
+                        SharedHelper.putKey(OrderHistory.this, "logged_in", "0");
+                        startActivity(new Intent(OrderHistory.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
+                    }
                 }
             }
 
