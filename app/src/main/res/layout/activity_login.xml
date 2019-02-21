@@ -7,7 +7,7 @@
     android:background="#FFFFFF"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context="com.geteat.deliver.activities.Login">
+    tools:context="com.comida.deliver.activities.Login">
 
     <ImageView
         android:id="@+id/app_logo"

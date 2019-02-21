@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#000000"
     android:gravity="center"
-    tools:context="com.geteat.deliver.activities.Splash">
+    tools:context="com.comida.deliver.activities.Splash">
 
     <ImageView
         android:layout_width="180dp"

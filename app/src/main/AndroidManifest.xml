@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.geteat.deliver">
+    package="com.comida.deliver">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,14 +16,14 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
 
     <permission
-        android:name="com.geteat.deliver.permission.C2D_MESSAGE"
+        android:name="com.comida.deliver.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.foodie.provider.permission.C2D_MESSAGE" />
 
 
     <application
-        android:name="com.geteat.deliver.Application"
+        android:name="com.comida.deliver.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -34,17 +34,17 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <service
-            android:name="com.geteat.deliver.service.GPSTracker"
+            android:name="com.comida.deliver.service.GPSTracker"
             android:enabled="true"
             android:exported="false"/>
-        <receiver android:name="com.geteat.deliver.helper.SmsReceiver"
+        <receiver android:name="com.comida.deliver.helper.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
         <activity
-            android:name="com.geteat.deliver.activities.Splash"
+            android:name="com.comida.deliver.activities.Splash"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,62 +53,62 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.geteat.deliver.activities.Login"
+            android:name="com.comida.deliver.activities.Login"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.geteat.deliver.activities.Home"
+            android:name="com.comida.deliver.activities.Home"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.geteat.deliver.activities.ServiceFlow"
+            android:name="com.comida.deliver.activities.ServiceFlow"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.geteat.deliver.activities.OTP"
+            android:name="com.comida.deliver.activities.OTP"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.geteat.deliver.activities.ShiftStatus"
+            android:name="com.comida.deliver.activities.ShiftStatus"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.geteat.deliver.activities.ProfileActivity"
+            android:name="com.comida.deliver.activities.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.geteat.deliver.activities.OrderDetail"
+            android:name="com.comida.deliver.activities.OrderDetail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.geteat.deliver.activities.Dispute"
+            android:name="com.comida.deliver.activities.Dispute"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.geteat.deliver.activities.OrderHistory"
+            android:name="com.comida.deliver.activities.OrderHistory"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.geteat.deliver.activities.Others"
+            android:name="com.comida.deliver.activities.Others"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
 
 
         <activity
-            android:name="com.geteat.deliver.activities.NoticeBoard"
+            android:name="com.comida.deliver.activities.NoticeBoard"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.geteat.deliver.activities.TermsAndConditions"
+            android:name="com.comida.deliver.activities.TermsAndConditions"
             android:theme="@style/AppTheme.NoActionBar" />
         <!-- Firebase Notifications -->
-        <service android:name="com.geteat.deliver.fcm.MyFirebaseMessagingService">
+        <service android:name="com.comida.deliver.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="com.geteat.deliver.fcm.MyFirebaseInstanceIDService">
+        <service android:name="com.comida.deliver.fcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <receiver android:name="com.geteat.deliver.receiver.NetworkChangeReceiver">
+        <receiver android:name="com.comida.deliver.receiver.NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
