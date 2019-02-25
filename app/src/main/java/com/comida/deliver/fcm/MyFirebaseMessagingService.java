@@ -59,8 +59,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             importance = NotificationManager.IMPORTANCE_HIGH;
 
         Notification notification;
-        notification = mBuilder.setSmallIcon(R.mipmap.ic_launcher).setTicker(getString(R.string.app_name)).
-                setWhen(when)
+        notification = mBuilder.setWhen(when)
                 //                .setAutoCancel(true)
                 .setContentTitle(getString(R.string.app_name))
                 .setContentIntent(pendingIntent)
@@ -85,11 +84,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationManager.notify(0, notification);
     }
 
-    private int getNotificationIcon(NotificationCompat.Builder notificationBuilder) {
+    /*private int getNotificationIcon(NotificationCompat.Builder notificationBuilder) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             notificationBuilder.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
             return R.drawable.ic_stat_push;
         } else return R.drawable.ic_stat_push;
+    }*/
+
+    private int getNotificationIcon(NotificationCompat.Builder notificationBuilder) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            notificationBuilder.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+            return R.drawable.ic_stat_push;
+        } else {
+            notificationBuilder.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+            return R.drawable.ic_stat_push;
+        }
     }
 
 }

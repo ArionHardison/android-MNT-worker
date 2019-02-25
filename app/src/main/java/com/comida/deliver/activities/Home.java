@@ -456,7 +456,11 @@ public class Home extends AppCompatActivity
                     errorMessage.setText(getResources().getString(R.string.turn_on_start_shift));
                     errorLayout.setVisibility(View.VISIBLE);
                     handler.removeCallbacks(runnable);
-                    navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
+                    if (GlobalData.shift != null) {
+                        navigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
+                    } else {
+                        navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
+                    }
                     break;
                 default:
                     break;
