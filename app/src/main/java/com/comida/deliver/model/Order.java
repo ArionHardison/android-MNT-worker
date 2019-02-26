@@ -62,6 +62,9 @@ public class Order {
     @SerializedName("status")
     @Expose
     private String status;
+    @SerializedName("is_rated")
+    @Expose
+    private String isRated;
     @SerializedName("schedule_status")
     @Expose
     private Integer scheduleStatus;
@@ -235,6 +238,14 @@ public class Order {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getIsRated() {
+        return isRated;
+    }
+
+    public void setIsRated(String isRated) {
+        this.isRated = isRated;
     }
 
     public void setStatus(String status) {

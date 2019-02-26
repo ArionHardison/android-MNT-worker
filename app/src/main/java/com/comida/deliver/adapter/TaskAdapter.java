@@ -201,6 +201,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 
     private void setOrderStatus(TextView view, Order order) {
         String value = order.getStatus();
+        String isUserRated = order.getIsRated();
         switch (value) {
             case "ASSIGNED":
                 view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
@@ -208,9 +209,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
                 view.setText(context.getResources().getString(R.string.new_order_request));
                 break;
             case "COMPLETED":
-                view.setTextColor(ContextCompat.getColor(context, R.color.primary_text));
-                view.setBackgroundColor(ContextCompat.getColor(context, R.color.light_grey));
-                view.setText(context.getResources().getString(R.string.deliver) + " #" + String.valueOf(order.getId()));
+                if (isUserRated.equalsIgnoreCase("0")){
+                    view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
+                    view.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+                    view.setText(context.getResources().getString(R.string.order) + " #" + String.valueOf(order.getId()));
+                }else {
+                    view.setTextColor(ContextCompat.getColor(context, R.color.primary_text));
+                    view.setBackgroundColor(ContextCompat.getColor(context, R.color.light_grey));
+                    view.setText(context.getResources().getString(R.string.deliver) + " #" + String.valueOf(order.getId()));
+                }
                 break;
             case "CANCELLED":
                 view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorRed));
@@ -252,10 +259,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
             int position = getAdapterPosition();
             if (v.getId() == taskCard.getId()) {
                 GlobalData.order = list.get(position);
-                if (GlobalData.order.getStatus().equals("COMPLETED") || GlobalData.order.getStatus().equals("CANCELLED"))
+                if ((GlobalData.order.getStatus().equals("COMPLETED") && GlobalData.order.getIsRated().equalsIgnoreCase("1")) || GlobalData.order.getStatus().equals("CANCELLED")) {
                     context.startActivity(new Intent(context, OrderDetail.class));
-                else
+                }else {
                     context.startActivity(new Intent(context, ServiceFlow.class));
+                }
 
             }
         }

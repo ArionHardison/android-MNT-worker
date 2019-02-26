@@ -230,8 +230,11 @@ public class ServiceFlow extends AppCompatActivity {
         runnable = new Runnable() {
             public void run() {
                 getOrder();
+                handler.postDelayed(this, 3000);
             }
         };
+        handler.postDelayed(runnable, 3000);
+
         if (GlobalData.order != null && GlobalData.order.getInvoice() != null) {
             initShop();
             initUser();
@@ -277,11 +280,11 @@ public class ServiceFlow extends AppCompatActivity {
                             updateFlowUI(GlobalData.order.getStatus());
                         }
 
-                        handler.removeCallbacks(runnable);
-                        handler.postDelayed(runnable, 5000);
+//                        handler.removeCallbacks(runnable);
+                        /*handler.postDelayed(runnable, 3000);*/
                     } else {
                         //If order status is completed then show feed back
-                        if (!previousStatus.equalsIgnoreCase("COMPLETED") && !previousStatus.equalsIgnoreCase("ARRIVED")) {
+                        if (!previousStatus.equalsIgnoreCase("COMPLETED") && !previousStatus.equalsIgnoreCase("ARRIVED") && !previousStatus.equalsIgnoreCase("PICKEDUP")) {
                             alertDialog();
                         }
                     }
@@ -305,12 +308,13 @@ public class ServiceFlow extends AppCompatActivity {
     }
 
     public void alertDialog() {
+        handler.removeCallbacks(runnable);
         AlertDialog.Builder builder = new AlertDialog.Builder(ServiceFlow.this);
         builder.setMessage(getResources().getString(R.string.the_order_has_been_cancelled_by_user))
                 .setPositiveButton(getResources().getString(R.string.okay), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
-                        handler.removeCallbacks(runnable);
+//                        handler.removeCallbacks(runnable);
                         startActivity(new Intent(ServiceFlow.this, Home.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                         finish();
 
@@ -319,12 +323,14 @@ public class ServiceFlow extends AppCompatActivity {
 
         AlertDialog alert = builder.create();
         alert.setCancelable(false);
+        alert.show();
         Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
         pbutton.setTextColor(ContextCompat.getColor(ServiceFlow.this, R.color.colorAccent));
         pbutton.setTypeface(pbutton.getTypeface(), Typeface.BOLD);
-        if (!((ServiceFlow) this).isFinishing()) {
+
+        /*if (!((ServiceFlow) this).isFinishing()) {
             alert.show();
-        }
+        }*/
     }
 
 
@@ -523,6 +529,7 @@ public class ServiceFlow extends AppCompatActivity {
 
     private void rate() {
         try {
+
             AlertDialog.Builder builder = new AlertDialog.Builder(ServiceFlow.this);
 
             final FrameLayout frameView = new FrameLayout(ServiceFlow.this);
