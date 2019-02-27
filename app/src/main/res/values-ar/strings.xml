@@ -109,4 +109,10 @@
     <string name="something_went_wrong">Something went wrong</string>
     <string name="reject">Reject</string>
     <string name="accept">Accept</string>
+
+    <string name="otp">Otp</string>
+    <string name="enter_otp">Please enter otp</string>
+    <string name="invalid_otp">Invalid Otp</string>
+    <string name="full_amount">Please enter full amount</string>
+    <string name="password">Password</string>
 </resources>

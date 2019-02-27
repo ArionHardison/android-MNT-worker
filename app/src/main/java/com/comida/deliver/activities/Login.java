@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,19 +21,24 @@ import com.comida.deliver.CountryPicker.Country;
 import com.comida.deliver.CountryPicker.CountryPicker;
 import com.comida.deliver.CountryPicker.CountryPickerListener;
 import com.comida.deliver.R;
+import com.comida.deliver.api.APIError;
 import com.comida.deliver.api.ApiClient;
 import com.comida.deliver.api.ApiInterface;
+import com.comida.deliver.api.ErrorUtils;
 import com.comida.deliver.helper.ConnectionHelper;
 import com.comida.deliver.helper.CustomDialog;
 import com.comida.deliver.helper.GlobalData;
 import com.comida.deliver.helper.SharedHelper;
 import com.comida.deliver.model.Otp;
+import com.comida.deliver.model.Profile;
+import com.comida.deliver.model.Token;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,7 +62,12 @@ public class Login extends AppCompatActivity {
     EditText mobileNo;
     @BindView(R.id.submit)
     Button submit;
+    @BindView(R.id.eye_img)
+    ImageView eyeImg;
+    @BindView(R.id.ed_password)
+    EditText edPassword;
     String country_code;
+    String mobile, password;
 
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
     ConnectionHelper connectionHelper;
@@ -89,6 +101,8 @@ public class Login extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
         }
+
+        eyeImg.setTag(1);
 
     }
 
@@ -186,18 +200,104 @@ public class Login extends AppCompatActivity {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    @OnClick({R.id.submit})
+    @OnClick({R.id.submit,R.id.eye_img})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.submit:
-                if (!mobileNo.getText().toString().equalsIgnoreCase("")) {
+                if (!mobileNo.getText().toString().equalsIgnoreCase("") && !edPassword.getText().toString().equalsIgnoreCase("")) {
                     SharedHelper.putKey(Login.this, "mobile_number", countryNumber.getText().toString() + mobileNo.getText().toString());
-                    getOtpVerification(countryNumber.getText().toString() + mobileNo.getText().toString());
+//                    getOtpVerification(countryNumber.getText().toString() + mobileNo.getText().toString());
+//                    String mobile_number = SharedHelper.getKey(OTP.this, "mobile_number");
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("phone", countryNumber.getText().toString() + mobileNo.getText().toString());
+                    map.put("password", edPassword.getText().toString());
+                    login(map);
                 } else {
-                    Toast.makeText(Login.this, "Please enter your Mobile number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, "Please enter your Mobile number and Password", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case R.id.eye_img:
+                if (eyeImg.getTag().equals(1)) {
+                    edPassword.setTransformationMethod(null);
+                    eyeImg.setImageDrawable(ContextCompat.getDrawable(Login.this, R.drawable.ic_eye_close));
+                    eyeImg.setTag(0);
+                } else {
+                    eyeImg.setTag(1);
+                    edPassword.setTransformationMethod(new PasswordTransformationMethod());
+                    eyeImg.setImageDrawable(ContextCompat.getDrawable(Login.this, R.drawable.ic_eye_open));
+                }
+                break;
+
         }
+    }
+
+    private void login(HashMap<String, String> map) {
+        if (customDialog != null)
+            customDialog.show();
+
+        Call<Token> call = apiInterface.postLogin(map);
+        call.enqueue(new Callback<Token>() {
+            @Override
+            public void onResponse(@NonNull Call<Token> call, @NonNull Response<Token> response) {
+                customDialog.cancel();
+                if (response.isSuccessful()) {
+                    if (response.body().getAccessToken() != null) {
+                        GlobalData.token = response.body();
+                        SharedHelper.putKey(Login.this, "token_type", GlobalData.token.getTokenType());
+                        SharedHelper.putKey(Login.this, "access_token", GlobalData.token.getAccessToken());
+                        System.out.println("login " + GlobalData.token.getTokenType() + " " + GlobalData.token.getAccessToken());
+                        getProfile();
+                    }
+                } else {
+                    APIError error = ErrorUtils.parseError(response);
+                    Toast.makeText(Login.this, error.getError(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Token> call, @NonNull Throwable t) {
+                customDialog.cancel();
+                Toast.makeText(Login.this, "login Something wrong", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+    }
+
+    private void getProfile() {
+        if (customDialog != null)
+            customDialog.show();
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("device_type", "android");
+        map.put("device_id", SharedHelper.getKey(this, "device_id"));
+        map.put("device_token", SharedHelper.getKey(this, "device_token"));
+
+        String header = SharedHelper.getKey(Login.this, "token_type") + " " + SharedHelper.getKey(Login.this, "access_token");
+        System.out.println("getProfile Header " + header);
+        Call<Profile> call = apiInterface.getProfile(header, map);
+        call.enqueue(new Callback<Profile>() {
+            @Override
+            public void onResponse(@NonNull Call<Profile> call, @NonNull Response<Profile> response) {
+                customDialog.cancel();
+                if (response.isSuccessful()) {
+                    GlobalData.profile = response.body();
+                    SharedHelper.putKey(Login.this, "logged_in", "1");
+                    startActivity(new Intent(Login.this, ShiftStatus.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    finish();
+                } else {
+                    APIError error = ErrorUtils.parseError(response);
+                    Toast.makeText(Login.this, error.getError(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
+                customDialog.cancel();
+                Toast.makeText(Login.this, "Something wrong getProfile", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

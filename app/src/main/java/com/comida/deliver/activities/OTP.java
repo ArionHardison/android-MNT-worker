@@ -170,7 +170,7 @@ public class OTP extends AppCompatActivity {
             String mobile_number = SharedHelper.getKey(OTP.this, "mobile_number");
             HashMap<String, String> map = new HashMap<>();
             map.put("phone", mobile_number);
-            map.put("otp", pin_value);
+            map.put("password", "123456");
             login(map);
         }
     }
