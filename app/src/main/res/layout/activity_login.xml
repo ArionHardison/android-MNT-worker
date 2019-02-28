@@ -102,7 +102,7 @@
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:textSize="@dimen/text_normal"
-            app:theme="@style/MyEditTextTheme" />
+            />
 
         <ImageView
             android:id="@+id/eye_img"

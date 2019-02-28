@@ -238,7 +238,14 @@ public class ProfileActivity extends AppCompatActivity {
                             .placeholder(R.drawable.man)
                             .error(R.drawable.man))
                     .into(userAvatar);
-            imgFile = new File(imgDecodableString);
+//            imgFile = new File(imgDecodableString);
+
+            try {
+                imgFile = new id.zelory.compressor.Compressor(ProfileActivity.this).compressToFile(new File(imgDecodableString));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         } else if (resultCode == Activity.RESULT_CANCELED)
             Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_SHORT).show();
     }

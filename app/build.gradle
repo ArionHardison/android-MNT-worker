@@ -74,6 +74,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.5'
     implementation 'com.github.stfalcon:smsverifycatcher:0.3.2'
     implementation 'com.intuit.sdp:sdp-android:1.0.5'
+    implementation 'id.zelory:compressor:2.1.0'
     implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true;
     }
