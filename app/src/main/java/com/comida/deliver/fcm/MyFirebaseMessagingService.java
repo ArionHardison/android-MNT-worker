@@ -96,8 +96,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationBuilder.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
             return R.drawable.ic_stat_push;
         } else {
-            notificationBuilder.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-            return R.drawable.ic_stat_push;
+//            notificationBuilder.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+            return R.drawable.ic_push;
         }
     }
 
