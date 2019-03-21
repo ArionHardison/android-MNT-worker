@@ -26,6 +26,9 @@ public class Invoice {
     @SerializedName("discount")
     @Expose
     private Double discount;
+    @SerializedName("promocode_amount")
+    @Expose
+    private Double promocode_amount;
     @SerializedName("delivery_charge")
     @Expose
     private Double deliveryCharge;
@@ -128,6 +131,14 @@ public class Invoice {
 
     public void setDiscount(Double discount) {
         this.discount = discount;
+    }
+
+    public Double getPromocode_amount() {
+        return promocode_amount;
+    }
+
+    public void setPromocode_amount(Double promocode_amount) {
+        this.promocode_amount = promocode_amount;
     }
 
     public Invoice withDiscount(Double discount) {

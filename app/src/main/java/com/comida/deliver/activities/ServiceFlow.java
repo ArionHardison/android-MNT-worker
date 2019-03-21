@@ -141,8 +141,12 @@ public class ServiceFlow extends AppCompatActivity {
     ImageView iconPaymentReceived;
     @BindView(R.id.user_name_ll)
     LinearLayout userNameLl;
+    @BindView(R.id.promocodeLayout)
+    LinearLayout promocodeLayout;
     @BindView(R.id.discount)
     TextView discount;
+    @BindView(R.id.promocode_amount)
+    TextView promocodeAmount;
     @BindView(R.id.payment_mode)
     TextView paymentMode;
     NumberFormat numberFormat;
@@ -245,6 +249,12 @@ public class ServiceFlow extends AppCompatActivity {
             serviceTax.setText(numberFormat.format(invoice.getTax()));
             deliveryCharges.setText(numberFormat.format(invoice.getDeliveryCharge()));
             discount.setText(numberFormat.format(invoice.getDiscount()));
+            if (invoice.getPromocode_amount() > 0){
+                promocodeLayout.setVisibility(View.VISIBLE);
+                promocodeAmount.setText(numberFormat.format(invoice.getPromocode_amount()));
+            }else{
+                promocodeLayout.setVisibility(View.GONE);
+            }
             walletDetection.setText(numberFormat.format(invoice.getWalletAmount()));
             total.setText(numberFormat.format(invoice.getPayable()));
             if (invoice.getPaymentMode().equalsIgnoreCase("stripe")) {

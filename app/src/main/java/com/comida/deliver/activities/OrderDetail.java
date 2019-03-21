@@ -109,7 +109,7 @@ public class OrderDetail extends AppCompatActivity {
             itemTotal.setText(numberFormat.format(invoice.getGross()));
             serviceTax.setText(numberFormat.format(invoice.getTax()));
             deliveryCharges.setText(numberFormat.format(invoice.getDeliveryCharge()));
-            discount.setText(numberFormat.format(invoice.getDiscount()));
+            discount.setText(numberFormat.format(invoice.getDiscount() + invoice.getPromocode_amount()));
             walletDetection.setText(numberFormat.format(invoice.getWalletAmount()));
             total.setText(numberFormat.format(invoice.getPayable()));
 

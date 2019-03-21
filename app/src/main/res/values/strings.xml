@@ -59,7 +59,8 @@
     <string name="item_total">"Item Total"</string>
     <string name="service_tax">"Service Tax"</string>
     <string name="delivery_charges">"Delivery Charges"</string>
-    <string name="discount">"Discount"</string>
+    <string name="discount">"Shop Discount"</string>
+    <string name="promocode_amount">"Promocode Amount"</string>
     <string name="total">"Total"</string>
     <string name="payment_mode">"Payment "</string>
     <string name="no_of_items">"No. of Items"</string>

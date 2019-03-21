@@ -149,10 +149,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
-                    GlobalData.order = response.body();
-                    countDownTimer.cancel();
-                    update(order);
-                    context.startActivity(new Intent(context, ServiceFlow.class));
+                    if (response.body().getItems() != null){
+                        GlobalData.order = response.body();
+                        countDownTimer.cancel();
+                        update(order);
+                        context.startActivity(new Intent(context, ServiceFlow.class));
+                    }else{
+                        Toast.makeText(context, "Order accepted by another delivery boy", Toast.LENGTH_SHORT).show();
+                    }
+
                 }else {
 
                 }

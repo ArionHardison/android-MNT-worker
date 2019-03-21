@@ -302,6 +302,7 @@ public class Home extends AppCompatActivity
                         orders.addAll(response.body());
                         newTaskAdapter.notifyDataSetChanged();
                         handler.removeCallbacks(runnable);
+                        handler.postDelayed(runnable, 5000);
                         errorLayout.setVisibility(View.GONE);
                     } else {
                         orders.clear();
