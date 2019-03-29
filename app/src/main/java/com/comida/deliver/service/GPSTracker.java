@@ -34,7 +34,7 @@ import retrofit2.Response;
 public class GPSTracker extends Service {
     private static final String TAG = "GPSTracker";
     private LocationManager locationManager = null;
-    private static final int LOCATION_INTERVAL = 30000;
+    private static final int LOCATION_INTERVAL = 5000;
     private static final float LOCATION_DISTANCE = 10f;
     public static double distance = 0.0;
     ConnectionHelper connectionHelper;

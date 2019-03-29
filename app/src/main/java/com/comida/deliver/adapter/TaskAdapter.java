@@ -70,11 +70,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         Home.errorLayout.setVisibility(View.VISIBLE);
     }
 
-    public void update(Order order) {
+    public void update(Order order)
+    {
         int position = list.indexOf(order);
-        Order order1 = list.get(position);
-        order.setStatus("PROCESSING");
-        notifyDataSetChanged();
+        if (position >= 0){
+            Order order1 = list.get(position);
+            order.setStatus("PROCESSING");
+            notifyDataSetChanged();
+        }
     }
 
     @Override

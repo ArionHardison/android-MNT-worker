@@ -35,6 +35,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.comida.deliver.service.GPSTracker;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
 import com.comida.deliver.R;
@@ -165,6 +166,8 @@ public class Home extends AppCompatActivity
         completedTaskRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         //completedTaskRv.setItemAnimator(new DefaultItemAnimator());
         completedTaskRv.setAdapter(completedTaskAdapter);
+
+        startService(new Intent(this, GPSTracker.class));
 
         handler = new Handler();
         runnable = new Runnable() {

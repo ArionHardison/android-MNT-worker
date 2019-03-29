@@ -62,6 +62,7 @@ import com.comida.deliver.model.Order;
 import com.comida.deliver.model.Ordertiming;
 import com.comida.deliver.model.Shop;
 import com.comida.deliver.model.User;
+import com.comida.deliver.service.GPSTracker;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public class ServiceFlow extends AppCompatActivity {
     TextView orderCreatedAt;
     @BindView(R.id.product_items_rv)
     RecyclerView productItemsRv;
-
+    RadioGroup rateRadioGroup;
     CustomDialog customDialog;
     ProductAdapter1 productAdapter1;
     List<Item> items;
@@ -168,7 +169,7 @@ public class ServiceFlow extends AppCompatActivity {
     TextView walletDetection;
     private String isPinView;
     private double bal = 0;
-
+    public static int rating = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,6 +186,8 @@ public class ServiceFlow extends AppCompatActivity {
 
         connectionHelper = new ConnectionHelper(this);
         customDialog = new CustomDialog(this);
+
+        startService(new Intent(this, GPSTracker.class));
 
         items = new ArrayList<>();
         productAdapter1 = new ProductAdapter1(items, this);
@@ -551,7 +554,7 @@ public class ServiceFlow extends AppCompatActivity {
     }
 
     private void rate() {
-        try {
+
 
             AlertDialog.Builder builder = new AlertDialog.Builder(ServiceFlow.this);
 
@@ -559,16 +562,37 @@ public class ServiceFlow extends AppCompatActivity {
             builder.setView(frameView);
 
             final AlertDialog rateDialog = builder.create();
-            LayoutInflater inflater = rateDialog.getLayoutInflater();
+            final LayoutInflater inflater = rateDialog.getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.feedback_popup, frameView);
 
-            final Integer[] rating = {5};
-            final RadioGroup rateRadioGroup = (RadioGroup) dialogView.findViewById(R.id.rate_radiogroup);
+            rating = 5;
+            rateRadioGroup = (RadioGroup) dialogView.findViewById(R.id.rate_radiogroup);
+            rateRadioGroup.clearCheck();
             ((RadioButton) rateRadioGroup.getChildAt(4)).setChecked(true);
             rateRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                    rating[0] = i;
+
+                    //rating = i;
+
+                    if (i == R.id.one) {
+                        //do work when radioButton1 is active
+                        rating = 1;
+                    } else  if (i == R.id.two) {
+                        //do work when radioButton2 is active
+                        rating = 2;
+                    } else  if (i == R.id.three) {
+                        //do work when radioButton3 is active
+                        rating = 3;
+                    } else  if (i == R.id.four) {
+                        //do work when radioButton3 is active
+                        rating = 4;
+                    } else  if (i == R.id.five) {
+                        //do work when radioButton3 is active
+                        rating = 5;
+                    }
+                    Log.d("gfgfgf", "onCheckedChanged: "+rating);
+
                 }
             });
 
@@ -580,7 +604,7 @@ public class ServiceFlow extends AppCompatActivity {
                     if (GlobalData.order != null && GlobalData.order.getId() != null) {
                         HashMap<String, String> map = new HashMap<>();
                         map.put("order_id", String.valueOf(GlobalData.order.getId()));
-                        map.put("rating", String.valueOf(rating[0]));
+                        map.put("rating", String.valueOf(rating));
                         map.put("comment", comment.getText().toString());
                         rateUser(map);
                         rateDialog.dismiss();
@@ -590,9 +614,6 @@ public class ServiceFlow extends AppCompatActivity {
             });
             rateDialog.show();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void rateUser(HashMap<String, String> map) {

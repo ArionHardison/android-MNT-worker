@@ -36,6 +36,7 @@
             android:layout_height="wrap_content">
 
             <RadioButton
+                android:id="@+id/one"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:button="@null"
@@ -49,6 +50,7 @@
                 android:text="@string/terrible" />
 
             <RadioButton
+                android:id="@+id/two"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:button="@null"
@@ -61,6 +63,7 @@
                 android:textAllCaps="true"
                 android:text="@string/bad" />
             <RadioButton
+                android:id="@+id/three"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:button="@null"
@@ -73,6 +76,7 @@
                 android:textAllCaps="true"
                 android:text="@string/okay" />
             <RadioButton
+                android:id="@+id/four"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:button="@null"
@@ -85,6 +89,7 @@
                 android:textAllCaps="true"
                 android:text="@string/good" />
             <RadioButton
+                android:id="@+id/five"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:button="@null"
