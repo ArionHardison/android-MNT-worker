@@ -1,15 +1,19 @@
 package com.comida.deliver.activities;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
@@ -35,7 +39,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.comida.deliver.service.GPSTracker;
+import com.comida.deliver.service.GPSTrackerService;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
 import com.comida.deliver.R;
@@ -81,7 +85,7 @@ public class Home extends AppCompatActivity
     List<Order> orders;
     TaskAdapter completedTaskAdapter;
     List<Order> completedOrders;
-
+    Activity activity = this;
     Handler handler;
     Runnable runnable;
     ConnectionHelper connectionHelper;
@@ -142,6 +146,21 @@ public class Home extends AppCompatActivity
         });
         toggle.syncState();
 
+        boolean serviceRunningStatus = isServiceRunning(GPSTrackerService.class);
+
+        if (serviceRunningStatus) {
+            Intent serviceIntent = new Intent(activity, GPSTrackerService.class);
+            stopService(serviceIntent);
+        }
+        if (!serviceRunningStatus) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                startService(new Intent(activity, GPSTrackerService.class));
+            } else {
+                Intent serviceIntent = new Intent(activity, GPSTrackerService.class);
+                ContextCompat.startForegroundService(activity, serviceIntent);
+            }
+        }
+
         //NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         //View headerView = navigationView.inflateHeaderView(R.layout.nav_header_home);
         userAvatar = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.user_avatar);
@@ -167,7 +186,7 @@ public class Home extends AppCompatActivity
         //completedTaskRv.setItemAnimator(new DefaultItemAnimator());
         completedTaskRv.setAdapter(completedTaskAdapter);
 
-        startService(new Intent(this, GPSTracker.class));
+//        startService(new Intent(this, GPSTracker.class));
 
         handler = new Handler();
         runnable = new Runnable() {
@@ -609,6 +628,17 @@ public class Home extends AppCompatActivity
         super.onPause();
         handler.removeCallbacks(runnable);
     }
+
+    private boolean isServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     @OnClick(R.id.internet_error_layout)
     public void onViewClicked() {

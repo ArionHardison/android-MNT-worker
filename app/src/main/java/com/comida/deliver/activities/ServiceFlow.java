@@ -1,7 +1,9 @@
 package com.comida.deliver.activities;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -63,6 +65,7 @@ import com.comida.deliver.model.Ordertiming;
 import com.comida.deliver.model.Shop;
 import com.comida.deliver.model.User;
 import com.comida.deliver.service.GPSTracker;
+import com.comida.deliver.service.GPSTrackerService;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -186,8 +189,6 @@ public class ServiceFlow extends AppCompatActivity {
 
         connectionHelper = new ConnectionHelper(this);
         customDialog = new CustomDialog(this);
-
-        startService(new Intent(this, GPSTracker.class));
 
         items = new ArrayList<>();
         productAdapter1 = new ProductAdapter1(items, this);
@@ -344,6 +345,16 @@ public class ServiceFlow extends AppCompatActivity {
         /*if (!((ServiceFlow) this).isFinishing()) {
             alert.show();
         }*/
+    }
+
+    private boolean isServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

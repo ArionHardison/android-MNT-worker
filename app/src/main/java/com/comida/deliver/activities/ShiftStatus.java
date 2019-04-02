@@ -2,6 +2,7 @@ package com.comida.deliver.activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -46,6 +47,7 @@ import com.comida.deliver.model.Vehicle;
 import com.comida.deliver.R;
 import com.comida.deliver.adapter.ShiftBreakAdapter;
 import com.comida.deliver.service.GPSTracker;
+import com.comida.deliver.service.GPSTrackerService;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -101,6 +103,7 @@ public class ShiftStatus extends AppCompatActivity {
     public static final int REQUEST_LOCATION = 1450;
     Button endShift;
     boolean isComesSplash = false;
+    Activity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,13 +126,11 @@ public class ShiftStatus extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.CALL_PHONE}, ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 buildGoogleApiClient();
-                startService(new Intent(this, GPSTracker.class));
             } else {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
             }
         } else {
             buildGoogleApiClient();
-            startService(new Intent(this, GPSTracker.class));
         }
 
     }
@@ -331,6 +332,16 @@ public class ShiftStatus extends AppCompatActivity {
         });
     }
 
+    private boolean isServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void endShift() {
 
         if (customDialog != null && GlobalData.shift != null)
@@ -343,6 +354,13 @@ public class ShiftStatus extends AppCompatActivity {
             public void onResponse(@NonNull Call<List<Shift>> call, @NonNull Response<List<Shift>> response) {
                 customDialog.cancel();
                 if (response.isSuccessful()) {
+                    boolean serviceRunningStatus = isServiceRunning(GPSTrackerService.class);
+
+                    if (serviceRunningStatus) {
+                        Intent serviceIntent = new Intent(activity, GPSTrackerService.class);
+                        stopService(serviceIntent);
+                    }
+
                     if (response.body().size() > 0) {
                         GlobalData.shift = response.body().get(0);
                         initView();
@@ -649,7 +667,20 @@ public class ShiftStatus extends AppCompatActivity {
                     boolean COARSE_LOCATIONPermission = grantResults[0] == PackageManager.PERMISSION_GRANTED;
 
                     if (FINE_LOCATIONPermission && COARSE_LOCATIONPermission) {
-                        startService(new Intent(this, GPSTracker.class));
+                        boolean serviceRunningStatus = isServiceRunning(GPSTrackerService.class);
+
+                        if (serviceRunningStatus) {
+                            Intent serviceIntent = new Intent(activity, GPSTrackerService.class);
+                            stopService(serviceIntent);
+                        }
+                        if (!serviceRunningStatus) {
+                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                                startService(new Intent(activity, GPSTrackerService.class));
+                            } else {
+                                Intent serviceIntent = new Intent(activity, GPSTrackerService.class);
+                                ContextCompat.startForegroundService(activity, serviceIntent);
+                            }
+                        }
                     } else {
                         Snackbar.make(this.findViewById(android.R.id.content),
                                 "Please Grant Permissions to start service",

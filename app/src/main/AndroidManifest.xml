@@ -11,9 +11,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <permission
         android:name="com.comida.deliver.permission.C2D_MESSAGE"
@@ -37,6 +37,13 @@
             android:name="com.comida.deliver.service.GPSTracker"
             android:enabled="true"
             android:exported="false"/>
+
+        <service
+            android:name="com.comida.deliver.service.GPSTrackerService"
+            android:enabled="true"
+            android:exported="false"
+            android:stopWithTask="false" />
+
         <receiver android:name="com.comida.deliver.helper.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
