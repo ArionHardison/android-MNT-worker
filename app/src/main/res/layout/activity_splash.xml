@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     android:background="#FEFEFE"
     android:gravity="center"
-    tools:context="com.comida.deliver.activities.Splash">
+    tools:context="com.snabbmaten.deliver.activities.Splash">
 
     <ImageView
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="@dimen/_350sdp"
+        android:layout_height="@dimen/_350sdp"
         android:contentDescription="@string/app_name"
         android:scaleType="centerInside"
         android:src="@drawable/logo_app" />

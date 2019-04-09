@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context="com.comida.deliver.activities.OTP">
+    tools:context="com.snabbmaten.deliver.activities.OTP">
 
 
         <LinearLayout
