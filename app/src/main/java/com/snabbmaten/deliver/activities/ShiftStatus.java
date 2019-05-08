@@ -35,18 +35,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.snabbmaten.deliver.Application;
-import com.snabbmaten.deliver.api.APIError;
-import com.snabbmaten.deliver.api.ErrorUtils;
-import com.snabbmaten.deliver.helper.CustomDialog;
-import com.snabbmaten.deliver.helper.GlobalData;
-import com.snabbmaten.deliver.helper.SharedHelper;
-import com.snabbmaten.deliver.model.Shift;
-import com.snabbmaten.deliver.model.Shiftbreaktime;
-import com.snabbmaten.deliver.model.Vehicle;
-import com.snabbmaten.deliver.R;
-import com.snabbmaten.deliver.adapter.ShiftBreakAdapter;
-import com.snabbmaten.deliver.service.GPSTrackerService;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -57,6 +45,17 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.snabbmaten.deliver.R;
+import com.snabbmaten.deliver.adapter.ShiftBreakAdapter;
+import com.snabbmaten.deliver.api.APIError;
+import com.snabbmaten.deliver.api.ErrorUtils;
+import com.snabbmaten.deliver.helper.CustomDialog;
+import com.snabbmaten.deliver.helper.GlobalData;
+import com.snabbmaten.deliver.helper.SharedHelper;
+import com.snabbmaten.deliver.model.Shift;
+import com.snabbmaten.deliver.model.Shiftbreaktime;
+import com.snabbmaten.deliver.model.Vehicle;
+import com.snabbmaten.deliver.service.GPSTrackerService;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -109,7 +108,7 @@ public class ShiftStatus extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shift_status);
         ButterKnife.bind(this);
-        numberFormat = Application.getNumberFormat();
+//        numberFormat = Application.getNumberFormat();
         customDialog = new CustomDialog(ShiftStatus.this);
         isComesSplash = getIntent().getBooleanExtra("is_splash", false);
 
@@ -150,7 +149,7 @@ public class ShiftStatus extends AppCompatActivity {
             owedAmount.setVisibility(View.VISIBLE);
             shiftBreakRv.setVisibility(View.VISIBLE);
             messageLayout.setVisibility(View.GONE);
-            CharSequence amount = color(Color.BLACK, getResources().getString(R.string.you_owed), color(Color.parseColor("#ef4756"), numberFormat.format(GlobalData.shift.getTotalAmountPay())));
+            CharSequence amount = color(Color.BLACK, getResources().getString(R.string.you_owed), color(Color.parseColor("#ef4756"), GlobalData.profile.getCurrency() + /*numberFormat.format(*/GlobalData.shift.getTotalAmountPay()))/*)*/;
             owedAmount.setText(amount);
             refreshBreaksRV();
             if (GlobalData.shift.getShiftbreaktimes() != null && GlobalData.shift.getShiftbreaktimes().size() > 0) {
@@ -178,10 +177,10 @@ public class ShiftStatus extends AppCompatActivity {
             LayoutInflater inflater = alertDialog.getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.shift_popup, frameView);
             alertDialog.show();
-            vehicleNumber = (EditText) dialogView.findViewById(R.id.vehicle_number);
-            vehicleNumberSpinner = (Spinner) dialogView.findViewById(R.id.vehicle_number_spinner);
+            vehicleNumber = dialogView.findViewById(R.id.vehicle_number);
+            vehicleNumberSpinner = dialogView.findViewById(R.id.vehicle_number_spinner);
             getVehicleList();
-            Button done = (Button) dialogView.findViewById(R.id.vehicle_done);
+            Button done = dialogView.findViewById(R.id.vehicle_done);
             done.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -524,9 +523,9 @@ public class ShiftStatus extends AppCompatActivity {
                 LayoutInflater inflater = alertDialog.getLayoutInflater();
                 View dialogView = inflater.inflate(R.layout.amount_paid_popup, frameView);
 
-                final TextView amountToBePaid = (TextView) dialogView.findViewById(R.id.amount_to_be_paid);
-                amountToBePaid.setText(numberFormat.format(GlobalData.shift.getTotalAmountPay()));
-                endShift = (Button) dialogView.findViewById(R.id.end_shift);
+                final TextView amountToBePaid = dialogView.findViewById(R.id.amount_to_be_paid);
+                amountToBePaid.setText(GlobalData.profile.getCurrency() +/*numberFormat.format(*/GlobalData.shift.getTotalAmountPay()/*)*/);
+                endShift = dialogView.findViewById(R.id.end_shift);
                 endShift.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         endShift();
@@ -658,7 +657,7 @@ public class ShiftStatus extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case ASK_MULTIPLE_PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0) {

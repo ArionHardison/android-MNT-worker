@@ -10,20 +10,17 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.crashlytics.android.Crashlytics;
+import com.snabbmaten.deliver.helper.GlobalData;
 import com.snabbmaten.deliver.helper.LocaleUtils;
 import com.snabbmaten.deliver.helper.SharedHelper;
-
-import io.fabric.sdk.android.Fabric;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.NumberFormat;
-import java.util.Currency;
 import java.util.Iterator;
-import java.util.Locale;
 
+import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 //import com.facebook.stetho.Stetho;
@@ -128,12 +125,13 @@ public class Application extends android.app.Application {
         return trimmedString;
     }
 
-    public static NumberFormat getNumberFormat() {
-        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
-        String currencyCode = SharedHelper.getKey(mInstance, "currency_code", "INR");
-        numberFormat.setCurrency(Currency.getInstance(currencyCode));
-        numberFormat.setMinimumFractionDigits(0);
-        return numberFormat;
+    public static String getNumberFormat() {
+//        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
+//        String currencyCode = SharedHelper.getKey(mInstance, "currency_code", "INR");
+        String currencyCode = SharedHelper.getKey(mInstance, "currency_code", GlobalData.profile.getCurrency());
+        /*numberFormat.setCurrency(Currency.getInstance("INR"));
+        numberFormat.setMinimumFractionDigits(0);*/
+        return currencyCode;
     }
 
 }

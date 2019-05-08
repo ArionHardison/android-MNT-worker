@@ -6,6 +6,6 @@ package com.snabbmaten.deliver;
 
 public class BuildConfigure {
 
-    public static String BASE_URL="http://snabbmaten.com/";
+    public static String BASE_URL = "https://snabbmaten.com/";
 
 }

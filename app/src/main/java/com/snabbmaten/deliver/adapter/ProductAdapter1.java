@@ -9,12 +9,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.snabbmaten.deliver.Application;
+import com.snabbmaten.deliver.R;
 import com.snabbmaten.deliver.model.CartAddon;
 import com.snabbmaten.deliver.model.Item;
 import com.snabbmaten.deliver.model.Product;
-import com.snabbmaten.deliver.R;
 
-import java.text.NumberFormat;
 import java.util.List;
 
 /**
@@ -24,7 +23,7 @@ import java.util.List;
 public class ProductAdapter1 extends RecyclerView.Adapter<ProductAdapter1.MyViewHolder> {
 
     private List<Item> list;
-    NumberFormat numberFormat;
+    String numberFormat;
     public ProductAdapter1(List<Item> list, Context con) {
         numberFormat = Application.getNumberFormat();
         this.list = list;
@@ -51,7 +50,7 @@ public class ProductAdapter1 extends RecyclerView.Adapter<ProductAdapter1.MyView
                         list.get(position).getCartAddons().get(j).getAddonProduct().getPrice()));
             }
         }
-        holder.productPrice.setText(numberFormat.format( priceAmount));
+        holder.productPrice.setText(numberFormat + priceAmount);
 
         if (item.getCartAddons() != null && !item.getCartAddons().isEmpty()) {
             List<CartAddon> cartAddonList = item.getCartAddons();
@@ -78,9 +77,9 @@ public class ProductAdapter1 extends RecyclerView.Adapter<ProductAdapter1.MyView
 
         private MyViewHolder(View view) {
             super(view);
-            productName = (TextView) view.findViewById(R.id.product_name);
-            productPrice = (TextView) view.findViewById(R.id.product_price);
-            addons = (TextView) view.findViewById(R.id.addons);
+            productName = view.findViewById(R.id.product_name);
+            productPrice = view.findViewById(R.id.product_price);
+            addons = view.findViewById(R.id.addons);
             //productName.setOnClickListener(this);
 
         }

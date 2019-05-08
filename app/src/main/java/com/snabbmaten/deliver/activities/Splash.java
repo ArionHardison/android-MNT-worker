@@ -3,14 +3,16 @@ package com.snabbmaten.deliver.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.snabbmaten.deliver.R;
 import com.snabbmaten.deliver.api.APIError;
 import com.snabbmaten.deliver.api.ApiClient;
 import com.snabbmaten.deliver.api.ApiInterface;
@@ -18,9 +20,7 @@ import com.snabbmaten.deliver.api.ErrorUtils;
 import com.snabbmaten.deliver.helper.ConnectionHelper;
 import com.snabbmaten.deliver.helper.GlobalData;
 import com.snabbmaten.deliver.helper.SharedHelper;
-import com.snabbmaten.deliver.R;
 import com.snabbmaten.deliver.model.Profile;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.HashMap;
 
@@ -88,7 +88,7 @@ public class Splash extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     GlobalData.profile = response.body();
                     SharedHelper.putKey(Splash.this, "logged_in", "1");
-                    SharedHelper.putKey(Splash.this, "currency_code", GlobalData.profile.getCurrencyCode());
+                    SharedHelper.putKey(Splash.this, "currency_code", GlobalData.profile.getCurrency());
                     if (isNotification)
                         startActivity(new Intent(Splash.this, Home.class).putExtra("is_splash", true));
                     else

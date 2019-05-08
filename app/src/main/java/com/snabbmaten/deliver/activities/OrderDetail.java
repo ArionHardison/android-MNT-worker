@@ -20,7 +20,6 @@ import com.snabbmaten.deliver.model.Item;
 import com.snabbmaten.deliver.model.Shop;
 import com.snabbmaten.deliver.model.User;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,7 +80,7 @@ public class OrderDetail extends AppCompatActivity {
     @BindView(R.id.status_message)
     TextView statusMessage;
 
-    NumberFormat numberFormat;
+    String numberFormat;
     @BindView(R.id.wallet_detection)
     TextView walletDetection;
 
@@ -106,12 +105,12 @@ public class OrderDetail extends AppCompatActivity {
             orderId.setText(getResources().getString(R.string.order_message, invoice.getOrderId()));
             orderCreatedAt.setText(GlobalData.getTimeFromString2(invoice.getCreatedAt()));
 
-            itemTotal.setText(numberFormat.format(invoice.getGross()));
-            serviceTax.setText(numberFormat.format(invoice.getTax()));
-            deliveryCharges.setText(numberFormat.format(invoice.getDeliveryCharge()));
-            discount.setText(numberFormat.format(invoice.getDiscount() + invoice.getPromocode_amount()));
-            walletDetection.setText(numberFormat.format(invoice.getWalletAmount()));
-            total.setText(numberFormat.format(invoice.getPayable()));
+            itemTotal.setText(numberFormat + invoice.getGross());
+            serviceTax.setText(numberFormat + invoice.getTax());
+            deliveryCharges.setText(numberFormat + invoice.getDeliveryCharge());
+            discount.setText(numberFormat + invoice.getDiscount() + invoice.getPromocode_amount());
+            walletDetection.setText(numberFormat + invoice.getWalletAmount());
+            total.setText(numberFormat + invoice.getPayable());
 
             if (invoice.getPaymentMode().equalsIgnoreCase("stripe")) {
                 paymentMode.setText(getString(R.string.card));
@@ -120,14 +119,14 @@ public class OrderDetail extends AppCompatActivity {
             }
 
             if (invoice.getTotalPay() != 0)
-                billPaid.setText(numberFormat.format(invoice.getTotalPay()));
+                billPaid.setText(numberFormat + invoice.getTotalPay());
             if (invoice.getTenderPay() != 0)
-                returned.setText(numberFormat.format(invoice.getTenderPay()));
+                returned.setText(numberFormat + invoice.getTenderPay());
 
-            billAmount.setText(numberFormat.format(invoice.getNet()));
+            billAmount.setText(numberFormat + invoice.getNet());
             title.setText(getResources().getString(R.string.order_message, invoice.getOrderId()));
             noOfItems.setText(String.valueOf(GlobalData.order.getItems().size()));
-            statusMessage.setText(this.getResources().getString(R.string.delivered) + " | " + GlobalData.order.getItems().size() + " items" + ", " + numberFormat.format(invoice.getPayable()));
+            statusMessage.setText(this.getResources().getString(R.string.delivered) + " | " + GlobalData.order.getItems().size() + " items" + ", " + numberFormat + invoice.getPayable());
             setOrderStatus(orderStatus, orderStatusIcon, GlobalData.order.getStatus());
 
             Shop shop = GlobalData.order.getShop();

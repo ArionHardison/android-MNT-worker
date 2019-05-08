@@ -64,7 +64,6 @@ import com.snabbmaten.deliver.model.Ordertiming;
 import com.snabbmaten.deliver.model.Shop;
 import com.snabbmaten.deliver.model.User;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -150,7 +149,7 @@ public class ServiceFlow extends AppCompatActivity {
     TextView promocodeAmount;
     @BindView(R.id.payment_mode)
     TextView paymentMode;
-    NumberFormat numberFormat;
+    String numberFormat;
     @BindView(R.id.shop_name_ll)
     LinearLayout shopNameLl;
     @BindView(R.id.shift_status)
@@ -177,7 +176,7 @@ public class ServiceFlow extends AppCompatActivity {
         setContentView(R.layout.activity_service_flow);
         ButterKnife.bind(this);
         numberFormat = Application.getNumberFormat();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         assert toolbar != null;
         toolbar.setTitle("LIVE TASK");
 
@@ -246,18 +245,18 @@ public class ServiceFlow extends AppCompatActivity {
             Invoice invoice = GlobalData.order.getInvoice();
             orderId.setText(getResources().getString(R.string.order_message, invoice.getOrderId()));
             orderCreatedAt.setText(GlobalData.getTimeFromString(invoice.getCreatedAt()));
-            itemTotal.setText(numberFormat.format(invoice.getGross()));
-            serviceTax.setText(numberFormat.format(invoice.getTax()));
-            deliveryCharges.setText(numberFormat.format(invoice.getDeliveryCharge()));
-            discount.setText(numberFormat.format(invoice.getDiscount()));
+            itemTotal.setText(numberFormat + invoice.getGross());
+            serviceTax.setText(numberFormat + invoice.getTax());
+            deliveryCharges.setText(numberFormat + invoice.getDeliveryCharge());
+            discount.setText(numberFormat + invoice.getDiscount());
             if (invoice.getPromocode_amount() > 0){
                 promocodeLayout.setVisibility(View.VISIBLE);
-                promocodeAmount.setText(numberFormat.format(invoice.getPromocode_amount()));
+                promocodeAmount.setText(numberFormat + invoice.getPromocode_amount());
             }else{
                 promocodeLayout.setVisibility(View.GONE);
             }
-            walletDetection.setText(numberFormat.format(invoice.getWalletAmount()));
-            total.setText(numberFormat.format(invoice.getPayable()));
+            walletDetection.setText(numberFormat + invoice.getWalletAmount());
+            total.setText(numberFormat + invoice.getPayable());
             if (invoice.getPaymentMode().equalsIgnoreCase("stripe")) {
                 paymentMode.setText(getResources().getString(R.string.payment_mode) + "Card");
             } else {
@@ -465,17 +464,17 @@ public class ServiceFlow extends AppCompatActivity {
                 alertDialog.setCancelable(false);
                 if (paymentOnce) {
                     paymentOnce = false;
-                    final Button paid = (Button) dialogView.findViewById(R.id.paid);
+                    final Button paid = dialogView.findViewById(R.id.paid);
                     final PinView pinView = dialogView.findViewById(R.id.pinView);
-                    TextView amount_paid_currency_symbol = (TextView) dialogView.findViewById(R.id.amount_paid_currency_symbol);
-                    amount_paid_currency_symbol.setText(numberFormat.getCurrency().getSymbol());
-                    TextView balance_currency_symbol = (TextView) dialogView.findViewById(R.id.balance_currency_symbol);
-                    balance_currency_symbol.setText(numberFormat.getCurrency().getSymbol());
-                    final TextView amount_to_pay = (TextView) dialogView.findViewById(R.id.amount_to_pay);
-                    final EditText amount_paid = (EditText) dialogView.findViewById(R.id.amount_paid);
-                    final TextView balance = (TextView) dialogView.findViewById(R.id.balance);
+                    TextView amount_paid_currency_symbol = dialogView.findViewById(R.id.amount_paid_currency_symbol);
+                    amount_paid_currency_symbol.setText(numberFormat/*.getCurrency().getSymbol()*/);
+                    TextView balance_currency_symbol = dialogView.findViewById(R.id.balance_currency_symbol);
+                    balance_currency_symbol.setText(numberFormat/*.getCurrency().getSymbol()*/);
+                    final TextView amount_to_pay = dialogView.findViewById(R.id.amount_to_pay);
+                    final EditText amount_paid = dialogView.findViewById(R.id.amount_paid);
+                    final TextView balance = dialogView.findViewById(R.id.balance);
 
-                    amount_to_pay.setText(numberFormat.format(invoice.getPayable()));
+                    amount_to_pay.setText(numberFormat + invoice.getPayable());
                     amount_paid.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -574,7 +573,7 @@ public class ServiceFlow extends AppCompatActivity {
             View dialogView = inflater.inflate(R.layout.feedback_popup, frameView);
 
             rating = 5;
-            rateRadioGroup = (RadioGroup) dialogView.findViewById(R.id.rate_radiogroup);
+        rateRadioGroup = dialogView.findViewById(R.id.rate_radiogroup);
             rateRadioGroup.clearCheck();
             ((RadioButton) rateRadioGroup.getChildAt(4)).setChecked(true);
             rateRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -604,8 +603,8 @@ public class ServiceFlow extends AppCompatActivity {
                 }
             });
 
-            final EditText comment = (EditText) dialogView.findViewById(R.id.comment);
-            Button feedbackSubmit = (Button) dialogView.findViewById(R.id.feedback_submit);
+        final EditText comment = dialogView.findViewById(R.id.comment);
+        Button feedbackSubmit = dialogView.findViewById(R.id.feedback_submit);
             feedbackSubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -736,6 +735,7 @@ public class ServiceFlow extends AppCompatActivity {
 
     private void navigation(String s_address, String d_address) {
         Uri naviUri2 = Uri.parse("http://maps.google.com/maps?f=d&hl=en&saddr=" + s_address + "&daddr=" + d_address);
+//      Uri naviUri2 = Uri.parse("https://www.google.com/maps/search/?api=1&query="+s_address+","+d_address);
 
         Intent intent = new Intent(Intent.ACTION_VIEW, naviUri2);
         intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
@@ -803,7 +803,7 @@ public class ServiceFlow extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_CALL_PHONE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

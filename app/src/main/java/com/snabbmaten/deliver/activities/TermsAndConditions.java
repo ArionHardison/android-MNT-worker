@@ -8,13 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.snabbmaten.deliver.R;
+import com.snabbmaten.deliver.helper.GlobalData;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
-import static com.snabbmaten.deliver.BuildConfigure.BASE_URL;
 
 public class TermsAndConditions extends AppCompatActivity {
 
@@ -22,6 +21,8 @@ public class TermsAndConditions extends AppCompatActivity {
     ImageView back;
     @BindView(R.id.title)
     TextView title;
+    @BindView(R.id.terms_condtion)
+    TextView terms_condtion;
     @BindView(R.id.webView)
     WebView webView;
 
@@ -31,9 +32,11 @@ public class TermsAndConditions extends AppCompatActivity {
         setContentView(R.layout.activity_terms_and_conditions);
         ButterKnife.bind(this);
         title.setText(getString(R.string.terms_and_conditions));
+        terms_condtion.setText(GlobalData.profile.getTerms());
+        webView.loadData(GlobalData.profile.getTerms(), "text/html", "UTF-8");
         webView.getSettings().setAppCacheEnabled(false);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl(BASE_URL+"terms");
+//        webView.loadUrl(BASE_URL+"terms");
 
     }
 

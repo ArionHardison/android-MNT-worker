@@ -14,14 +14,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.snabbmaten.deliver.Application;
+import com.snabbmaten.deliver.R;
 import com.snabbmaten.deliver.activities.OrderDetail;
 import com.snabbmaten.deliver.helper.GlobalData;
 import com.snabbmaten.deliver.model.Invoice;
 import com.snabbmaten.deliver.model.Order;
 import com.snabbmaten.deliver.model.Shop;
-import com.snabbmaten.deliver.R;
 
-import java.text.NumberFormat;
 import java.util.List;
 
 /**
@@ -32,7 +31,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
     private List<Order> list;
     private Context context;
-    NumberFormat numberFormat;
+    String numberFormat;
     public OrderHistoryAdapter(List<Order> list, Context con) {
         this.list = list;
         this.context = con;
@@ -50,6 +49,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Order obj = list.get(position);
+
         holder.orderId.setText("#"+obj.getId());
         holder.orderStatus.setText(obj.getStatus());
         Shop shop = obj.getShop();
@@ -63,8 +63,9 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
                 .into(holder.shopAvatar);
         Invoice invoice = obj.getInvoice();
         holder.orderDeliveryTime.setText(GlobalData.getTimeFromString(invoice.getCreatedAt()));
-        holder.quantity.setText(String.valueOf(invoice.getQuantity())+ " items");
-        holder.amount.setText(numberFormat.format(invoice.getNet()));
+        holder.quantity.setText(obj.getItems().size() + " items");
+//        holder.quantity.setText(String.valueOf(invoice.getQuantity())+ " items");
+        holder.amount.setText(numberFormat + invoice.getNet());
 
     }
 
@@ -80,14 +81,14 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
         private MyViewHolder(View view) {
             super(view);
-            historyCard = (CardView) view.findViewById(R.id.history_card);
-            orderStatus = (TextView) view.findViewById(R.id.order_status);
-            shopName = (TextView) view.findViewById(R.id.shop_name);
-            orderId = (TextView) view.findViewById(R.id.order_id);
-            orderDeliveryTime = (TextView) view.findViewById(R.id.order_delivery_time);
-            quantity = (TextView) view.findViewById(R.id.quantity);
-            amount = (TextView) view.findViewById(R.id.amount);
-            shopAvatar = (ImageView) view.findViewById(R.id.shop_avatar);
+            historyCard = view.findViewById(R.id.history_card);
+            orderStatus = view.findViewById(R.id.order_status);
+            shopName = view.findViewById(R.id.shop_name);
+            orderId = view.findViewById(R.id.order_id);
+            orderDeliveryTime = view.findViewById(R.id.order_delivery_time);
+            quantity = view.findViewById(R.id.quantity);
+            amount = view.findViewById(R.id.amount);
+            shopAvatar = view.findViewById(R.id.shop_avatar);
             historyCard.setOnClickListener(this);
 
         }

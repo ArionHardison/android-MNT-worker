@@ -11,6 +11,12 @@ public class Profile {
     @SerializedName("id")
     @Expose
     private Integer id;
+    @SerializedName("terms")
+    @Expose
+    private String terms;
+    @SerializedName("privacy")
+    @Expose
+    private String privacy;
     @SerializedName("name")
     @Expose
     private String name;
@@ -53,6 +59,22 @@ public class Profile {
     @SerializedName("payment_mode")
     @Expose
     private String paymentMode;
+
+    public String getTerms() {
+        return terms;
+    }
+
+    public void setTerms(String terms) {
+        this.terms = terms;
+    }
+
+    public String getPrivacy() {
+        return privacy;
+    }
+
+    public void setPrivacy(String privacy) {
+        this.privacy = privacy;
+    }
 
     public Integer getId() {
         return id;

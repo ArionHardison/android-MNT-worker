@@ -8,9 +8,17 @@
 
     <include layout="@layout/toolbar" />
 
+    <TextView
+        android:id="@+id/terms_condtion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_10sdp"
+        android:visibility="gone" />
+
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
+        android:visibility="visible"
         android:layout_height="match_parent">
 
     </WebView>
