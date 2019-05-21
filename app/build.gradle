@@ -18,7 +18,7 @@ android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
     defaultConfig {
-        applicationId "com.snabbmaten.deliver"
+        applicationId "com.pakupaku.deliver"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 2

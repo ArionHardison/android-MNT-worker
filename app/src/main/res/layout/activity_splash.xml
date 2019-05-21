@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FEFEFE"
     android:gravity="center"
-    tools:context="com.snabbmaten.deliver.activities.Splash">
+    tools:context="com.pakupaku.deliver.activities.Splash">
 
     <ImageView
         android:layout_width="@dimen/_350sdp"

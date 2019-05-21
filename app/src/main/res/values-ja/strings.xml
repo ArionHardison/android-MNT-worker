@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE resources [
+    <!ENTITY appname "Paku Paku Delivery">
+    <!ENTITY order "Order">
+    <!ENTITY shift "Shift">
+    ]>
+<resources>
+    <string name="app_name">Paku Paku for 受渡し員</string>
+    <string name="mobile_number">携帯電話番号</string>
+    <string name="break_">休憩</string>
+    <string name="select_vehicle">乗物を選んでください。</string>
+    <string name="turn_on_start_shift">受渡しを開始するには、シフトをオンにしてください。</string>
+    <string name="no_results">まだ該当がないようです</string>
+    <string name="notice_board">お知らせ</string>
+    <string name="check_your_internet_connection">インターネットの接続を確認してください。</string>
+    <string name="waiting_for_new_task">新しいタスクを待っています。</string>
+    <string name="terms_and_conditions">利用規約</string>
+
+    <string name="connect_to_network">ネットワークに接続しました。</string>
+    <string name="connect_to_wifi">WiFiに接続されました。</string>
+    <string name="quit">止める</string>
+
+    <string name="navigation_drawer_open">ナビゲーションシステムを開始します</string>
+    <string name="navigation_drawer_close">ナビゲーションシステムを終了します</string>
+
+    <string name="new_order_request">新規ご注文が入りました</string>
+    <string name="deliver">受渡し</string>
+    <string name="delivered">受渡し完了</string>
+    <string name="order_delivered_successfully">ご注文の受渡しが完了しました</string>
+    <string name="order">ご注文</string>
+    <string name="orders">ご注文</string>
+    <string name="new_task">新規タスク</string>
+    <string name="completed_tasks">完了したタスク</string>
+    <string name="new_order_txt">新規ご注文リクエスト数</string>
+    <string name="time_left">残り時間</string>
+    <string name="time_left_txt">残り 120秒</string>
+    <string name="started_restaurant">店舗へ向かっています</string>
+    <string name="verification_code_txt">ご利用できないコードです。</string>
+    <string name="continu">続ける</string>
+    <string name="start_shift">シフトを開始</string>
+    <string name="shift_status">シフト履歴</string>
+    <string name="end_shift">シフトを止める</string>
+    <string name="vehicle_number">車両番号を入力してください。</string>
+    <string name="name">名前</string>
+    <string name="user_id">ユーザーID</string>
+    <string name="email">Eメールアドレス</string>
+    <string name="update">アップデート</string>
+    <string name="enter_mobile_number">携帯電話番号を入力してください。</string>
+
+    <string name="reached_restaurant">店舗に到着しました</string>
+    <string name="order_picked_up">ご注文を受け取りました。</string>
+    <string name="order_delivered">ご注文のお渡し完了。</string>
+    <string name="payment_received">お支払いを受け取りました。</string>
+    <string name="back">戻る</string>
+    <string name="profile">プロフィール</string>
+    <string name="order_history">注文履歴</string>
+    <string name="order_message">ご注文メッセージ</string>
+    <string name="you_owed">あなたの稼ぎ</string>
+    <string name="item_total">商品の合計</string>
+    <string name="service_tax">"Service Tax"</string>
+    <string name="delivery_charges">受渡し料金</string>
+    <string name="discount">ディスカウント</string>
+    <string name="promocode_amount">プロモディスカウン料金</string>
+    <string name="total">合計</string>
+    <string name="payment_mode">お支払い</string>
+    <string name="no_of_items">商品がありません</string>
+    <string name="bill_amount">お支払い料金</string>
+    <string name="bill_paid">お支払い済み</string>
+    <string name="returned">返却</string>
+    <string name="other">その他</string>
+    <string name="reason">理由</string>
+    <string name="chat_us">チャットする</string>
+    <string name="call_us">電話する</string>
+    <string name="please_type_the_verification_code">送信されたコードを入力してください</string>
+    <string name="amount_to_be_paid">お支払される金額</string>
+    <string name="please_handover_the_amount_earned">受け取った決済を渡してください。</string>
+    <string name="please_settle_the_amount_to_the_respective_restaurant">それぞれの店舗に金額の決済を開いてください。</string>
+    <string name="type_a_message">メッセージを書いてください。</string>
+    <string name="country_name">国</string>
+    <string name="feedback">ご意見</string>
+    <string name="how_was_the_delivery">受渡しはいかがでしたか？</string>
+    <string name="terrible">悪い</string>
+    <string name="bad">良くない</string>
+    <string name="okay">問題無し</string>
+    <string name="good">良い</string>
+    <string name="superb">とても良い</string>
+    <string name="give_some_feedback_in_words">ご意見を聞かせてください。</string>
+    <string name="submit">送信</string>
+    <string name="report">リポート</string>
+    <string name="dispute">処分する</string>
+    <string name="help">ヘルプ</string>
+    <string name="amount_to_pay">お支払額</string>
+    <string name="otp">Otp</string>
+    <string name="enter_otp">Please enter otp</string>
+    <string name="invalid_otp">Invalid Otp</string>
+    <string name="full_amount">お支払い総額を入力してください</string>
+    <string name="enter_the_amount_paid">お支払い済みの金額を入力してください</string>
+    <string name="balance">残高</string>
+    <string name="paid">お支払済み</string>
+    <string name="user">ユーザー</string>
+    <string name="shift">シフト</string>
+    <string name="source">Source</string>
+    <string name="destination">行き先</string>
+    <string name="order_status">ご注文履歴</string>
+    <string name="upload_photo">イメージ画像</string>
+    <string name="call">電話する</string>
+    <string name="navigation">ナビゲーション</string>
+    <string name="network_error">ネットワークにつながっていません</string>
+    <string name="shop">お店</string>
+    <string name="change_language">言語を変える</string>
+    <string name="please_start_shift">シフトを開始してください</string>
+    <string name="cash">現金</string>
+    <string name="card">カード</string>
+    <string name="order_cancelled">ご注文がキャンセルされました。</string>
+    <string name="the_order_has_been_cancelled_by_user">お客様によって注文がキャンセルされました。</string>
+    <string name="cancelled">キャンセル</string>
+    <string name="logout">ログアウト</string>
+    <string name="something_went_wrong">何か問題が起きました</string>
+    <string name="reject">拒否する</string>
+    <string name="accept">同意する</string>
+    <string name="password">パスワード</string>
+</resources>

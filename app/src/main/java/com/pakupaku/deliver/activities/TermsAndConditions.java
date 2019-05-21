@@ -1,0 +1,52 @@
+package com.pakupaku.deliver.activities;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.webkit.WebView;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.pakupaku.deliver.R;
+import com.pakupaku.deliver.helper.GlobalData;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+public class TermsAndConditions extends AppCompatActivity {
+
+    @BindView(R.id.back)
+    ImageView back;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.terms_condtion)
+    TextView terms_condtion;
+    @BindView(R.id.webView)
+    WebView webView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_terms_and_conditions);
+        ButterKnife.bind(this);
+        title.setText(getString(R.string.terms_and_conditions));
+        terms_condtion.setText(GlobalData.profile.getTerms());
+        webView.loadData(GlobalData.profile.getTerms(), "text/html", "UTF-8");
+        webView.getSettings().setAppCacheEnabled(false);
+        webView.getSettings().setJavaScriptEnabled(true);
+//        webView.loadUrl(BASE_URL+"terms");
+
+    }
+
+    @OnClick(R.id.back)
+    public void onViewClicked() {
+        onBackPressed();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+}
