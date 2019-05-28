@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FEFEFE"
+    android:background="#000"
     android:gravity="center"
     tools:context="com.pakupaku.deliver.activities.Splash">
 
@@ -13,5 +13,5 @@
         android:layout_height="@dimen/_350sdp"
         android:contentDescription="@string/app_name"
         android:scaleType="centerInside"
-        android:src="@drawable/logo_app" />
+        android:src="@drawable/logo" />
 </RelativeLayout>
