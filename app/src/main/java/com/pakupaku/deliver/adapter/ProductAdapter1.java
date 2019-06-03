@@ -43,7 +43,7 @@ public class ProductAdapter1 extends RecyclerView.Adapter<ProductAdapter1.MyView
 
         Product product = item.getProduct();
         holder.productName.setText(product.getName() + " x " + item.getQuantity());
-        double priceAmount = item.getProduct().getPrices().getPrice()*item.getQuantity();
+        int priceAmount = item.getProduct().getPrices().getPrice() * item.getQuantity();
         if (list.get(position).getCartAddons() != null && !list.get(position).getCartAddons().isEmpty()) {
             for (int j = 0; j < list.get(position).getCartAddons().size(); j++) {
                 priceAmount = priceAmount + (list.get(position).getQuantity() * (list.get(position).getCartAddons().get(j).getQuantity() *

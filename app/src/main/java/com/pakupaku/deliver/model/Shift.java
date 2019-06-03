@@ -4,10 +4,10 @@ package com.pakupaku.deliver.model;
  * Created by santhosh@appoets.com on 28-09-2017.
  */
 
-import java.util.List;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class Shift {
     @SerializedName("id")
@@ -33,10 +33,10 @@ public class Shift {
     private String deletedAt;
     @SerializedName("total_amount")
     @Expose
-    private Double totalAmount;
+    private int totalAmount;
     @SerializedName("total_amount_pay")
     @Expose
-    private Double totalAmountPay;
+    private int totalAmountPay;
     @SerializedName("vehicle")
     @Expose
     private Vehicle vehicle;
@@ -135,28 +135,28 @@ public class Shift {
         return this;
     }
 
-    public Double getTotalAmount() {
+    public int getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Double totalAmount) {
+    public void setTotalAmount(int totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public Shift withTotalAmount(Double totalAmount) {
+    public Shift withTotalAmount(int totalAmount) {
         this.totalAmount = totalAmount;
         return this;
     }
 
-    public Double getTotalAmountPay() {
+    public int getTotalAmountPay() {
         return totalAmountPay;
     }
 
-    public void setTotalAmountPay(Double totalAmountPay) {
+    public void setTotalAmountPay(int totalAmountPay) {
         this.totalAmountPay = totalAmountPay;
     }
 
-    public Shift withTotalAmountPay(Double totalAmountPay) {
+    public Shift withTotalAmountPay(int totalAmountPay) {
         this.totalAmountPay = totalAmountPay;
         return this;
     }

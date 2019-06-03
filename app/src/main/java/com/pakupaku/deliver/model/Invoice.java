@@ -22,34 +22,34 @@ public class Invoice {
     private Integer paid;
     @SerializedName("gross")
     @Expose
-    private Double gross;
+    private int gross;
     @SerializedName("discount")
     @Expose
-    private Double discount;
+    private int discount;
     @SerializedName("promocode_amount")
     @Expose
-    private Double promocode_amount;
+    private int promocode_amount;
     @SerializedName("delivery_charge")
     @Expose
-    private Double deliveryCharge;
+    private int deliveryCharge;
     @SerializedName("wallet_amount")
     @Expose
-    private Double walletAmount;
+    private int walletAmount;
     @SerializedName("payable")
     @Expose
-    private Double payable;
+    private int payable;
     @SerializedName("tax")
     @Expose
-    private Double tax;
+    private int tax;
     @SerializedName("net")
     @Expose
-    private Double net;
+    private int net;
     @SerializedName("total_pay")
     @Expose
-    private Double totalPay;
+    private int totalPay;
     @SerializedName("tender_pay")
     @Expose
-    private Double tenderPay;
+    private int tenderPay;
     @SerializedName("payment_mode")
     @Expose
     private String paymentMode;
@@ -112,127 +112,127 @@ public class Invoice {
         return this;
     }
 
-    public Double getGross() {
+    public int getGross() {
         return gross;
     }
 
-    public void setGross(Double gross) {
+    public void setGross(int gross) {
         this.gross = gross;
     }
 
-    public Invoice withGross(Double gross) {
+    public Invoice withGross(int gross) {
         this.gross = gross;
         return this;
     }
 
-    public Double getDiscount() {
+    public int getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Double discount) {
+    public void setDiscount(int discount) {
         this.discount = discount;
     }
 
-    public Double getPromocode_amount() {
+    public int getPromocode_amount() {
         return promocode_amount;
     }
 
-    public void setPromocode_amount(Double promocode_amount) {
+    public void setPromocode_amount(int promocode_amount) {
         this.promocode_amount = promocode_amount;
     }
 
-    public Invoice withDiscount(Double discount) {
+    public Invoice withDiscount(int discount) {
         this.discount = discount;
         return this;
     }
 
-    public Double getDeliveryCharge() {
+    public int getDeliveryCharge() {
         return deliveryCharge;
     }
 
-    public void setDeliveryCharge(Double deliveryCharge) {
+    public void setDeliveryCharge(int deliveryCharge) {
         this.deliveryCharge = deliveryCharge;
     }
 
-    public Invoice withDeliveryCharge(Double deliveryCharge) {
+    public Invoice withDeliveryCharge(int deliveryCharge) {
         this.deliveryCharge = deliveryCharge;
         return this;
     }
 
-    public Double getWalletAmount() {
+    public int getWalletAmount() {
         return walletAmount;
     }
 
-    public void setWalletAmount(Double walletAmount) {
+    public void setWalletAmount(int walletAmount) {
         this.walletAmount = walletAmount;
     }
 
-    public Invoice withWalletAmount(Double walletAmount) {
+    public Invoice withWalletAmount(int walletAmount) {
         this.walletAmount = walletAmount;
         return this;
     }
 
-    public Double getPayable() {
+    public int getPayable() {
         return payable;
     }
 
-    public void setPayable(Double payable) {
+    public void setPayable(int payable) {
         this.payable = payable;
     }
 
-    public Invoice withPayable(Double payable) {
+    public Invoice withPayable(int payable) {
         this.payable = payable;
         return this;
     }
 
-    public Double getTax() {
+    public int getTax() {
         return tax;
     }
 
-    public void setTax(Double tax) {
+    public void setTax(int tax) {
         this.tax = tax;
     }
 
-    public Invoice withTax(Double tax) {
+    public Invoice withTax(int tax) {
         this.tax = tax;
         return this;
     }
 
-    public Double getNet() {
+    public int getNet() {
         return net;
     }
 
-    public void setNet(Double net) {
+    public void setNet(int net) {
         this.net = net;
     }
 
-    public Invoice withNet(Double net) {
+    public Invoice withNet(int net) {
         this.net = net;
         return this;
     }
 
-    public Double getTotalPay() {
+    public int getTotalPay() {
         return totalPay;
     }
 
-    public void setTotalPay(Double totalPay) {
+    public void setTotalPay(int totalPay) {
         this.totalPay = totalPay;
     }
 
-    public Invoice withTotalPay(Double totalPay) {
+    public Invoice withTotalPay(int totalPay) {
         this.totalPay = totalPay;
         return this;
     }
 
-    public Double getTenderPay() {
+    public int getTenderPay() {
         return tenderPay;
     }
 
-    public void setTenderPay(Double tenderPay) {
+    public void setTenderPay(int tenderPay) {
         this.tenderPay = tenderPay;
     }
 
-    public Invoice withTenderPay(Double tenderPay) {
+    public Invoice withTenderPay(int tenderPay) {
         this.tenderPay = tenderPay;
         return this;
     }

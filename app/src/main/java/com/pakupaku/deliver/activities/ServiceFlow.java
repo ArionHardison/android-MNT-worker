@@ -167,7 +167,7 @@ public class ServiceFlow extends AppCompatActivity {
     @BindView(R.id.wallet_detection)
     TextView walletDetection;
     private String isPinView;
-    private double bal = 0;
+    private int bal = 0;
     public static int rating = 5;
 
     @Override
@@ -487,9 +487,9 @@ public class ServiceFlow extends AppCompatActivity {
                         @Override
                         public void afterTextChanged(Editable s) {
                             if (!s.toString().equals("")) {
-                                Double amountPaid = Double.parseDouble(s.toString());
+                                int amountPaid = Integer.parseInt(s.toString());
                                 bal = amountPaid - invoice.getPayable();
-                                balance.setText(String.format("%.2f", bal));
+                                balance.setText(/*String.format("%.2f", */bal + "");
 
                                 if (bal >= 0) {
                                     paid.setEnabled(true);
@@ -520,7 +520,7 @@ public class ServiceFlow extends AppCompatActivity {
 
                             if (!amount_paid.getText().toString().equalsIgnoreCase("")) {
 
-                                double amount = Double.parseDouble(amount_paid.getText().toString());
+                                int amount = Integer.parseInt(amount_paid.getText().toString());
 
                                 if (amount>=invoice.getPayable()) {
                                     map = new HashMap<>();
