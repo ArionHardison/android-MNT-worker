@@ -39,9 +39,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.pakupaku.deliver.service.GPSTrackerService;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.pakupaku.deliver.R;
 import com.pakupaku.deliver.adapter.TaskAdapter;
 import com.pakupaku.deliver.api.APIError;
@@ -56,7 +56,7 @@ import com.pakupaku.deliver.model.Order;
 import com.pakupaku.deliver.model.Profile;
 import com.pakupaku.deliver.model.Shift;
 import com.pakupaku.deliver.receiver.NetworkChangeReceiver;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.pakupaku.deliver.service.GPSTrackerService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -120,14 +120,14 @@ public class Home extends AppCompatActivity
         ButterKnife.bind(this);
         getDeviceToken();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        errorLayout = (LinearLayout) findViewById(R.id.error_layout);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        errorLayout = findViewById(R.id.error_layout);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle("LIVE TASK");
         customDialog = new CustomDialog(this);
         connectionHelper = new ConnectionHelper(this);
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -163,15 +163,15 @@ public class Home extends AppCompatActivity
 
         //NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         //View headerView = navigationView.inflateHeaderView(R.layout.nav_header_home);
-        userAvatar = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.user_avatar);
-        LinearLayout nav_header = (LinearLayout) navigationView.getHeaderView(0).findViewById(R.id.nav_header);
+        userAvatar = navigationView.getHeaderView(0).findViewById(R.id.user_avatar);
+        LinearLayout nav_header = navigationView.getHeaderView(0).findViewById(R.id.nav_header);
         nav_header.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(Home.this, ProfileActivity.class));
             }
         });
-        name = (TextView) navigationView.getHeaderView(0).findViewById(R.id.name);
-        userId = (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_id);
+        name = navigationView.getHeaderView(0).findViewById(R.id.name);
+        userId = navigationView.getHeaderView(0).findViewById(R.id.user_id);
         navigationView.setNavigationItemSelectedListener(this);
 
         orders = new ArrayList<>();
@@ -257,7 +257,7 @@ public class Home extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -512,7 +512,7 @@ public class Home extends AppCompatActivity
         } else if (id == R.id.nav_logout) {
             logout();
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return false;
     }
@@ -522,13 +522,13 @@ public class Home extends AppCompatActivity
         List<String> languages = Arrays.asList(getResources().getStringArray(R.array.languages));
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View convertView = (View) inflater.inflate(R.layout.language_dialog, null);
+        View convertView = inflater.inflate(R.layout.language_dialog, null);
         alertDialog.setView(convertView);
         alertDialog.setCancelable(true);
         alertDialog.setTitle("Change Language");
         final AlertDialog alert = alertDialog.create();
 
-        final ListView lv = (ListView) convertView.findViewById(R.id.lv);
+        final ListView lv = convertView.findViewById(R.id.lv);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice, languages);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -601,6 +601,10 @@ public class Home extends AppCompatActivity
         switch (value) {
             case "English":
                 LocaleUtils.setLocale(this, "en");
+                recreate();
+                break;
+            case "Japanese":
+                LocaleUtils.setLocale(this, "ja");
                 recreate();
                 break;
             case "Arabic":

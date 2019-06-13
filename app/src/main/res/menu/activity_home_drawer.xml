@@ -25,8 +25,7 @@
         <item
             android:id="@+id/nav_language"
             android:icon="@drawable/ic_translate"
-            android:title="@string/change_language"
-            android:visible="false"/>
+            android:title="@string/change_language" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"
