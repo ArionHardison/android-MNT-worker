@@ -115,4 +115,9 @@
     <string name="invalid_otp">Invalid Otp</string>
     <string name="full_amount">Please enter full amount</string>
     <string name="password">Password</string>
+
+
+    <string name="lang_english">English</string>
+    <!--<item>Arabic</item>-->
+    <string name="lang_japnese">Japanese</string>
 </resources>

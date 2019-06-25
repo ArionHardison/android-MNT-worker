@@ -19,6 +19,7 @@ import com.pakupaku.deliver.api.ApiInterface;
 import com.pakupaku.deliver.api.ErrorUtils;
 import com.pakupaku.deliver.helper.ConnectionHelper;
 import com.pakupaku.deliver.helper.GlobalData;
+import com.pakupaku.deliver.helper.LocaleUtils;
 import com.pakupaku.deliver.helper.SharedHelper;
 import com.pakupaku.deliver.model.Profile;
 
@@ -49,6 +50,18 @@ public class Splash extends AppCompatActivity {
             if (value1 != null) {
                 isNotification = true;
             }
+        }
+        String dd = SharedHelper.getKey(this, "language");
+        switch (dd) {
+            case "English":
+                LocaleUtils.setLocale(this, "en");
+                break;
+            case "Japanese":
+                LocaleUtils.setLocale(this, "ja");
+                break;
+            default:
+                LocaleUtils.setLocale(this, "en");
+                break;
         }
 
         final Handler handler = new Handler();

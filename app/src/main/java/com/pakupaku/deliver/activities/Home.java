@@ -28,11 +28,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -525,22 +524,42 @@ public class Home extends AppCompatActivity
         View convertView = inflater.inflate(R.layout.language_dialog, null);
         alertDialog.setView(convertView);
         alertDialog.setCancelable(true);
-        alertDialog.setTitle("Change Language");
-        final AlertDialog alert = alertDialog.create();
+        alertDialog.setTitle(getResources().getString(R.string.change_language));
+        final android.app.AlertDialog alert = alertDialog.create();
+        final RadioGroup chooseLanguage = convertView.findViewById(R.id.choose_language);
+        final RadioButton english = convertView.findViewById(R.id.english);
+        final RadioButton japnese = convertView.findViewById(R.id.japnese);
 
-        final ListView lv = convertView.findViewById(R.id.lv);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice, languages);
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        String dd = LocaleUtils.getLanguage(this);
+        switch (dd) {
+            case "en":
+                english.setChecked(true);
+                break;
+            case "ja":
+                japnese.setChecked(true);
+                break;
+            default:
+                english.setChecked(true);
+                break;
+        }
+
+        chooseLanguage.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                String item = lv.getItemAtPosition(position).toString();
-                setLanguage(item);
-                alert.dismiss();
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.english:
+                        setLanguage("English");
+                        alert.dismiss();
+                        break;
+                    case R.id.japnese:
+                        setLanguage("Japanese");
+                        alert.dismiss();
+                        break;
+
+                }
             }
         });
         alert.show();
-
     }
 
     public void getDeviceToken() {
@@ -605,10 +624,6 @@ public class Home extends AppCompatActivity
                 break;
             case "Japanese":
                 LocaleUtils.setLocale(this, "ja");
-                recreate();
-                break;
-            case "Arabic":
-                LocaleUtils.setLocale(this, "ar");
                 recreate();
                 break;
             default:

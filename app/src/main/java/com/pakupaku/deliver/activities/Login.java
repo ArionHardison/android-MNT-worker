@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.pakupaku.deliver.CountryPicker.Country;
 import com.pakupaku.deliver.CountryPicker.CountryPicker;
 import com.pakupaku.deliver.CountryPicker.CountryPickerListener;
@@ -32,7 +33,6 @@ import com.pakupaku.deliver.helper.SharedHelper;
 import com.pakupaku.deliver.model.Otp;
 import com.pakupaku.deliver.model.Profile;
 import com.pakupaku.deliver.model.Token;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
@@ -73,6 +73,8 @@ public class Login extends AppCompatActivity {
     ConnectionHelper connectionHelper;
     private CountryPicker mCountryPicker;
 
+    public Country mCountry;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +97,7 @@ public class Login extends AppCompatActivity {
                 return s1.getName().compareToIgnoreCase(s2.getName());
             }
         });
+
         mCountryPicker.setCountriesList(countryList);
         setListener();
 
@@ -154,13 +157,11 @@ public class Login extends AppCompatActivity {
     private void setListener() {
         mCountryPicker.setListener(new CountryPickerListener() {
             @Override
-            public void onSelectCountry(String name, String code, String dialCode,
-                                        int flagDrawableResID) {
+            public void onSelectCountry(Country country) {
 //                mCountryNameTextView.setText(name);
 //                mCountryIsoCodeTextView.setText(code);
-                countryNumber.setText(dialCode);
-
-                countryImage.setImageResource(flagDrawableResID);
+                countryNumber.setText(country.getDialCode());
+                countryImage.setImageResource(country.getFlag());
                 mCountryPicker.dismiss();
             }
         });
@@ -181,7 +182,7 @@ public class Login extends AppCompatActivity {
 
     private void getUserCountryInfo() {
         Locale current = getResources().getConfiguration().locale;
-        Country country = Country.getCountryFromSIM(Login.this);
+        Country country = Country.getCountrydetails("JP");
         if (country != null) {
             countryImage.setImageResource(country.getFlag());
             countryNumber.setText(country.getDialCode());
@@ -200,7 +201,7 @@ public class Login extends AppCompatActivity {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    @OnClick({R.id.submit,R.id.eye_img})
+    @OnClick({R.id.submit, R.id.eye_img})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.submit:

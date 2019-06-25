@@ -119,4 +119,9 @@
     <string name="reject">拒否する</string>
     <string name="accept">同意する</string>
     <string name="password">パスワード</string>
+
+
+    <string name="lang_english">English</string>
+    <!--<item>Arabic</item>-->
+    <string name="lang_japnese">Japanese</string>
 </resources>
