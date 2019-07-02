@@ -120,4 +120,13 @@
     <string name="lang_english">English</string>
     <!--<item>Arabic</item>-->
     <string name="lang_japnese">Japanese</string>
+    <string name="reason_facing">Are you facing any issue which we can assist with? Please reach out to us we will be happy to help !</string>
+    <string name="check_internet_connection">Check your internet connection</string>
+    <string name="no_luck">No Luck!</string>
+    <string name="please_enternumber_pswd">Please enter your Mobile number and Password</string>
+    <string name="select_country">Select Country</string>
+    <string name="success_profile">Profile Updated Successfully</string>
+    <string name="dont_pick_image">You haven\'t picked Image</string>
+    <string name="wallet_detection">Wallet Detection</string>
+    <string name="live_tasks">LIVE TASK</string>
 </resources>

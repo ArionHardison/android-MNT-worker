@@ -37,8 +37,8 @@ public class Application extends android.app.Application {
 
     @Override
     protected void attachBaseContext(Context base) {
-        //super.attachBaseContext(base);
-        super.attachBaseContext(LocaleUtils.onAttach(base, "en"));
+        super.attachBaseContext(LocaleUtils.onAttach(base));
+        //super.attachBaseContext(LocaleUtils.onAttach(base, "en"));
         MultiDex.install(this);
     }
 

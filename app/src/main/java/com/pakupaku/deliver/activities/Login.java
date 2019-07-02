@@ -87,7 +87,7 @@ public class Login extends AppCompatActivity {
             startActivity(new Intent(Login.this, ShiftStatus.class));
             finish();
         }
-        mCountryPicker = CountryPicker.newInstance("Select Country");
+        mCountryPicker = CountryPicker.newInstance(getResources().getString(R.string.select_country));
 
         // You can limit the displayed countries
         List<Country> countryList = Country.getAllCountries();
@@ -113,7 +113,7 @@ public class Login extends AppCompatActivity {
     public void getOtpVerification(String mobile) {
         System.out.println(mobile);
         if (!connectionHelper.isConnectingToInternet()) {
-            Toast.makeText(this, "Check your internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.check_internet_connection), Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -139,14 +139,14 @@ public class Login extends AppCompatActivity {
                             //Toast.makeText(Login.this, jObjError.optString("error"), Toast.LENGTH_LONG).show();
                         }
                     } catch (Exception e) {
-                        Toast.makeText(Login.this, "No Luck!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Login.this, getResources().getString(R.string.no_luck), Toast.LENGTH_LONG).show();
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Otp> call, @NonNull Throwable t) {
-                Toast.makeText(Login.this, "Something Wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
                 customDialog.cancel();
             }
         });
@@ -214,7 +214,7 @@ public class Login extends AppCompatActivity {
                     map.put("password", edPassword.getText().toString());
                     login(map);
                 } else {
-                    Toast.makeText(Login.this, "Please enter your Mobile number and Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, getString(R.string.please_enternumber_pswd), Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.eye_img:
@@ -258,7 +258,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Token> call, @NonNull Throwable t) {
                 customDialog.cancel();
-                Toast.makeText(Login.this, "login Something wrong", Toast.LENGTH_LONG).show();
+                Toast.makeText(Login.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -296,7 +296,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
                 customDialog.cancel();
-                Toast.makeText(Login.this, "Something wrong getProfile", Toast.LENGTH_LONG).show();
+                Toast.makeText(Login.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
             }
         });
     }

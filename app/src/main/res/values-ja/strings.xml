@@ -1,9 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE resources [
-    <!ENTITY appname "Paku Paku Delivery">
-    <!ENTITY order "Order">
-    <!ENTITY shift "Shift">
-    ]>
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE resources [<!ENTITY appname "Paku Paku Delivery"><!ENTITY order "Order"><!ENTITY shift "Shift">]>
 <resources>
     <string name="app_name">受け渡し用　Paku Paku</string>
     <string name="mobile_number">携帯電話番号</string>
@@ -61,7 +56,7 @@
     <string name="delivery_charges">受け渡し料金</string>
     <string name="discount">ディスカウント</string>
     <string name="promocode_amount">クーポンディスカウン料金</string>
-    <string name="total">合計</string>
+    <string name="total">総計</string>
     <string name="payment_mode">お支払い</string>
     <string name="no_of_items">商品がありません</string>
     <string name="bill_amount">お支払い料金</string>
@@ -77,7 +72,7 @@
     <string name="please_settle_the_amount_to_the_respective_restaurant">それぞれの店舗に金額の決済を開いてください。</string>
     <string name="type_a_message">メッセージを書いてください。</string>
     <string name="country_name">国</string>
-    <string name="feedback">"Feedback"</string>
+    <string name="feedback">"饋還"</string>
     <string name="how_was_the_delivery">お届けは大丈夫でしたか？</string>
     <string name="terrible">う〜ん</string>
     <string name="bad">OK</string>
@@ -124,4 +119,13 @@
     <string name="lang_english">English</string>
     <!--<item>Arabic</item>-->
     <string name="lang_japnese">Japanese</string>
+    <string name="reason_facing">あなたは私たちが手助けできる何か問題に直面していますか？私たちに手を差し伸べてください私たちは助けて幸せになります！</string>
+    <string name="check_internet_connection">インターネット接続を確認してください</string>
+    <string name="no_luck">運が悪い</string>
+    <string name="please_enternumber_pswd">あなたの携帯電話番号とパスワードを入力してください</string>
+    <string name="select_country">国を選択</string>
+    <string name="success_profile">プロフィールを更新しました</string>
+    <string name="dont_pick_image">画像を選択していません</string>
+    <string name="wallet_detection">財布の検出</string>
+    <string name="live_tasks">ライブタスク</string>
 </resources>

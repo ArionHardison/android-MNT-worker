@@ -108,7 +108,7 @@ public class NoticeBoard extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<List<Notice>> call, @NonNull Throwable t) {
                 customDialog.cancel();
-                Toast.makeText(NoticeBoard.this, "Something wrong getNoticeBoard", Toast.LENGTH_LONG).show();
+                Toast.makeText(NoticeBoard.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
             }
         });
     }

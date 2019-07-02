@@ -30,6 +30,7 @@ import com.pakupaku.deliver.api.APIError;
 import com.pakupaku.deliver.api.ErrorUtils;
 import com.pakupaku.deliver.helper.CustomDialog;
 import com.pakupaku.deliver.helper.GlobalData;
+import com.pakupaku.deliver.helper.LocaleUtils;
 import com.pakupaku.deliver.helper.SharedHelper;
 import com.pakupaku.deliver.model.Profile;
 import com.pakupaku.deliver.R;
@@ -87,7 +88,18 @@ public class ProfileActivity extends AppCompatActivity {
         getDeviceToken();
         title.setText(getResources().getString(R.string.profile));
         customDialog = new CustomDialog(ProfileActivity.this);
-
+        String dd = SharedHelper.getKey(this, "language");
+        switch (dd) {
+            case "English":
+                LocaleUtils.setLocale(this, "en");
+                break;
+            case "Japanese":
+                LocaleUtils.setLocale(this, "ja");
+                break;
+            default:
+                LocaleUtils.setLocale(this, "en");
+                break;
+        }
         initView();
         getProfile();
     }
@@ -143,7 +155,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
-                Toast.makeText(ProfileActivity.this, "Something wrong", Toast.LENGTH_LONG).show();
+                Toast.makeText(ProfileActivity.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -182,7 +194,7 @@ public class ProfileActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     GlobalData.profile = response.body();
                     initView();
-                    Toast.makeText(ProfileActivity.this, "Profile Updated Successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileActivity.this, getResources().getString(R.string.success_profile), Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
                     Gson gson = new GsonBuilder().create();
@@ -207,7 +219,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
                 customDialog.cancel();
-                Toast.makeText(ProfileActivity.this, "Something wrong - updateProfile", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -247,7 +259,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
 
         } else if (resultCode == Activity.RESULT_CANCELED)
-            Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.dont_pick_image), Toast.LENGTH_SHORT).show();
     }
 
     public void goToImageIntent() {

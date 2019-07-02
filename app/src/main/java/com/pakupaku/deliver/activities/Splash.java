@@ -122,7 +122,7 @@ public class Splash extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
-                Toast.makeText(Splash.this, "Something wrong", Toast.LENGTH_LONG).show();
+                Toast.makeText(Splash.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                 if (retryCount < 5) {
                     getProfile();
                 }

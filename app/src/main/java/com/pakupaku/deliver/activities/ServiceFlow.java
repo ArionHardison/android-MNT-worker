@@ -178,7 +178,7 @@ public class ServiceFlow extends AppCompatActivity {
         numberFormat = Application.getNumberFormat();
         Toolbar toolbar = findViewById(R.id.toolbar);
         assert toolbar != null;
-        toolbar.setTitle("LIVE TASK");
+        toolbar.setTitle(getResources().getString(R.string.live_tasks));
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -249,10 +249,10 @@ public class ServiceFlow extends AppCompatActivity {
             serviceTax.setText(numberFormat + invoice.getTax());
             deliveryCharges.setText(numberFormat + invoice.getDeliveryCharge());
             discount.setText(numberFormat + invoice.getDiscount());
-            if (invoice.getPromocode_amount() > 0){
+            if (invoice.getPromocode_amount() > 0) {
                 promocodeLayout.setVisibility(View.VISIBLE);
                 promocodeAmount.setText(numberFormat + invoice.getPromocode_amount());
-            }else{
+            } else {
                 promocodeLayout.setVisibility(View.GONE);
             }
             walletDetection.setText(numberFormat + invoice.getWalletAmount());
@@ -522,7 +522,7 @@ public class ServiceFlow extends AppCompatActivity {
 
                                 int amount = Integer.parseInt(amount_paid.getText().toString());
 
-                                if (amount>=invoice.getPayable()) {
+                                if (amount >= invoice.getPayable()) {
                                     map = new HashMap<>();
                                     map.put("status", status);
                                     map.put("total_pay", amount_paid.getText().toString());
@@ -531,10 +531,10 @@ public class ServiceFlow extends AppCompatActivity {
                                     map.put("payment_status", "success");
                                     updateStatus();
                                     alertDialog.dismiss();
-                                }else {
+                                } else {
                                     Toast.makeText(getApplicationContext(), getString(R.string.full_amount), Toast.LENGTH_SHORT).show();
                                 }
-                            }else {
+                            } else {
                                 Toast.makeText(getApplicationContext(), getString(R.string.enter_the_amount_paid), Toast.LENGTH_SHORT).show();
                             }
                                    /* }
@@ -563,63 +563,63 @@ public class ServiceFlow extends AppCompatActivity {
     private void rate() {
 
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(ServiceFlow.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ServiceFlow.this);
 
-            final FrameLayout frameView = new FrameLayout(ServiceFlow.this);
-            builder.setView(frameView);
+        final FrameLayout frameView = new FrameLayout(ServiceFlow.this);
+        builder.setView(frameView);
 
-            final AlertDialog rateDialog = builder.create();
-            final LayoutInflater inflater = rateDialog.getLayoutInflater();
-            View dialogView = inflater.inflate(R.layout.feedback_popup, frameView);
+        final AlertDialog rateDialog = builder.create();
+        final LayoutInflater inflater = rateDialog.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.feedback_popup, frameView);
 
-            rating = 5;
+        rating = 5;
         rateRadioGroup = dialogView.findViewById(R.id.rate_radiogroup);
-            rateRadioGroup.clearCheck();
-            ((RadioButton) rateRadioGroup.getChildAt(4)).setChecked(true);
-            rateRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        rateRadioGroup.clearCheck();
+        ((RadioButton) rateRadioGroup.getChildAt(4)).setChecked(true);
+        rateRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
 
-                    //rating = i;
+                //rating = i;
 
-                    if (i == R.id.one) {
-                        //do work when radioButton1 is active
-                        rating = 1;
-                    } else  if (i == R.id.two) {
-                        //do work when radioButton2 is active
-                        rating = 2;
-                    } else  if (i == R.id.three) {
-                        //do work when radioButton3 is active
-                        rating = 3;
-                    } else  if (i == R.id.four) {
-                        //do work when radioButton3 is active
-                        rating = 4;
-                    } else  if (i == R.id.five) {
-                        //do work when radioButton3 is active
-                        rating = 5;
-                    }
-                    Log.d("gfgfgf", "onCheckedChanged: "+rating);
-
+                if (i == R.id.one) {
+                    //do work when radioButton1 is active
+                    rating = 1;
+                } else if (i == R.id.two) {
+                    //do work when radioButton2 is active
+                    rating = 2;
+                } else if (i == R.id.three) {
+                    //do work when radioButton3 is active
+                    rating = 3;
+                } else if (i == R.id.four) {
+                    //do work when radioButton3 is active
+                    rating = 4;
+                } else if (i == R.id.five) {
+                    //do work when radioButton3 is active
+                    rating = 5;
                 }
-            });
+                Log.d("gfgfgf", "onCheckedChanged: " + rating);
+
+            }
+        });
 
         final EditText comment = dialogView.findViewById(R.id.comment);
         Button feedbackSubmit = dialogView.findViewById(R.id.feedback_submit);
-            feedbackSubmit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (GlobalData.order != null && GlobalData.order.getId() != null) {
-                        HashMap<String, String> map = new HashMap<>();
-                        map.put("order_id", String.valueOf(GlobalData.order.getId()));
-                        map.put("rating", String.valueOf(rating));
-                        map.put("comment", comment.getText().toString());
-                        rateUser(map);
-                        rateDialog.dismiss();
-                    }
-
+        feedbackSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (GlobalData.order != null && GlobalData.order.getId() != null) {
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("order_id", String.valueOf(GlobalData.order.getId()));
+                    map.put("rating", String.valueOf(rating));
+                    map.put("comment", comment.getText().toString());
+                    rateUser(map);
+                    rateDialog.dismiss();
                 }
-            });
-            rateDialog.show();
+
+            }
+        });
+        rateDialog.show();
 
     }
 

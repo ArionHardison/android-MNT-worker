@@ -123,7 +123,21 @@ public class Home extends AppCompatActivity
         errorLayout = findViewById(R.id.error_layout);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle("LIVE TASK");
+
+        String dd = SharedHelper.getKey(this, "language");
+        switch (dd) {
+            case "English":
+                LocaleUtils.setLocale(this, "en");
+                break;
+            case "Japanese":
+                LocaleUtils.setLocale(this, "ja");
+                break;
+            default:
+                LocaleUtils.setLocale(this, "en");
+                break;
+        }
+
+        getSupportActionBar().setTitle(getResources().getString(R.string.live_tasks));
         customDialog = new CustomDialog(this);
         connectionHelper = new ConnectionHelper(this);
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -380,7 +394,7 @@ public class Home extends AppCompatActivity
 
             @Override
             public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
-                Toast.makeText(Home.this, "Something wrong getProfile", Toast.LENGTH_LONG).show();
+                Toast.makeText(Home.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -413,7 +427,7 @@ public class Home extends AppCompatActivity
                         completedOrders.clear();
                         completedOrders.addAll(response.body());
                         completedTaskAdapter.notifyDataSetChanged();
-                        completedTaskLabel.setText(getResources().getString(R.string.completed_tasks));
+                        completedTaskLabel.setText(Home.this.getResources().getString(R.string.completed_tasks));
                         completedTaskLabel.setVisibility(View.VISIBLE);
                     } else {
                         completedOrders.clear();
@@ -464,18 +478,18 @@ public class Home extends AppCompatActivity
                 case "online":
                     if (orders.size() <= 0) errorLayout.setVisibility(View.VISIBLE);
                     errorImg.setImageResource(R.drawable.hour_glass);
-                    errorMessage.setText(getResources().getString(R.string.waiting_for_new_task));
+                    errorMessage.setText(Home.this.getResources().getString(R.string.waiting_for_new_task));
                     navigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
                     break;
                 case "unsettled":
                     errorImg.setImageResource(R.drawable.coins);
-                    errorMessage.setText(getResources().getString(R.string.please_settle_the_amount_to_the_respective_restaurant));
+                    errorMessage.setText(Home.this.getResources().getString(R.string.please_settle_the_amount_to_the_respective_restaurant));
                     errorLayout.setVisibility(View.VISIBLE);
                     navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
                     break;
                 case "offline":
                     errorImg.setImageResource(R.drawable.purchase);
-                    errorMessage.setText(getResources().getString(R.string.turn_on_start_shift));
+                    errorMessage.setText(Home.this.getResources().getString(R.string.turn_on_start_shift));
                     errorLayout.setVisibility(View.VISIBLE);
                     handler.removeCallbacks(runnable);
                     if (GlobalData.shift != null) {
@@ -518,7 +532,7 @@ public class Home extends AppCompatActivity
 
     private void changeLanguage() {
 
-        List<String> languages = Arrays.asList(getResources().getStringArray(R.array.languages));
+        List<String> languages = Arrays.asList(Home.this.getResources().getStringArray(R.array.languages));
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         View convertView = inflater.inflate(R.layout.language_dialog, null);
@@ -608,7 +622,7 @@ public class Home extends AppCompatActivity
             @Override
             public void onFailure(@NonNull Call<Message> call, @NonNull Throwable t) {
                 customDialog.cancel();
-                Toast.makeText(Home.this, "logout Something wrong", Toast.LENGTH_LONG).show();
+                Toast.makeText(Home.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -635,7 +649,7 @@ public class Home extends AppCompatActivity
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(LocaleUtils.onAttach(newBase)));
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     public void onDestroy() {
