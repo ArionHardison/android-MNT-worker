@@ -508,38 +508,37 @@ public class ShiftStatus extends AppCompatActivity {
     }
 
     private void popupEndShift() {
-
         if (GlobalData.shift != null) {
-
-
             System.out.println("popupEndShift");
             try {
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+                if (GlobalData.shift.getTotalAmountPay() > 0) {
+                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
 
-                final FrameLayout frameView = new FrameLayout(this);
-                builder.setView(frameView);
+                    final FrameLayout frameView = new FrameLayout(this);
+                    builder.setView(frameView);
 
-                final android.app.AlertDialog alertDialog = builder.create();
-                LayoutInflater inflater = alertDialog.getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.amount_paid_popup, frameView);
+                    final android.app.AlertDialog alertDialog = builder.create();
+                    LayoutInflater inflater = alertDialog.getLayoutInflater();
+                    View dialogView = inflater.inflate(R.layout.amount_paid_popup, frameView);
 
-                final TextView amountToBePaid = dialogView.findViewById(R.id.amount_to_be_paid);
-                amountToBePaid.setText(GlobalData.profile.getCurrency() +/*numberFormat.format(*/GlobalData.shift.getTotalAmountPay()/*)*/);
-                endShift = dialogView.findViewById(R.id.end_shift);
-                endShift.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        endShift();
-                        alertDialog.cancel();
-                    }
-                });
+                    final TextView amountToBePaid = dialogView.findViewById(R.id.amount_to_be_paid);
+                    amountToBePaid.setText(String.format("%s %d", GlobalData.profile.getCurrency(), GlobalData.shift.getTotalAmountPay()));
+                    endShift = dialogView.findViewById(R.id.end_shift);
+                    endShift.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
 
+                            alertDialog.cancel();
+                        }
+                    });
+                    alertDialog.show();
+                } else {
+                    endShift();
+                }
                 if (GlobalData.shift != null && GlobalData.shift.getEndTime() != null) {
                     endShift.setVisibility(View.GONE);
                 } else {
                     endShift.setVisibility(View.VISIBLE);
                 }
-
-                alertDialog.show();
 
             } catch (Exception e) {
                 e.printStackTrace();
