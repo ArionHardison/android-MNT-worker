@@ -526,12 +526,12 @@ public class ShiftStatus extends AppCompatActivity {
                     endShift = dialogView.findViewById(R.id.end_shift);
                     endShift.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
-
+                            endShift();
                             alertDialog.cancel();
                         }
                     });
                     alertDialog.show();
-                } else {
+                }else{
                     endShift();
                 }
                 if (GlobalData.shift != null && GlobalData.shift.getEndTime() != null) {
