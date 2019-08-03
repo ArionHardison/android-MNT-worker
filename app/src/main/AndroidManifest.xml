@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.pakupaku.deliver">
+    package="com.dalejoak.deliver">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,42 +16,47 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <permission
-        android:name="com.pakupaku.deliver.permission.C2D_MESSAGE"
+        android:name="com.dalejoak.deliver.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.foodie.provider.permission.C2D_MESSAGE" />
 
 
     <application
-        android:name="com.pakupaku.deliver.Application"
+        android:name="com.dalejoak.deliver.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         android:fullBackupContent="@xml/backup_descriptor"
         tools:ignore="GoogleAppIndexingWarning">
 
         <service
-            android:name="com.pakupaku.deliver.service.GPSTracker"
+            android:name="com.dalejoak.deliver.service.GPSTracker"
             android:enabled="true"
             android:exported="false"/>
 
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         <service
-            android:name="com.pakupaku.deliver.service.GPSTrackerService"
+            android:name="com.dalejoak.deliver.service.GPSTrackerService"
             android:enabled="true"
             android:exported="false"
             android:stopWithTask="false" />
 
-        <receiver android:name="com.pakupaku.deliver.helper.SmsReceiver"
+        <receiver android:name="com.dalejoak.deliver.helper.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
         <activity
-            android:name="com.pakupaku.deliver.activities.Splash"
+            android:name="com.dalejoak.deliver.activities.Splash"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,62 +65,62 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.pakupaku.deliver.activities.Login"
+            android:name="com.dalejoak.deliver.activities.Login"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.pakupaku.deliver.activities.Home"
+            android:name="com.dalejoak.deliver.activities.Home"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.pakupaku.deliver.activities.ServiceFlow"
+            android:name="com.dalejoak.deliver.activities.ServiceFlow"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.pakupaku.deliver.activities.OTP"
+            android:name="com.dalejoak.deliver.activities.OTP"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.pakupaku.deliver.activities.ShiftStatus"
+            android:name="com.dalejoak.deliver.activities.ShiftStatus"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.pakupaku.deliver.activities.ProfileActivity"
+            android:name="com.dalejoak.deliver.activities.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.pakupaku.deliver.activities.OrderDetail"
+            android:name="com.dalejoak.deliver.activities.OrderDetail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.pakupaku.deliver.activities.Dispute"
+            android:name="com.dalejoak.deliver.activities.Dispute"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.pakupaku.deliver.activities.OrderHistory"
+            android:name="com.dalejoak.deliver.activities.OrderHistory"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.pakupaku.deliver.activities.Others"
+            android:name="com.dalejoak.deliver.activities.Others"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
 
 
         <activity
-            android:name="com.pakupaku.deliver.activities.NoticeBoard"
+            android:name="com.dalejoak.deliver.activities.NoticeBoard"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.pakupaku.deliver.activities.TermsAndConditions"
+            android:name="com.dalejoak.deliver.activities.TermsAndConditions"
             android:theme="@style/AppTheme.NoActionBar" />
         <!-- Firebase Notifications -->
-        <service android:name="com.pakupaku.deliver.fcm.MyFirebaseMessagingService">
+        <service android:name="com.dalejoak.deliver.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="com.pakupaku.deliver.fcm.MyFirebaseInstanceIDService">
+        <service android:name="com.dalejoak.deliver.fcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <receiver android:name="com.pakupaku.deliver.receiver.NetworkChangeReceiver">
+        <receiver android:name="com.dalejoak.deliver.receiver.NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>

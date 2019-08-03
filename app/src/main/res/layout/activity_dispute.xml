@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.pakupaku.deliver.activities.Dispute">
+    tools:context="com.dalejoak.deliver.activities.Dispute">
 
     <include layout="@layout/toolbar" />
 
