@@ -3,13 +3,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    tools:context="com.dalejoak.deliver.activities.Splash">
+    android:background="@color/colorWhite"
+    tools:context="com.dalejoak.deliveryboy.activities.Splash">
 
     <ImageView
-        android:layout_width="@dimen/_350sdp"
-        android:layout_height="@dimen/_350sdp"
-        android:contentDescription="@string/app_name"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-10dp"
+        android:contentDescription="@string/image_view"
+        android:src="@drawable/splash_1" />
+
+    <ImageView
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="-8dp"
+        android:layout_marginBottom="50dp"
+        android:contentDescription="@string/image_view"
+        android:src="@drawable/splash_2" />
+
+    <ImageView
+        android:layout_width="@dimen/_220sdp"
+        android:layout_height="@dimen/_220sdp"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/image_view"
         android:scaleType="centerInside"
         android:src="@drawable/logo_app" />
+
+    <ImageView
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="-16dp"
+        android:layout_marginTop="-10dp"
+        android:contentDescription="@string/image_view"
+        android:src="@drawable/splash_3" />
+
+
+    <ImageView
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-18dp"
+        android:contentDescription="@string/image_view"
+        android:src="@drawable/splash_4" />
 </RelativeLayout>
+

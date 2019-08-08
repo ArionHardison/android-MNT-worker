@@ -7,7 +7,7 @@
     android:animateLayoutChanges="true"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.dalejoak.deliver.activities.Home"
+    tools:context="com.dalejoak.deliveryboy.activities.Home"
     tools:showIn="@layout/app_bar_home">
 
     <RelativeLayout

@@ -51,7 +51,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="scalingPercent" value="73" />
+                                                <entry key="scalingPercent" value="94" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -63,8 +63,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="ffffff" />
-                                      <entry key="foregroundImage" value="C:\Users\CSS\Downloads\IMG-20190730-WA0002.jpg" />
+                                      <entry key="foregroundImage" value="C:\Users\CSS\Downloads\Delivery Man Jo3ak.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
