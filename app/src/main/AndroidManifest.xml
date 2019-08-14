@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.dalejoak.deliveryboy">
+    package="com.tringtwentyfour.deliveryboy">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,14 +16,14 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <permission
-        android:name="com.dalejoak.deliveryboy.permission.C2D_MESSAGE"
+        android:name="com.tringtwentyfour.deliveryboy.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.foodie.provider.permission.C2D_MESSAGE" />
 
 
     <application
-        android:name="com.dalejoak.deliveryboy.Application"
+        android:name="com.tringtwentyfour.deliveryboy.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -35,7 +35,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <service
-            android:name="com.dalejoak.deliveryboy.service.GPSTracker"
+            android:name="com.tringtwentyfour.deliveryboy.service.GPSTracker"
             android:enabled="true"
             android:exported="false"/>
 
@@ -44,19 +44,19 @@
             android:required="false" />
 
         <service
-            android:name="com.dalejoak.deliveryboy.service.GPSTrackerService"
+            android:name="com.tringtwentyfour.deliveryboy.service.GPSTrackerService"
             android:enabled="true"
             android:exported="false"
             android:stopWithTask="false" />
 
-        <receiver android:name="com.dalejoak.deliveryboy.helper.SmsReceiver"
+        <receiver android:name="com.tringtwentyfour.deliveryboy.helper.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
         <activity
-            android:name="com.dalejoak.deliveryboy.activities.Splash"
+            android:name="com.tringtwentyfour.deliveryboy.activities.Splash"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -65,62 +65,62 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.dalejoak.deliveryboy.activities.Login"
+            android:name="com.tringtwentyfour.deliveryboy.activities.Login"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.deliveryboy.activities.Home"
+            android:name="com.tringtwentyfour.deliveryboy.activities.Home"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.deliveryboy.activities.ServiceFlow"
+            android:name="com.tringtwentyfour.deliveryboy.activities.ServiceFlow"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.deliveryboy.activities.OTP"
+            android:name="com.tringtwentyfour.deliveryboy.activities.OTP"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.deliveryboy.activities.ShiftStatus"
+            android:name="com.tringtwentyfour.deliveryboy.activities.ShiftStatus"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.deliveryboy.activities.ProfileActivity"
+            android:name="com.tringtwentyfour.deliveryboy.activities.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.deliveryboy.activities.OrderDetail"
+            android:name="com.tringtwentyfour.deliveryboy.activities.OrderDetail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.deliveryboy.activities.Dispute"
+            android:name="com.tringtwentyfour.deliveryboy.activities.Dispute"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.deliveryboy.activities.OrderHistory"
+            android:name="com.tringtwentyfour.deliveryboy.activities.OrderHistory"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.deliveryboy.activities.Others"
+            android:name="com.tringtwentyfour.deliveryboy.activities.Others"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
 
 
         <activity
-            android:name="com.dalejoak.deliveryboy.activities.NoticeBoard"
+            android:name="com.tringtwentyfour.deliveryboy.activities.NoticeBoard"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.deliveryboy.activities.TermsAndConditions"
+            android:name="com.tringtwentyfour.deliveryboy.activities.TermsAndConditions"
             android:theme="@style/AppTheme.NoActionBar" />
         <!-- Firebase Notifications -->
-        <service android:name="com.dalejoak.deliveryboy.fcm.MyFirebaseMessagingService">
+        <service android:name="com.tringtwentyfour.deliveryboy.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="com.dalejoak.deliveryboy.fcm.MyFirebaseInstanceIDService">
+        <service android:name="com.tringtwentyfour.deliveryboy.fcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <receiver android:name="com.dalejoak.deliveryboy.receiver.NetworkChangeReceiver">
+        <receiver android:name="com.tringtwentyfour.deliveryboy.receiver.NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
