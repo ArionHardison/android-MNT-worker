@@ -203,11 +203,12 @@ public class Login extends AppCompatActivity {
             case R.id.submit:
                 if (!mobileNo.getText().toString().equalsIgnoreCase("") && !edPassword.getText().toString().equalsIgnoreCase("")) {
                     SharedHelper.putKey(Login.this, "mobile_number", countryNumber.getText().toString() + mobileNo.getText().toString());
-//                    getOtpVerification(countryNumber.getText().toString() + mobileNo.getText().toString());
+                    //   getOtpVerification(countryNumber.getText().toString() + mobileNo.getText().toString());
 //                    String mobile_number = SharedHelper.getKey(OTP.this, "mobile_number");
                     HashMap<String, String> map = new HashMap<>();
                     map.put("phone", countryNumber.getText().toString() + mobileNo.getText().toString());
-                    map.put("password", edPassword.getText().toString());
+                  //  map.put("password", edPassword.getText().toString());
+                    map.put("otp", "123456");
                     login(map);
                 } else {
                     Toast.makeText(Login.this, getString(R.string.please_enternumber_pswd), Toast.LENGTH_SHORT).show();

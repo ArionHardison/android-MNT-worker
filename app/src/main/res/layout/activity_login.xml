@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:background="#FFFFFF"
     android:focusable="true"
@@ -86,16 +85,16 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/edittext"
-        android:visibility="visible"
-        android:gravity="bottom">
+        android:gravity="bottom"
+        android:visibility="gone">
 
         <EditText
             android:id="@+id/ed_password"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_size"
             android:background="@null"
-            android:drawablePadding="@dimen/_8sdp"
             android:drawableStart="@drawable/password_left"
+            android:drawablePadding="@dimen/_8sdp"
             android:hint="@string/password"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
