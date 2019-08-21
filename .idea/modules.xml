@@ -3,9 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/dale3jo3ak_android_deliveryboy_new.iml" filepath="$PROJECT_DIR$/dale3jo3ak_android_deliveryboy_new.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pakupaku_android_deliveryboy.iml" filepath="$PROJECT_DIR$/pakupaku_android_deliveryboy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pakupaku_android_deliveryboy_base.iml" filepath="$PROJECT_DIR$/pakupaku_android_deliveryboy_base.iml" />
       <module fileurl="file://$PROJECT_DIR$/pinentry/pinentry.iml" filepath="$PROJECT_DIR$/pinentry/pinentry.iml" />
       <module fileurl="file://$PROJECT_DIR$/tring24_android_deliveryboy.iml" filepath="$PROJECT_DIR$/tring24_android_deliveryboy.iml" />
     </modules>

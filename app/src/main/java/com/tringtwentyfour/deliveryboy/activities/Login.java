@@ -201,7 +201,8 @@ public class Login extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.submit:
-                if (!mobileNo.getText().toString().equalsIgnoreCase("") && !edPassword.getText().toString().equalsIgnoreCase("")) {
+                if (!mobileNo.getText().toString().equalsIgnoreCase("") ) {
+                     //   && !edPassword.getText().toString().equalsIgnoreCase("")) {
                     SharedHelper.putKey(Login.this, "mobile_number", countryNumber.getText().toString() + mobileNo.getText().toString());
                     //   getOtpVerification(countryNumber.getText().toString() + mobileNo.getText().toString());
 //                    String mobile_number = SharedHelper.getKey(OTP.this, "mobile_number");
