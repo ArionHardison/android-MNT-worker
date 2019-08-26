@@ -12,6 +12,9 @@ public class Prices {
     @SerializedName("price")
     @Expose
     private int price;
+    @SerializedName("orignal_price")
+    @Expose
+    private double orignalPrice;
     @SerializedName("currency")
     @Expose
     private String currency;
@@ -46,6 +49,14 @@ public class Prices {
     public Prices withPrice(int price) {
         this.price = price;
         return this;
+    }
+
+    public double getOriginalPrice() {
+        return orignalPrice;
+    }
+
+    public void setOriginalPrice(double originalPrice) {
+        this.orignalPrice = originalPrice;
     }
 
     public String getCurrency() {

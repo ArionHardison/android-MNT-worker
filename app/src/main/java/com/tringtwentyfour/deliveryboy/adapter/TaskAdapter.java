@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.tringtwentyfour.deliveryboy.R;
 import com.tringtwentyfour.deliveryboy.activities.Home;
 import com.tringtwentyfour.deliveryboy.activities.OrderDetail;
 import com.tringtwentyfour.deliveryboy.activities.ServiceFlow;
@@ -27,7 +28,6 @@ import com.tringtwentyfour.deliveryboy.helper.SharedHelper;
 import com.tringtwentyfour.deliveryboy.model.Message;
 import com.tringtwentyfour.deliveryboy.model.Order;
 import com.tringtwentyfour.deliveryboy.model.Shop;
-import com.tringtwentyfour.deliveryboy.R;
 
 import java.util.HashMap;
 import java.util.List;
@@ -53,9 +53,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_new_task, parent, false);
-
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_new_task, parent, false);
         return new MyViewHolder(itemView);
     }
 
@@ -67,10 +65,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         Home.errorLayout.setVisibility(View.VISIBLE);
     }
 
-    public void update(Order order)
-    {
+    public void update(Order order) {
         int position = list.indexOf(order);
-        if (position >= 0){
+        if (position >= 0) {
             Order order1 = list.get(position);
             order.setStatus("PROCESSING");
             notifyDataSetChanged();
@@ -99,7 +96,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
                 Home.errorLayout.setVisibility(View.GONE);
                 holder.timeLeft.setText(obj.getResponseTime().toString());
                 int count = obj.getResponseTime() * 1000;
-                if (countDownTimer != null&&isRunning) {
+                if (countDownTimer != null && isRunning) {
                     countDownTimer.cancel();
                 }
                 countDownTimer = new CountDownTimer(count, 1000) {
@@ -107,12 +104,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
                         isRunning = true;
                         holder.timeLeft.setText(millisUntilFinished / 1000 + " secs left");
                     }
+
                     public void onFinish() {
                         isRunning = false;
                         remove(obj);
                     }
                 }.start();
-
             }
         } else {
             holder.acceptRejectLayout.setVisibility(View.GONE);
@@ -146,22 +143,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         call.enqueue(new Callback<Order>() {
             @Override
             public void onResponse(Call<Order> call, Response<Order> response) {
-
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
-                    if (response.body().getItems() != null){
+                    if (response.body().getItems() != null) {
                         GlobalData.order = response.body();
                         countDownTimer.cancel();
                         update(order);
                         context.startActivity(new Intent(context, ServiceFlow.class));
-                    }else{
+                    } else {
                         Toast.makeText(context, "Order accepted by another delivery boy", Toast.LENGTH_SHORT).show();
                     }
-
-                }else {
-
                 }
-
             }
 
             @Override
@@ -187,7 +179,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
                 customDialog.dismiss();
                 countDownTimer.cancel();
                 remove(order);
-
             }
 
             @Override
@@ -196,7 +187,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
                 customDialog.dismiss();
             }
         });
-
     }
 
     @Override
@@ -206,7 +196,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 
     private void setOrderStatus(TextView view, Order order) {
         String value = order.getStatus();
-        String isUserRated = order.getIsRated();
+        String isUserRated = order.getIsRated() != null ? order.getIsRated() : "0";
         switch (value) {
             case "ASSIGNED":
                 view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
@@ -214,25 +204,25 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
                 view.setText(context.getResources().getString(R.string.new_order_request));
                 break;
             case "COMPLETED":
-                if (isUserRated.equalsIgnoreCase("0")){
+                if (isUserRated.equalsIgnoreCase("0")) {
                     view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
                     view.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-                    view.setText(context.getResources().getString(R.string.order) + " #" + String.valueOf(order.getId()));
-                }else {
+                    view.setText(context.getResources().getString(R.string.order) + " #" + order.getId());
+                } else {
                     view.setTextColor(ContextCompat.getColor(context, R.color.primary_text));
                     view.setBackgroundColor(ContextCompat.getColor(context, R.color.light_grey));
-                    view.setText(context.getResources().getString(R.string.deliver) + " #" + String.valueOf(order.getId()));
+                    view.setText(context.getResources().getString(R.string.deliver) + " #" + order.getId());
                 }
                 break;
             case "CANCELLED":
                 view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorRed));
                 view.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-                view.setText(context.getResources().getString(R.string.cancelled) + " #" + String.valueOf(order.getId()));
+                view.setText(context.getResources().getString(R.string.cancelled) + " #" + order.getId());
                 break;
             default:
                 view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
                 view.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-                view.setText(context.getResources().getString(R.string.order) + " #" + String.valueOf(order.getId()));
+                view.setText(context.getResources().getString(R.string.order) + " #" + order.getId());
                 break;
         }
     }
@@ -246,17 +236,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 
         private MyViewHolder(View view) {
             super(view);
-            taskCard = (CardView) view.findViewById(R.id.task_card);
-            orderStatus = (TextView) view.findViewById(R.id.order_status);
-            timeLeft = (TextView) view.findViewById(R.id.time_left);
-            shopName = (TextView) view.findViewById(R.id.shop_name);
-            shopAddress = (TextView) view.findViewById(R.id.shop_address);
-            shopAvatar = (ImageView) view.findViewById(R.id.shop_avatar);
-            acceptRejectLayout = (LinearLayout) view.findViewById(R.id.accept_reject_layout);
+            taskCard = view.findViewById(R.id.task_card);
+            orderStatus = view.findViewById(R.id.order_status);
+            timeLeft = view.findViewById(R.id.time_left);
+            shopName = view.findViewById(R.id.shop_name);
+            shopAddress = view.findViewById(R.id.shop_address);
+            shopAvatar = view.findViewById(R.id.shop_avatar);
+            acceptRejectLayout = view.findViewById(R.id.accept_reject_layout);
             acceptBtn = view.findViewById(R.id.accept_btn);
             rejectBtn = view.findViewById(R.id.reject_btn);
             taskCard.setOnClickListener(this);
-
         }
 
         @Override
@@ -264,16 +253,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
             int position = getAdapterPosition();
             if (v.getId() == taskCard.getId()) {
                 GlobalData.order = list.get(position);
-                if ((GlobalData.order.getStatus().equals("COMPLETED") && GlobalData.order.getIsRated().equalsIgnoreCase("1")) || GlobalData.order.getStatus().equals("CANCELLED")) {
+                if ((GlobalData.order.getStatus().equals("COMPLETED") && GlobalData.order.getIsRated() != null && GlobalData.order.getIsRated().equalsIgnoreCase("1")) || GlobalData.order.getStatus().equals("CANCELLED")) {
                     context.startActivity(new Intent(context, OrderDetail.class));
-                }else {
+                } else {
                     context.startActivity(new Intent(context, ServiceFlow.class));
                 }
-
             }
         }
 
     }
-
-
 }
