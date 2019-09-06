@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    tools:context="com.tringtwentyfour.deliveryboy.activities.ServiceFlow">
+    tools:context="com.oyola.deliveryboy.activities.ServiceFlow">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -571,7 +571,7 @@
         android:layout_gravity="bottom"
         android:layout_margin="16dp">
 
-        <com.tringtwentyfour.deliveryboy.helper.OnlySeekableSeekBar
+        <com.oyola.deliveryboy.helper.OnlySeekableSeekBar
             android:id="@+id/shift_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

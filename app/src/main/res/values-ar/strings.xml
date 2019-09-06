@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!DOCTYPE resources [<!ENTITY appname  "Tring24 Delivery"><!ENTITY order "Order"><!ENTITY shift "Shift">]>
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE resources [<!ENTITY appname  "Oyola Delivery"><!ENTITY order "Order"><!ENTITY shift "Shift">]>
 <resources>
 
     <string name="app_name">&appname;</string>
