@@ -129,4 +129,5 @@
     <string name="wallet_detection">Wallet Detection</string>
     <string name="live_tasks">LIVE TASK</string>
     <string name="image_view">ImageView</string>
+    <string name="agree_policies">By signing up you agree to Oyola\'s <u>Terms of Service</u>, <u>Privacy Policy</u> and <u>Content Policies</u></string>
 </resources>

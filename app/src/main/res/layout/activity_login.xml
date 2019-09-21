@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="#FFFFFF"
+    android:background="@color/colorWhite"
     android:focusable="true"
     android:focusableInTouchMode="true"
     tools:context="com.oyola.deliveryboy.activities.Login">
@@ -12,118 +12,77 @@
     <ImageView
         android:id="@+id/app_logo"
         android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_height="70dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="100dp"
         android:contentDescription="@string/app_name"
-        android:scaleType="centerInside"
-        android:src="@drawable/logo_app" />
-
-    <TextView
-        android:id="@+id/app_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/app_logo"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textAllCaps="true"
-        android:textColor="@color/primary_text"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:visibility="invisible" />
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_app_logo" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/app_name"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/edittext"
-        android:gravity="bottom"
-        android:orientation="horizontal">
+        android:layout_centerInParent="true"
+        android:layout_margin="30dp"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/country_image"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/enter_mobile_number"
-            android:padding="8dp" />
-
-        <TextView
-            android:id="@+id/country_number"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/mobile_no"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:gravity="center_vertical"
-            android:hint="@string/enter_mobile_number"
-            android:inputType="phone"
-            android:maxLines="1"
-            android:padding="16dp"
-            android:textColor="@color/secondary_text"
-            android:textSize="18sp" />
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/edittext">
 
+            <ImageView
+                android:id="@+id/country_image"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/enter_mobile_number"
+                android:padding="8dp" />
+
+            <TextView
+                android:id="@+id/country_number"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/mobile_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/enter_mobile_number"
+                android:inputType="phone"
+                android:maxLines="1"
+                android:padding="16dp"
+                android:textColor="@color/colorPrimaryText"
+                android:textColorHint="@color/colorSecondaryText"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/submit"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="@string/continu" />
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/password_lyt"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_agree_policies"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/edittext"
-        android:gravity="bottom"
-        android:visibility="gone">
-
-        <EditText
-            android:id="@+id/ed_password"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_text_size"
-            android:background="@null"
-            android:drawableStart="@drawable/password_left"
-            android:drawablePadding="@dimen/_8sdp"
-            android:hint="@string/password"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:paddingStart="@dimen/_8sdp"
-            android:paddingEnd="@dimen/_8sdp"
-            android:textSize="@dimen/text_normal"
-
-            />
-
-        <ImageView
-            android:id="@+id/eye_img"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:src="@drawable/ic_eye_open" />
-
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/submit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/password_lyt"
-        android:layout_margin="16dp"
-        android:background="@color/colorAccent"
-        android:text="@string/continu"
-        android:textColor="@color/colorWhite" />
+        android:layout_alignParentBottom="true"
+        android:layout_margin="30dp"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="start"
+        android:text="@string/agree_policies"
+        android:textColor="@color/colorSecondaryText"
+        android:textSize="12sp" />
 
 </RelativeLayout>

@@ -42,14 +42,14 @@
             android:padding="2dp"
             android:textColor="@color/colorAccent"
             android:textSize="16sp"
-            app:cursorColor="@color/grey"
+            app:cursorColor="@color/colorGray"
             app:cursorWidth="2dp"
             app:itemCount="6"
             app:itemHeight="35dp"
             app:itemRadius="2dp"
             app:itemSpacing="3dp"
             app:itemWidth="35dp"
-            app:lineColor="@color/grey"
+            app:lineColor="@color/colorGray"
             app:lineWidth="2dp"
             app:viewType="rectangle" />
 

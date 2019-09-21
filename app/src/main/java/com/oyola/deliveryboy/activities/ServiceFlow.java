@@ -199,7 +199,7 @@ public class ServiceFlow extends AppCompatActivity {
                 if (progress > 50) {
                     seekBar.getThumb().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.MULTIPLY);
                 } else {
-                    seekBar.getThumb().setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.MULTIPLY);
+                    seekBar.getThumb().setColorFilter(getResources().getColor(R.color.colorGray), PorterDuff.Mode.MULTIPLY);
                 }
 
             }

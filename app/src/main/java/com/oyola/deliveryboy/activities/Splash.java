@@ -92,26 +92,32 @@ public class Splash extends AppCompatActivity {
         map.put("device_type", "android");
         map.put("device_id", device_UDID);
         map.put("device_token", device_token);
-        String header = SharedHelper.getKey(Splash.this, "token_type") + " " + SharedHelper.getKey(Splash.this, "access_token");
+        String header = SharedHelper.getKey(Splash.this, "token_type") + " "
+                + SharedHelper.getKey(Splash.this, "access_token");
         Call<Profile> call = api.getProfile(header, map);
         call.enqueue(new Callback<Profile>() {
             @Override
-            public void onResponse(@NonNull Call<Profile> call, @NonNull Response<Profile> response) {
+            public void onResponse(@NonNull Call<Profile> call,
+                                   @NonNull Response<Profile> response) {
 
                 if (response.isSuccessful()) {
                     GlobalData.profile = response.body();
                     SharedHelper.putKey(Splash.this, "logged_in", "1");
-                    SharedHelper.putKey(Splash.this, "currency_code", GlobalData.profile.getCurrency());
+                    SharedHelper.putKey(Splash.this, "currency_code",
+                            GlobalData.profile.getCurrency());
                     if (isNotification)
-                        startActivity(new Intent(Splash.this, Home.class).putExtra("is_splash", true));
+                        startActivity(new Intent(Splash.this, Home.class).putExtra("is_splash",
+                                true));
                     else
-                        startActivity(new Intent(Splash.this, ShiftStatus.class).putExtra("is_splash", true));
+                        startActivity(new Intent(Splash.this, ShiftStatus.class).putExtra(
+                                "is_splash", true));
 
                     finish();
                 } else {
                     if (response.code() == 401) {
                         SharedHelper.putKey(Splash.this, "logged_in", "0");
-                        startActivity(new Intent(Splash.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        startActivity(new Intent(Splash.this, Login.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                         finish();
                     }
                     APIError error = ErrorUtils.parseError(response);
@@ -141,12 +147,13 @@ public class Splash extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.connect_to_network))
                 .setCancelable(false)
-                .setPositiveButton(getString(R.string.connect_to_wifi), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        alert.dismiss();
-                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-                    }
-                })
+                .setPositiveButton(getString(R.string.connect_to_wifi),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                alert.dismiss();
+                                startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                            }
+                        })
                 .setNegativeButton(getString(R.string.quit), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         alert.dismiss();
@@ -163,12 +170,14 @@ public class Splash extends AppCompatActivity {
     public void getDeviceToken() {
         String TAG = "FCM";
         try {
-            if (!SharedHelper.getKey(this, "device_token").equals("") && SharedHelper.getKey(this, "device_token") != null) {
+            if (!SharedHelper.getKey(this, "device_token").equals("") && SharedHelper.getKey(this
+                    , "device_token") != null) {
                 device_token = SharedHelper.getKey(this, "device_token");
                 Log.d(TAG, "GCM Registration Token: " + device_token);
             } else {
                 device_token = FirebaseInstanceId.getInstance().getToken();
-                SharedHelper.putKey(this, "device_token", "" + FirebaseInstanceId.getInstance().getToken());
+                SharedHelper.putKey(this, "device_token",
+                        "" + FirebaseInstanceId.getInstance().getToken());
                 Log.d(TAG, "Failed to complete token refresh: " + device_token);
             }
         } catch (Exception e) {
@@ -177,7 +186,8 @@ public class Splash extends AppCompatActivity {
         }
 
         try {
-            device_UDID = android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+            device_UDID = android.provider.Settings.Secure.getString(getContentResolver(),
+                    android.provider.Settings.Secure.ANDROID_ID);
             Log.d(TAG, "Device UDID:" + device_UDID);
             SharedHelper.putKey(this, "device_id", device_UDID);
         } catch (Exception e) {

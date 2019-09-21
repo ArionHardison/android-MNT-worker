@@ -585,7 +585,7 @@
             android:progressDrawable="@android:color/transparent"
             android:splitTrack="false"
             android:thumb="@drawable/ic_thumb_scooter"
-            android:thumbTint="@color/grey" />
+            android:thumbTint="@color/colorGray" />
 
         <TextView
             android:id="@+id/status_label"

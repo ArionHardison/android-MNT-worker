@@ -37,16 +37,20 @@ public class TermsAndConditions extends AppCompatActivity {
         ButterKnife.bind(this);
 
         String dd = SharedHelper.getKey(this, "language");
-        switch (dd) {
-            case "English":
-                LocaleUtils.setLocale(this, "en");
-                break;
-            case "Japanese":
-                LocaleUtils.setLocale(this, "ja");
-                break;
-            default:
-                LocaleUtils.setLocale(this, "en");
-                break;
+        if (dd != null) {
+            switch (dd) {
+                case "English":
+                    LocaleUtils.setLocale(this, "en");
+                    break;
+                case "Japanese":
+                    LocaleUtils.setLocale(this, "ja");
+                    break;
+                default:
+                    LocaleUtils.setLocale(this, "en");
+                    break;
+            }
+        } else {
+            LocaleUtils.setLocale(this, "en");
         }
 
 
@@ -55,7 +59,7 @@ public class TermsAndConditions extends AppCompatActivity {
         webView.loadData(GlobalData.profile.getTerms(), "text/html", "UTF-8");
         webView.getSettings().setAppCacheEnabled(false);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl(BASE_URL+"terms");
+        webView.loadUrl(BASE_URL + "terms");
 
     }
 
@@ -63,7 +67,6 @@ public class TermsAndConditions extends AppCompatActivity {
     public void onViewClicked() {
         onBackPressed();
     }
-
 
 
     @Override
