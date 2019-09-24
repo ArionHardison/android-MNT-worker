@@ -55,8 +55,9 @@ public class TermsAndConditions extends AppCompatActivity {
 
 
         title.setText(getResources().getString(R.string.terms_and_conditions));
-        terms_condtion.setText(GlobalData.profile.getTerms());
-        webView.loadData(GlobalData.profile.getTerms(), "text/html", "UTF-8");
+        /*terms_condtion.setText(GlobalData.profile.getTerms());*/
+        if (GlobalData.profile != null && GlobalData.profile.getTerms() != null)
+            webView.loadData(GlobalData.profile.getTerms(), "text/html", "UTF-8");
         webView.getSettings().setAppCacheEnabled(false);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(BASE_URL + "terms");

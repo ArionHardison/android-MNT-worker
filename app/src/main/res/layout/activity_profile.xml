@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="com.oyola.deliveryboy.activities.ProfileActivity">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -27,8 +27,9 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/user_avatar"
                     android:layout_width="100dp"
@@ -37,20 +38,23 @@
                     android:src="@drawable/man"
                     app:civ_border_color="#FFFFFF"
                     app:civ_border_width="4dp" />
+
                 <ImageView
                     android:id="@+id/upload_profile"
                     android:layout_width="25dp"
-                    android:contentDescription="@string/upload_photo"
                     android:layout_height="25dp"
-                    android:src="@drawable/ic_cam"
-                    android:background="@drawable/round"
-                    android:padding="2dp"
-                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:background="@drawable/round"
+                    android:contentDescription="@string/upload_photo"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_cam"
+                    android:tint="@color/colorPrimary" />
+
             </RelativeLayout>
-
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,12 +63,13 @@
                 android:orientation="vertical">
 
                 <TextView
+                    fontPath="fonts/Nunito-Bold.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/name"
                     android:textAllCaps="true"
+                    android:textColor="@color/colorPrimaryText"
                     android:textSize="14sp"
-                    fontPath="fonts/Nunito-Bold.ttf"
                     tools:ignore="MissingPrefix" />
 
                 <EditText
@@ -81,7 +86,6 @@
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,6 +98,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/user_id"
                     android:textAllCaps="true"
+                    android:textColor="@color/colorPrimaryText"
                     android:textSize="14sp"
                     tools:ignore="MissingPrefix" />
 
@@ -102,11 +107,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_2"
+                    android:enabled="false"
                     android:inputType="text|textCapCharacters"
                     android:maxLines="1"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
-                    android:enabled="false"
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp" />
 
@@ -124,6 +129,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/mobile_number"
                     android:textAllCaps="true"
+                    android:textColor="@color/colorPrimaryText"
                     android:textSize="14sp"
                     tools:ignore="MissingPrefix" />
 
@@ -132,10 +138,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_2"
+                    android:enabled="false"
                     android:inputType="phone"
                     android:maxLines="1"
                     android:paddingTop="16dp"
-                    android:enabled="false"
                     android:paddingBottom="16dp"
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp" />
@@ -154,6 +160,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/email"
                     android:textAllCaps="true"
+                    android:textColor="@color/colorPrimaryText"
                     android:textSize="14sp"
                     tools:ignore="MissingPrefix" />
 
@@ -171,18 +178,19 @@
 
             </LinearLayout>
 
-
             <Button
                 android:id="@+id/update"
+                style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
-                android:text="@string/update"
+                android:layout_marginStart="0dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="0dp"
                 android:layout_marginBottom="16dp"
-                android:textColor="@android:color/white" />
+                android:text="@string/update" />
 
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>

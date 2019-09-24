@@ -8,8 +8,7 @@
                 </shape>
             </item>
             <item android:right="8dp">
-                <bitmap android:gravity="center|right"
-                    android:src="@drawable/ic_down" />
+                <bitmap android:gravity="center|right" android:src="@drawable/ic_down" android:tint="@color/colorPrimary" />
             </item>
         </layer-list>
     </item>

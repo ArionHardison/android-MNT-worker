@@ -4,7 +4,7 @@
     <string name="mobile_number">Mobile Number</string>
     <string name="break_">Break</string>
     <string name="select_vehicle">"Select vehicle"</string>
-    <string name="turn_on_start_shift">"Turn on Start &shift; to go for delivery"</string>
+    <string name="turn_on_start_shift">"Turn On Start &shift; to go for delivery"</string>
     <string name="no_results">"No Results"</string>
     <string name="notice_board">"Notice Board"</string>
     <string name="check_your_internet_connection">"Please check your Internet connection"</string>
@@ -87,7 +87,6 @@
     <string name="amount_to_pay">"Amount to Pay"</string>
     <string name="otp">Otp</string>
     <string name="enter_otp">Please enter otp</string>
-    <string name="invalid_otp">Invalid Otp</string>
     <string name="full_amount">Please enter full amount</string>
     <string name="enter_the_amount_paid">Enter the amount paid</string>
     <string name="balance">"Balance"</string>
@@ -130,4 +129,5 @@
     <string name="live_tasks">LIVE TASK</string>
     <string name="image_view">ImageView</string>
     <string name="agree_policies">By signing up you agree to Oyola\'s <u>Terms of Service</u>, <u>Privacy Policy</u> and <u>Content Policies</u></string>
+    <string name="invalid_otp">Please enter valid OTP</string>
 </resources>

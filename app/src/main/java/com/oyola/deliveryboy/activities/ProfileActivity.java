@@ -26,6 +26,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.oyola.deliveryboy.R;
 import com.oyola.deliveryboy.api.APIError;
 import com.oyola.deliveryboy.api.ErrorUtils;
 import com.oyola.deliveryboy.helper.CustomDialog;
@@ -33,11 +37,7 @@ import com.oyola.deliveryboy.helper.GlobalData;
 import com.oyola.deliveryboy.helper.LocaleUtils;
 import com.oyola.deliveryboy.helper.SharedHelper;
 import com.oyola.deliveryboy.model.Profile;
-import com.oyola.deliveryboy.R;
 import com.oyola.deliveryboy.model.ProfileError;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,6 +57,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    private static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE = 0;
     @BindView(R.id.user_avatar)
     CircleImageView userAvatar;
     @BindView(R.id.name)
@@ -76,10 +77,10 @@ public class ProfileActivity extends AppCompatActivity {
     TextView title;
     @BindView(R.id.upload_profile)
     ImageView uploadProfile;
-    private int PICK_IMAGE_REQUEST = 1;
     File imgFile;
-    private static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE = 0;
     String device_token, device_UDID;
+    private int PICK_IMAGE_REQUEST = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,12 +134,14 @@ public class ProfileActivity extends AppCompatActivity {
         map.put("device_type", "android");
         map.put("device_id", device_UDID);
         map.put("device_token", device_token);
-        String header = SharedHelper.getKey(this, "token_type") + " " + SharedHelper.getKey(this, "access_token");
+        String header = SharedHelper.getKey(this, "token_type") + " " + SharedHelper.getKey(this,
+                "access_token");
         System.out.println("getProfile Header " + header);
         Call<Profile> call = GlobalData.api.getProfile(header, map);
         call.enqueue(new Callback<Profile>() {
             @Override
-            public void onResponse(@NonNull Call<Profile> call, @NonNull Response<Profile> response) {
+            public void onResponse(@NonNull Call<Profile> call,
+                                   @NonNull Response<Profile> response) {
                 if (response.isSuccessful()) {
                     GlobalData.profile = response.body();
                     initView();
@@ -155,17 +158,18 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
-                Toast.makeText(ProfileActivity.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+                Toast.makeText(ProfileActivity.this, R.string.something_went_wrong,
+                        Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private void updateProfile() {
 
-        if (name.getText().toString().isEmpty()){
+        if (name.getText().toString().isEmpty()) {
             Toast.makeText(this, "The name field is required.", Toast.LENGTH_SHORT).show();
             return;
-        } else if(email.getText().toString().isEmpty()) {
+        } else if (email.getText().toString().isEmpty()) {
             Toast.makeText(this, "The email field is required.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -178,35 +182,46 @@ public class ProfileActivity extends AppCompatActivity {
         map.put("email", email.getText().toString());*/
 
         HashMap<String, RequestBody> map = new HashMap<>();
-        map.put("name", RequestBody.create(MediaType.parse("text/plain"), name.getText().toString()));
-        map.put("email", RequestBody.create(MediaType.parse("text/plain"), email.getText().toString()));
+        map.put("name", RequestBody.create(MediaType.parse("text/plain"),
+                name.getText().toString()));
+        map.put("email", RequestBody.create(MediaType.parse("text/plain"),
+                email.getText().toString()));
         MultipartBody.Part filePart = null;
 
         if (imgFile != null)
-            filePart = MultipartBody.Part.createFormData("avatar", imgFile.getName(), RequestBody.create(MediaType.parse("image/*"), imgFile));
+            filePart = MultipartBody.Part.createFormData("avatar", imgFile.getName(),
+                    RequestBody.create(MediaType.parse("image/*"), imgFile));
 
-        String header = SharedHelper.getKey(this, "token_type") + " " + SharedHelper.getKey(this, "access_token");
+        String header = SharedHelper.getKey(this, "token_type") + " " + SharedHelper.getKey(this,
+                "access_token");
         Call<Profile> call = GlobalData.api.updateProfileWithImage(header, map, filePart);
         call.enqueue(new Callback<Profile>() {
             @Override
-            public void onResponse(@NonNull Call<Profile> call, @NonNull Response<Profile> response) {
+            public void onResponse(@NonNull Call<Profile> call,
+                                   @NonNull Response<Profile> response) {
                 customDialog.cancel();
                 if (response.isSuccessful()) {
                     GlobalData.profile = response.body();
                     initView();
-                    Toast.makeText(ProfileActivity.this, getResources().getString(R.string.success_profile), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileActivity.this,
+                            getResources().getString(R.string.success_profile),
+                            Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
                     Gson gson = new GsonBuilder().create();
                     try {
-                        ProfileError error = gson.fromJson(response.errorBody().string(),ProfileError.class);
-                        System.out.println("error "+error.toString());
-                        if (error.getName() != null){
-                            Toast.makeText(ProfileActivity.this, error.getName().get(0), Toast.LENGTH_SHORT).show();
-                        }else if(error.getEmail() != null){
-                            Toast.makeText(ProfileActivity.this, error.getEmail().get(0), Toast.LENGTH_SHORT).show();
-                        }else if(error.getAvatar() != null){
-                            Toast.makeText(ProfileActivity.this, error.getAvatar().get(0), Toast.LENGTH_SHORT).show();
+                        ProfileError error = gson.fromJson(response.errorBody().string(),
+                                ProfileError.class);
+                        System.out.println("error " + error.toString());
+                        if (error.getName() != null) {
+                            Toast.makeText(ProfileActivity.this, error.getName().get(0),
+                                    Toast.LENGTH_SHORT).show();
+                        } else if (error.getEmail() != null) {
+                            Toast.makeText(ProfileActivity.this, error.getEmail().get(0),
+                                    Toast.LENGTH_SHORT).show();
+                        } else if (error.getAvatar() != null) {
+                            Toast.makeText(ProfileActivity.this, error.getAvatar().get(0),
+                                    Toast.LENGTH_SHORT).show();
                             initView();
                         }
                     } catch (IOException e) {
@@ -219,7 +234,8 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
                 customDialog.cancel();
-                Toast.makeText(ProfileActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, R.string.something_went_wrong,
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -253,17 +269,20 @@ public class ProfileActivity extends AppCompatActivity {
 //            imgFile = new File(imgDecodableString);
 
             try {
-                imgFile = new id.zelory.compressor.Compressor(ProfileActivity.this).compressToFile(new File(imgDecodableString));
+                imgFile =
+                        new id.zelory.compressor.Compressor(ProfileActivity.this).compressToFile(new File(imgDecodableString));
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
         } else if (resultCode == Activity.RESULT_CANCELED)
-            Toast.makeText(this, getResources().getString(R.string.dont_pick_image), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.dont_pick_image),
+                    Toast.LENGTH_SHORT).show();
     }
 
     public void goToImageIntent() {
-        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
@@ -286,7 +305,8 @@ public class ProfileActivity extends AppCompatActivity {
                 break;
             case R.id.upload_profile:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                         goToImageIntent();
                     } else {
                         requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
@@ -302,7 +322,8 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
         switch (requestCode) {
             case ASK_MULTIPLE_PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0) {
@@ -318,7 +339,8 @@ public class ProfileActivity extends AppCompatActivity {
                                 new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        ActivityCompat.requestPermissions(ProfileActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
+                                        ActivityCompat.requestPermissions(ProfileActivity.this,
+                                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
                                     }
                                 }).show();
                     }
@@ -330,12 +352,14 @@ public class ProfileActivity extends AppCompatActivity {
     public void getDeviceToken() {
         String TAG = "FCM";
         try {
-            if (!SharedHelper.getKey(this, "device_token").equals("") && SharedHelper.getKey(this, "device_token") != null) {
+            if (!SharedHelper.getKey(this, "device_token").equals("") && SharedHelper.getKey(this
+                    , "device_token") != null) {
                 device_token = SharedHelper.getKey(this, "device_token");
                 Log.d(TAG, "GCM Registration Token: " + device_token);
             } else {
                 device_token = FirebaseInstanceId.getInstance().getToken();
-                SharedHelper.putKey(this, "device_token", "" + FirebaseInstanceId.getInstance().getToken());
+                SharedHelper.putKey(this, "device_token",
+                        "" + FirebaseInstanceId.getInstance().getToken());
                 Log.d(TAG, "Failed to complete token refresh: " + device_token);
             }
         } catch (Exception e) {
@@ -344,7 +368,8 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         try {
-            device_UDID = android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+            device_UDID = android.provider.Settings.Secure.getString(getContentResolver(),
+                    android.provider.Settings.Secure.ANDROID_ID);
             Log.d(TAG, "Device UDID:" + device_UDID);
             SharedHelper.putKey(this, "device_id", "" + device_UDID);
         } catch (Exception e) {

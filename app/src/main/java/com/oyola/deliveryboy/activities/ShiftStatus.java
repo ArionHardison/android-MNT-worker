@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -68,15 +69,15 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.oyola.deliveryboy.helper.GlobalData.color;
 
 public class ShiftStatus extends AppCompatActivity {
 
+    public static final int REQUEST_LOCATION = 1450;
+    private static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE = 0;
     @BindView(R.id.shift_btn)
     Button shiftBtn;
-
     EditText vehicleNumber;
     Spinner vehicleNumberSpinner;
     CustomDialog customDialog;
@@ -90,15 +91,12 @@ public class ShiftStatus extends AppCompatActivity {
     Switch breakSwitch;
     @BindView(R.id.shift_break_rv)
     RecyclerView shiftBreakRv;
-
     ShiftBreakAdapter adapter;
     List<Shiftbreaktime> breaks;
     NumberFormat numberFormat;
     @BindView(R.id.owed_amount)
     TextView owedAmount;
-    private static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE = 0;
     GoogleApiClient googleApiClient;
-    public static final int REQUEST_LOCATION = 1450;
     Button endShift;
     boolean isComesSplash = false;
     Activity activity = this;
@@ -114,18 +112,25 @@ public class ShiftStatus extends AppCompatActivity {
 
         breaks = new ArrayList<>();
         adapter = new ShiftBreakAdapter(breaks, this);
-        shiftBreakRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        shiftBreakRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,
+                false));
         shiftBreakRv.setItemAnimator(new DefaultItemAnimator());
         shiftBreakRv.setAdapter(adapter);
 
         getShift();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.CALL_PHONE}, ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA,
+                    Manifest.permission.CALL_PHONE}, ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 buildGoogleApiClient();
             } else {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION},
+                        ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
             }
         } else {
             buildGoogleApiClient();
@@ -149,11 +154,14 @@ public class ShiftStatus extends AppCompatActivity {
             owedAmount.setVisibility(View.VISIBLE);
             shiftBreakRv.setVisibility(View.VISIBLE);
             messageLayout.setVisibility(View.GONE);
-            CharSequence amount = color(Color.BLACK, getResources().getString(R.string.you_owed), color(Color.parseColor("#ef4756"), GlobalData.profile.getCurrency() + /*numberFormat.format(*/GlobalData.shift.getTotalAmountPay()))/*)*/;
+            CharSequence amount = color(Color.BLACK, getResources().getString(R.string.you_owed),
+                    color(Color.parseColor("#ef4756"), GlobalData.profile.getCurrency() +
+                            /*numberFormat.format(*/GlobalData.shift.getTotalAmountPay()))/*)*/;
             owedAmount.setText(amount);
             refreshBreaksRV();
             if (GlobalData.shift.getShiftbreaktimes() != null && GlobalData.shift.getShiftbreaktimes().size() > 0) {
-                Shiftbreaktime lastBreakTime = GlobalData.shift.getShiftbreaktimes().get(GlobalData.shift.getShiftbreaktimes().size() - 1);
+                Shiftbreaktime lastBreakTime =
+                        GlobalData.shift.getShiftbreaktimes().get(GlobalData.shift.getShiftbreaktimes().size() - 1);
                 if (lastBreakTime.getEndTime() == null) {
                     breakSwitch.setChecked(true);
                 } else {
@@ -167,48 +175,39 @@ public class ShiftStatus extends AppCompatActivity {
     }
 
     private void initiatePopupWindow() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        FrameLayout frameView = new FrameLayout(this);
+        builder.setView(frameView);
 
-        try {
-            AlertDialog.Builder builder = new AlertDialog.Builder(ShiftStatus.this);
-            final FrameLayout frameView = new FrameLayout(ShiftStatus.this);
-            builder.setView(frameView);
-
-            final AlertDialog alertDialog = builder.create();
-            LayoutInflater inflater = alertDialog.getLayoutInflater();
-            View dialogView = inflater.inflate(R.layout.shift_popup, frameView);
-            alertDialog.show();
-            vehicleNumber = dialogView.findViewById(R.id.vehicle_number);
-            vehicleNumberSpinner = dialogView.findViewById(R.id.vehicle_number_spinner);
-            getVehicleList();
-            Button done = dialogView.findViewById(R.id.vehicle_done);
-            done.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    alertDialog.dismiss();
-                    startShift();
-                    //startActivity(new Intent(ShiftStatus.this, Home.class));
-                }
-            });
-            alertDialog.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        final AlertDialog alertDialog = builder.create();
+        View dialogView = getLayoutInflater().inflate(R.layout.shift_popup, frameView);
+        vehicleNumberSpinner = dialogView.findViewById(R.id.vehicle_number_spinner);
+        vehicleNumber = dialogView.findViewById(R.id.vehicle_number);
+        Button done = dialogView.findViewById(R.id.vehicle_done);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                startShift();
+            }
+        });
+        if (alertDialog.getWindow() != null)
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
     }
 
     private void getShift() {
-
         if (customDialog != null)
             customDialog.show();
 
-        String header = SharedHelper.getKey(ShiftStatus.this, "token_type") + " " + SharedHelper.getKey(ShiftStatus.this, "access_token");
+        String header = SharedHelper.getKey(ShiftStatus.this, "token_type") + " "
+                + SharedHelper.getKey(ShiftStatus.this, "access_token");
         Call<List<Shift>> call = GlobalData.api.getShift(header);
         call.enqueue(new Callback<List<Shift>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Shift>> call, @NonNull Response<List<Shift>> response) {
-                Log.d("getShift() ", response.toString());
+            public void onResponse(@NonNull Call<List<Shift>> call,
+                                   @NonNull Response<List<Shift>> response) {
                 customDialog.cancel();
-
                 if (response.isSuccessful()) {
                     if (response.body().size() > 0) {
                         GlobalData.shift = response.body().get(0);
@@ -232,64 +231,70 @@ public class ShiftStatus extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<List<Shift>> call, @NonNull Throwable t) {
                 customDialog.cancel();
-                Toast.makeText(ShiftStatus.this, "Something wrong - getShift", Toast.LENGTH_LONG).show();
+                Toast.makeText(ShiftStatus.this, "Something wrong - getShift",
+                        Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private void getVehicleList() {
-
         if (customDialog != null)
             customDialog.show();
 
-        String header = SharedHelper.getKey(ShiftStatus.this, "token_type") + " " + SharedHelper.getKey(ShiftStatus.this, "access_token");
+        String header = SharedHelper.getKey(ShiftStatus.this, "token_type") + " "
+                + SharedHelper.getKey(ShiftStatus.this, "access_token");
         Call<List<Vehicle>> call = GlobalData.api.getVehicles(header);
         call.enqueue(new Callback<List<Vehicle>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Vehicle>> call, @NonNull Response<List<Vehicle>> response) {
-                customDialog.cancel();
-                if (response.isSuccessful()) {
-                    List<Vehicle> vehicles = new ArrayList<Vehicle>();
+            public void onResponse(@NonNull Call<List<Vehicle>> call,
+                                   @NonNull Response<List<Vehicle>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    initiatePopupWindow();
 
+                    List<Vehicle> vehicles = new ArrayList<>();
                     Vehicle vehicle = new Vehicle();
                     vehicle.setId(null);
                     vehicle.setTransporterId(null);
                     vehicle.setVehicleNo(getResources().getString(R.string.select_vehicle));
                     vehicle.setDeletedAt(null);
-
                     vehicles.add(vehicle);
                     vehicles.addAll(response.body());
 
-                    ArrayAdapter<Vehicle> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, vehicles);
+                    customDialog.cancel();
+
+                    ArrayAdapter<Vehicle> adapter = new ArrayAdapter<>(getApplicationContext(),
+                            R.layout.spinner_item, vehicles);
                     adapter.setDropDownViewResource(R.layout.spinner_item);
                     vehicleNumberSpinner.setAdapter(adapter);
                 } else {
+                    customDialog.cancel();
                     APIError error = ErrorUtils.parseError(response);
-                    Toast.makeText(ShiftStatus.this, error.getError(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ShiftStatus.this, error.getError(), Toast.LENGTH_SHORT)
+                            .show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Vehicle>> call, @NonNull Throwable t) {
                 customDialog.cancel();
-                Toast.makeText(ShiftStatus.this, "Something wrong - getVehicleList", Toast.LENGTH_LONG).show();
+                Toast.makeText(ShiftStatus.this, "Something wrong - getVehicleList",
+                        Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private void startShift() {
-
         String vehicle_no = "";
-
-        if (!vehicleNumberSpinner.getSelectedItem().toString().equals(getResources().getString(R.string.select_vehicle))) {
+        if (!vehicleNumberSpinner.getSelectedItem().toString()
+                .equals(getResources().getString(R.string.select_vehicle))) {
             vehicle_no = vehicleNumberSpinner.getSelectedItem().toString();
         }
         if (!vehicleNumber.getText().toString().isEmpty()) {
             vehicle_no = vehicleNumber.getText().toString();
         }
-
         if (vehicle_no.isEmpty()) {
-            Toast.makeText(this, getResources().getString(R.string.select_vehicle), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.select_vehicle),
+                    Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -298,15 +303,16 @@ public class ShiftStatus extends AppCompatActivity {
 
         HashMap<String, String> map = new HashMap<>();
         map.put("vehicle_no", vehicle_no);
-
-        String header = SharedHelper.getKey(ShiftStatus.this, "token_type") + " " + SharedHelper.getKey(ShiftStatus.this, "access_token");
+        String header = SharedHelper.getKey(ShiftStatus.this, "token_type") + " "
+                + SharedHelper.getKey(ShiftStatus.this, "access_token");
         Call<List<Shift>> call = GlobalData.api.shiftStart(header, map);
         call.enqueue(new Callback<List<Shift>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Shift>> call, @NonNull Response<List<Shift>> response) {
+            public void onResponse(@NonNull Call<List<Shift>> call,
+                                   @NonNull Response<List<Shift>> response) {
                 customDialog.cancel();
                 if (response.isSuccessful()) {
-                    if (response.body().size() > 0) {
+                    if (!response.body().isEmpty()) {
                         GlobalData.shift = response.body().get(0);
                         startActivity(new Intent(ShiftStatus.this, Home.class));
                         finish();
@@ -325,14 +331,16 @@ public class ShiftStatus extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<List<Shift>> call, @NonNull Throwable t) {
                 customDialog.cancel();
-                Toast.makeText(ShiftStatus.this, "Something wrong - startShift", Toast.LENGTH_LONG).show();
+                Toast.makeText(ShiftStatus.this, "Something wrong - startShift",
+                        Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private boolean isServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+        for (ActivityManager.RunningServiceInfo service :
+                manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
                 return true;
             }
@@ -345,11 +353,13 @@ public class ShiftStatus extends AppCompatActivity {
         if (customDialog != null && GlobalData.shift != null)
             customDialog.show();
 
-        String header = SharedHelper.getKey(ShiftStatus.this, "token_type") + " " + SharedHelper.getKey(ShiftStatus.this, "access_token");
+        String header = SharedHelper.getKey(ShiftStatus.this, "token_type") + " "
+                        + SharedHelper.getKey(ShiftStatus.this, "access_token");
         Call<List<Shift>> call = GlobalData.api.shiftEnd(header, GlobalData.shift.getId());
         call.enqueue(new Callback<List<Shift>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Shift>> call, @NonNull Response<List<Shift>> response) {
+            public void onResponse(@NonNull Call<List<Shift>> call,
+                                   @NonNull Response<List<Shift>> response) {
                 customDialog.cancel();
                 if (response.isSuccessful()) {
                     boolean serviceRunningStatus = isServiceRunning(GPSTrackerService.class);
@@ -395,11 +405,13 @@ public class ShiftStatus extends AppCompatActivity {
         HashMap<String, String> map = new HashMap<>();
         map.put("vehicle_no", GlobalData.shift.getVehicle().getVehicleNo());
 
-        String header = SharedHelper.getKey(ShiftStatus.this, "token_type") + " " + SharedHelper.getKey(ShiftStatus.this, "access_token");
+        String header =
+                SharedHelper.getKey(ShiftStatus.this, "token_type") + " " + SharedHelper.getKey(ShiftStatus.this, "access_token");
         Call<List<Shift>> call = GlobalData.api.shiftBreakStart(header, map);
         call.enqueue(new Callback<List<Shift>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Shift>> call, @NonNull Response<List<Shift>> response) {
+            public void onResponse(@NonNull Call<List<Shift>> call,
+                                   @NonNull Response<List<Shift>> response) {
                 customDialog.cancel();
                 Log.i("startBreakShift", GlobalData.shift.toString());
                 if (response.isSuccessful()) {
@@ -421,7 +433,8 @@ public class ShiftStatus extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<List<Shift>> call, @NonNull Throwable t) {
                 customDialog.cancel();
-                Toast.makeText(ShiftStatus.this, "Something wrong - startBreakShift", Toast.LENGTH_LONG).show();
+                Toast.makeText(ShiftStatus.this, "Something wrong - startBreakShift",
+                        Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -434,13 +447,16 @@ public class ShiftStatus extends AppCompatActivity {
 
         customDialog.show();
 
-        Shiftbreaktime lastBreakTime = GlobalData.shift.getShiftbreaktimes().get(GlobalData.shift.getShiftbreaktimes().size() - 1);
+        Shiftbreaktime lastBreakTime =
+                GlobalData.shift.getShiftbreaktimes().get(GlobalData.shift.getShiftbreaktimes().size() - 1);
 
-        String header = SharedHelper.getKey(ShiftStatus.this, "token_type") + " " + SharedHelper.getKey(ShiftStatus.this, "access_token");
+        String header =
+                SharedHelper.getKey(ShiftStatus.this, "token_type") + " " + SharedHelper.getKey(ShiftStatus.this, "access_token");
         Call<List<Shift>> call = GlobalData.api.shiftBreakEnd(header, lastBreakTime.getId());
         call.enqueue(new Callback<List<Shift>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Shift>> call, @NonNull Response<List<Shift>> response) {
+            public void onResponse(@NonNull Call<List<Shift>> call,
+                                   @NonNull Response<List<Shift>> response) {
                 customDialog.cancel();
                 Log.i("endBreakShift", GlobalData.shift.toString());
                 if (response.isSuccessful()) {
@@ -462,7 +478,8 @@ public class ShiftStatus extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<List<Shift>> call, @NonNull Throwable t) {
                 customDialog.cancel();
-                Toast.makeText(ShiftStatus.this, "Something wrong - endBreakShift", Toast.LENGTH_LONG).show();
+                Toast.makeText(ShiftStatus.this, "Something wrong - endBreakShift",
+                        Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -512,7 +529,8 @@ public class ShiftStatus extends AppCompatActivity {
             System.out.println("popupEndShift");
             try {
                 if (GlobalData.shift.getTotalAmountPay() > 0) {
-                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+                    android.app.AlertDialog.Builder builder =
+                            new android.app.AlertDialog.Builder(this);
 
                     final FrameLayout frameView = new FrameLayout(this);
                     builder.setView(frameView);
@@ -522,7 +540,9 @@ public class ShiftStatus extends AppCompatActivity {
                     View dialogView = inflater.inflate(R.layout.amount_paid_popup, frameView);
 
                     final TextView amountToBePaid = dialogView.findViewById(R.id.amount_to_be_paid);
-                    amountToBePaid.setText(String.format("%s %d", GlobalData.profile.getCurrency(), GlobalData.shift.getTotalAmountPay()));
+                    amountToBePaid.setText(String.format("%s %d",
+                            GlobalData.profile.getCurrency(),
+                            GlobalData.shift.getTotalAmountPay()));
                     endShift = dialogView.findViewById(R.id.end_shift);
                     endShift.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
@@ -531,7 +551,7 @@ public class ShiftStatus extends AppCompatActivity {
                         }
                     });
                     alertDialog.show();
-                }else{
+                } else {
                     endShift();
                 }
                 if (GlobalData.shift != null && GlobalData.shift.getEndTime() != null) {
@@ -571,13 +591,16 @@ public class ShiftStatus extends AppCompatActivity {
                 startActivity(new Intent(this, Home.class));
                 finish();
                 break;
+
             case R.id.shift_btn:
                 if (GlobalData.shift != null) {
                     popupEndShift();
-                    //endShift();
                 } else {
-                    initiatePopupWindow();
+                    getVehicleList();
                 }
+                break;
+
+            default:
                 break;
         }
     }
@@ -600,12 +623,14 @@ public class ShiftStatus extends AppCompatActivity {
                 .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(ConnectionResult connectionResult) {
-                        Log.d("Location error", "Location error " + connectionResult.getErrorCode());
+                        Log.d("Location error",
+                                "Location error " + connectionResult.getErrorCode());
                     }
                 }).build();
         googleApiClient.connect();
 
-        final LocationManager manager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        final LocationManager manager =
+                (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             enableLoc();
         }
@@ -623,7 +648,8 @@ public class ShiftStatus extends AppCompatActivity {
         builder.setAlwaysShow(true);
 
         PendingResult<LocationSettingsResult> result =
-                LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
+                LocationServices.SettingsApi.checkLocationSettings(googleApiClient,
+                        builder.build());
         result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
             @Override
             public void onResult(LocationSettingsResult result) {
@@ -656,12 +682,15 @@ public class ShiftStatus extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         switch (requestCode) {
             case ASK_MULTIPLE_PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0) {
-                    boolean FINE_LOCATIONPermission = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-                    boolean COARSE_LOCATIONPermission = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean FINE_LOCATIONPermission =
+                            grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    boolean COARSE_LOCATIONPermission =
+                            grantResults[0] == PackageManager.PERMISSION_GRANTED;
 
                     if (FINE_LOCATIONPermission && COARSE_LOCATIONPermission) {
                         boolean serviceRunningStatus = isServiceRunning(GPSTrackerService.class);
@@ -674,7 +703,8 @@ public class ShiftStatus extends AppCompatActivity {
                             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                                 startService(new Intent(activity, GPSTrackerService.class));
                             } else {
-                                Intent serviceIntent = new Intent(activity, GPSTrackerService.class);
+                                Intent serviceIntent = new Intent(activity,
+                                        GPSTrackerService.class);
                                 ContextCompat.startForegroundService(activity, serviceIntent);
                             }
                         }
@@ -685,18 +715,14 @@ public class ShiftStatus extends AppCompatActivity {
                                 new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        ActivityCompat.requestPermissions(ShiftStatus.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
+                                        ActivityCompat.requestPermissions(ShiftStatus.this,
+                                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
                                     }
                                 }).show();
                     }
                 }
                 break;
         }
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override

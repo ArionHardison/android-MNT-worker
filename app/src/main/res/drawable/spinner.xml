@@ -4,13 +4,13 @@
         <layer-list>
             <item>
                 <shape>
-                    <solid android:color="#ffffff" />
-                    <stroke android:width="0.33dp" android:color="#efeeee" />
+                    <solid android:color="@color/colorWhite" />
+                    <stroke android:width="0.5dp" android:color="@color/colorGray" />
                     <corners android:radius="1dp" />
                 </shape>
             </item>
-            <item android:right="5dp">
-                <bitmap android:gravity="center_vertical|right" android:src="@drawable/ic_down" />
+            <item android:right="10dp">
+                <bitmap android:gravity="center_vertical|right" android:src="@drawable/ic_down" android:tint="@color/colorPrimary" />
             </item>
         </layer-list>
     </item>

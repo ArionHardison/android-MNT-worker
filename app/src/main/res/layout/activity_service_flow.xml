@@ -170,8 +170,8 @@
                                 android:id="@+id/shop_distance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="4dp"
                                 android:layout_marginStart="4dp"
+                                android:layout_marginLeft="4dp"
                                 android:maxLines="1"
                                 android:textColor="@color/colorAccent" />
                         </LinearLayout>
@@ -255,8 +255,8 @@
                                 android:id="@+id/user_distance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="4dp"
                                 android:layout_marginStart="4dp"
+                                android:layout_marginLeft="4dp"
                                 android:maxLines="1"
                                 android:textColor="@color/colorAccent" />
                         </LinearLayout>
@@ -594,14 +594,20 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:maxLines="1"
-            android:paddingEnd="0dp"
-            android:paddingLeft="24dp"
-            android:paddingRight="0dp"
             android:paddingStart="24dp"
+            android:paddingLeft="24dp"
+            android:paddingEnd="0dp"
+            android:paddingRight="0dp"
             android:textAllCaps="true"
             android:textColor="@color/colorAccent"
             android:textSize="14sp"
             tools:ignore="MissingPrefix" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
     </RelativeLayout>
 

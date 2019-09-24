@@ -210,7 +210,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
                     view.setText(context.getResources().getString(R.string.order) + " #" + order.getId());
                 } else {
                     view.setTextColor(ContextCompat.getColor(context, R.color.primary_text));
-                    view.setBackgroundColor(ContextCompat.getColor(context, R.color.light_grey));
+                    view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorGrayLight));
                     view.setText(context.getResources().getString(R.string.deliver) + " #" + order.getId());
                 }
                 break;

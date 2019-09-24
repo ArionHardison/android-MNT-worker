@@ -64,7 +64,7 @@ public interface ApiInterface {
     @POST("api/transporter/verify/otp")
     Call<Token> postLogin(@FieldMap HashMap<String, String> params);
 
-    @GET("api/transporter/shift/")
+    @GET("api/transporter/shift")
     Call<List<Shift>> getShift(@Header("Authorization") String authorization);
 
     @FormUrlEncoded

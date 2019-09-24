@@ -13,6 +13,7 @@
         android:layout_margin="12dp"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:clickable="true"
+        android:focusable="true"
         card_view:cardCornerRadius="4dp">
 
         <LinearLayout
@@ -103,26 +104,31 @@
 
             <LinearLayout
                 android:id="@+id/accept_reject_layout"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/reject_btn"
-                    android:textColor="@color/colorWhite"
-                    android:background="@color/colorRed"
-                    android:text="@string/reject"
-                    android:layout_weight="1"
+                    style="@style/ButtonStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp" />
+                    android:layout_height="40dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorRed"
+                    android:text="@string/reject" />
+
                 <Button
                     android:id="@+id/accept_btn"
-                    android:textColor="@color/colorWhite"
-                    android:background="@color/green_dark"
-                    android:text="@string/accept"
-                    android:layout_weight="1"
+                    style="@style/ButtonStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp" />
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorGreen"
+                    android:text="@string/accept" />
             </LinearLayout>
 
 

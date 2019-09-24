@@ -1,136 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:background="@color/colorWhite"
+    app:cardCornerRadius="15dp"
+    app:contentPadding="0dp">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="@string/feedback"
-        android:textAllCaps="true"
-        android:textSize="16sp"
-        fontPath="fonts/Nunito-Bold.ttf"
-        tools:ignore="MissingPrefix" />
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:text="@string/how_was_the_delivery"
-        fontPath="fonts/Nunito-Bold.ttf"
-        tools:ignore="MissingPrefix"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        <TextView
+            fontPath="fonts/Nunito-Bold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/feedback"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            tools:ignore="MissingPrefix" />
 
-
+        <TextView
+            fontPath="fonts/Nunito-Bold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:text="@string/how_was_the_delivery"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:ignore="MissingPrefix" />
 
         <RadioGroup
             android:id="@+id/rate_radiogroup"
             android:layout_width="match_parent"
-            android:orientation="horizontal"
+            android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:layout_height="wrap_content">
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/one"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button"
                 android:button="@null"
                 android:drawableTop="@drawable/sad72"
                 android:gravity="center"
-                android:textSize="8sp"
-                android:textAllCaps="true"
-                android:layout_weight="1"
                 android:padding="8dp"
-                android:background="@drawable/radio_button"
-                android:text="@string/terrible" />
+                android:text="@string/terrible"
+                android:textAllCaps="true"
+                android:textSize="8sp" />
 
             <RadioButton
                 android:id="@+id/two"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button"
                 android:button="@null"
                 android:drawableTop="@drawable/emotion72"
                 android:gravity="center"
-                android:textSize="8sp"
-                android:layout_weight="1"
                 android:padding="8dp"
-                android:background="@drawable/radio_button"
+                android:text="@string/bad"
                 android:textAllCaps="true"
-                android:text="@string/bad" />
+                android:textSize="8sp" />
+
             <RadioButton
                 android:id="@+id/three"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button"
                 android:button="@null"
                 android:drawableTop="@drawable/happyy72"
                 android:gravity="center"
-                android:textSize="8sp"
                 android:padding="8dp"
-                android:background="@drawable/radio_button"
-                android:layout_weight="1"
+                android:text="@string/okay"
                 android:textAllCaps="true"
-                android:text="@string/okay" />
+                android:textSize="8sp" />
+
             <RadioButton
                 android:id="@+id/four"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button"
                 android:button="@null"
                 android:drawableTop="@drawable/happy72"
                 android:gravity="center"
-                android:textSize="8sp"
                 android:padding="8dp"
-                android:background="@drawable/radio_button"
-                android:layout_weight="1"
+                android:text="@string/good"
                 android:textAllCaps="true"
-                android:text="@string/good" />
+                android:textSize="8sp" />
+
             <RadioButton
                 android:id="@+id/five"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button"
                 android:button="@null"
                 android:drawableTop="@drawable/smille"
                 android:gravity="center"
-                android:textSize="8sp"
                 android:padding="8dp"
-                android:background="@drawable/radio_button"
-                android:layout_weight="1"
+                android:text="@string/superb"
                 android:textAllCaps="true"
-                android:text="@string/superb" />
+                android:textSize="8sp" />
 
         </RadioGroup>
 
+        <TextView
+            fontPath="fonts/Nunito-Bold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/give_some_feedback_in_words"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:ignore="MissingPrefix" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="@string/give_some_feedback_in_words"
-        fontPath="fonts/Nunito-Bold.ttf"
-        tools:ignore="MissingPrefix"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        <EditText
+            android:id="@+id/comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/shadow_view"
+            android:inputType="textMultiLine|textCapCharacters"
+            android:lines="3"
+            android:padding="8dp" />
 
-    <EditText
-        android:id="@+id/comment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/shadow_view"
-        android:lines="3"
-        android:padding="8dp"
-        android:inputType="textMultiLine|textCapCharacters" />
+        <Button
+            android:id="@+id/feedback_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:text="@string/submit"
+            android:textColor="@color/colorWhite" />
 
-    <Button
-        android:id="@+id/feedback_submit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:text="@string/submit"
-        android:textColor="@color/colorWhite" />
+    </LinearLayout>
 
-</LinearLayout>
+</android.support.v7.widget.CardView>

@@ -1,12 +1,12 @@
 package com.oyola.deliveryboy.activities;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,8 +32,6 @@ import com.oyola.deliveryboy.model.Otp;
 import com.oyola.deliveryboy.model.Profile;
 import com.oyola.deliveryboy.model.Token;
 
-import org.json.JSONObject;
-
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -45,7 +43,6 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Login extends AppCompatActivity {
 
@@ -104,7 +101,6 @@ public class Login extends AppCompatActivity {
 
 
     public void getOtpVerification(String mobile) {
-        System.out.println(mobile);
         if (!connectionHelper.isConnectingToInternet()) {
             Toast.makeText(this, getResources().getString(R.string.check_internet_connection),
                     Toast.LENGTH_LONG).show();
@@ -120,37 +116,28 @@ public class Login extends AppCompatActivity {
             public void onResponse(@NonNull Call<Otp> call, @NonNull Response<Otp> response) {
                 customDialog.cancel();
                 if (response.isSuccessful()) {
-                    GlobalData.otp = response.body();
-                    Toast.makeText(Login.this, "" + GlobalData.otp.getMessage(),
+                    Toast.makeText(Login.this, response.body().getMessage(),
                             Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(Login.this, OTP.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    launchActivity(response.body().getOtp());
                 } else {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        if (jObjError.has("phone"))
-                            Toast.makeText(Login.this, jObjError.optString("phone"),
-                                    Toast.LENGTH_LONG).show();
-                        else if (jObjError.has("error")) {
-                            startActivity(new Intent(Login.this, OTP.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                            //Toast.makeText(Login.this, jObjError.optString("error"), Toast
-                            // .LENGTH_LONG).show();
-                        }
-                    } catch (Exception e) {
-                        Toast.makeText(Login.this, getResources().getString(R.string.no_luck),
-                                Toast.LENGTH_LONG).show();
-                    }
+                    APIError error = ErrorUtils.parseError(response);
+                    Toast.makeText(Login.this, error.getError(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Otp> call, @NonNull Throwable t) {
+                customDialog.dismiss();
                 Toast.makeText(Login.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
-                customDialog.cancel();
             }
         });
-
     }
 
+    private void launchActivity(int otp) {
+        Intent intent = new Intent(getApplicationContext(), OTP.class);
+        intent.putExtra("otp", otp);
+        startActivity(intent);
+    }
 
     private void setListener() {
         mCountryPicker.setListener(new CountryPickerListener() {
@@ -191,28 +178,15 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
-
     @OnClick({R.id.submit, R.id.tv_agree_policies})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.submit:
-                if (!mobileNo.getText().toString().equalsIgnoreCase("")) {
-                    //   && !edPassword.getText().toString().equalsIgnoreCase("")) {
-                    SharedHelper.putKey(Login.this, "mobile_number",
-                            countryNumber.getText().toString() + mobileNo.getText().toString());
-                    //   getOtpVerification(countryNumber.getText().toString() + mobileNo.getText
-                    //   ().toString());
-//                    String mobile_number = SharedHelper.getKey(OTP.this, "mobile_number");
-                    HashMap<String, String> map = new HashMap<>();
-                    map.put("phone",
-                            countryNumber.getText().toString() + mobileNo.getText().toString());
-                    //  map.put("password", edPassword.getText().toString());
-                    map.put("otp", "123456");
-                    login(map);
+                String phone = mobileNo.getText().toString().trim();
+                if (!TextUtils.isEmpty(phone)) {
+                    String mobileNumber = countryNumber.getText().toString().trim() + phone;
+                    SharedHelper.putKey(Login.this, "mobile_number", mobileNumber);
+                    getOtpVerification(mobileNumber);
                 } else {
                     Toast.makeText(Login.this, getString(R.string.please_enternumber_pswd),
                             Toast.LENGTH_SHORT).show();
@@ -220,7 +194,7 @@ public class Login extends AppCompatActivity {
                 break;
 
             case R.id.tv_agree_policies:
-//                startActivity(new Intent(getApplicationContext(), TermsAndConditions.class));
+                startActivity(new Intent(getApplicationContext(), TermsAndConditions.class));
                 break;
 
             default:

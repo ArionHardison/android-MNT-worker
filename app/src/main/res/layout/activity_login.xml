@@ -44,14 +44,16 @@
                 android:id="@+id/country_number"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/nunito_regular"
                 android:gravity="center"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/mobile_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:fontFamily="@font/nunito_regular"
                 android:gravity="center_vertical"
                 android:hint="@string/enter_mobile_number"
                 android:inputType="phone"
@@ -59,7 +61,7 @@
                 android:padding="16dp"
                 android:textColor="@color/colorPrimaryText"
                 android:textColorHint="@color/colorSecondaryText"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -68,7 +70,8 @@
             style="@style/ButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:foreground="?attr/selectableItemBackground"
+            android:layout_margin="0dp"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:text="@string/continu" />
 
     </LinearLayout>
@@ -80,6 +83,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="30dp"
         android:background="?attr/selectableItemBackground"
+        android:fontFamily="@font/nunito_regular"
         android:gravity="start"
         android:text="@string/agree_policies"
         android:textColor="@color/colorSecondaryText"
