@@ -55,10 +55,15 @@ public class ProductAdapter1 extends RecyclerView.Adapter<ProductAdapter1.MyView
         if (item.getCartAddons() != null && !item.getCartAddons().isEmpty()) {
             List<CartAddon> cartAddonList = item.getCartAddons();
             for (int i = 0; i < cartAddonList.size(); i++) {
-                if (i == 0)
-                    holder.addons.setText(cartAddonList.get(i).getAddonProduct().getAddon().getName());
-                else
-                    holder.addons.append(", " + cartAddonList.get(i).getAddonProduct().getAddon().getName());
+                if (i == 0) {
+                    if (cartAddonList.get(i).getAddonProduct().getAddon() != null) {
+                        holder.addons.setText(cartAddonList.get(i).getAddonProduct().getAddon().getName());
+                    }
+                } else {
+                    if (cartAddonList.get(i).getAddonProduct().getAddon() != null) {
+                        holder.addons.append(", " + cartAddonList.get(i).getAddonProduct().getAddon().getName());
+                    }
+                }
             }
 
             holder.addons.setVisibility(View.VISIBLE);

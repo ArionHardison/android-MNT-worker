@@ -23,7 +23,7 @@ import java.util.Iterator;
 import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-//import com.facebook.stetho.Stetho;
+import com.facebook.stetho.Stetho;
 
 public class Application extends android.app.Application {
 
@@ -46,7 +46,7 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
-//        Stetho.initializeWithDefaults(this);
+        Stetho.initializeWithDefaults(this);
 
         mInstance = this;
         initCalligraphyConfig();

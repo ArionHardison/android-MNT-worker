@@ -33,6 +33,7 @@
             android:drawableRight="@drawable/language_select_unselect"
             android:drawablePadding="30dp"
             android:ellipsize="end"
+            android:visibility="gone"
             android:padding="12dp"
             android:singleLine="true"
             android:text="@string/lang_japnese"

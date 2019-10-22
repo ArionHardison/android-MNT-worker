@@ -539,7 +539,7 @@ public class ServiceFlow extends AppCompatActivity {
 
                             if (!amount_paid.getText().toString().equalsIgnoreCase("")) {
 
-                                int amount = Integer.parseInt(amount_paid.getText().toString());
+                                Double amount = Double.parseDouble(amount_paid.getText().toString());
 
                                 if (amount >= invoice.getPayable()) {
                                     map = new HashMap<>();
