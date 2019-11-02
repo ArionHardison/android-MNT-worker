@@ -170,6 +170,7 @@ public class ServiceFlow extends AppCompatActivity {
     TextView walletDetection;
     private String isPinView;
     private double bal = 0;
+    private double mRoundedAmt=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -486,8 +487,8 @@ public class ServiceFlow extends AppCompatActivity {
                     final TextView amount_to_pay = dialogView.findViewById(R.id.amount_to_pay);
                     final EditText amount_paid = dialogView.findViewById(R.id.amount_paid);
                     final TextView balance = dialogView.findViewById(R.id.balance);
-
-                    amount_to_pay.setText(numberFormat + invoice.getPayable());
+                    mRoundedAmt = GlobalData.roundoff(invoice.getPayable());
+                    amount_to_pay.setText(numberFormat + GlobalData.roundoff(invoice.getPayable()));
                     amount_paid.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before,
@@ -503,7 +504,7 @@ public class ServiceFlow extends AppCompatActivity {
                         public void afterTextChanged(Editable s) {
                             if (!s.toString().equals("")) {
                                 double amountPaid = Double.parseDouble(s.toString());
-                                bal = amountPaid - invoice.getPayable();
+                                bal = amountPaid - mRoundedAmt;
                                 balance.setText(/*String.format("%.2f", */bal + "");
 
                                 if (bal >= 0) {

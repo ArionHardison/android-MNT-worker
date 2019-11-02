@@ -35,7 +35,8 @@ public class GlobalData {
     public static Shift shift;
     public static Order order;
     public static ApiInterface api = ApiClient.getRetrofit().create(ApiInterface.class);
-    public static List<String> ORDER_STATUS = Arrays.asList("ORDERED", "RECEIVED", "ASSIGNED", "PROCESSING", "REACHED", "PICKEDUP", "ARRIVED", "COMPLETED");
+    public static List<String> ORDER_STATUS = Arrays.asList("ORDERED", "RECEIVED", "ASSIGNED",
+            "PROCESSING", "REACHED", "PICKEDUP", "ARRIVED", "COMPLETED");
     public static Location CURRENT_LOCATION = null;
 
     public static NumberFormat getNumberFormat() {
@@ -122,4 +123,8 @@ public class GlobalData {
         return apply(content, new ForegroundColorSpan(color));
     }
 
+    public static double roundoff(double data) {
+        double value = Math.round(data);
+        return value;
+    }
 }
