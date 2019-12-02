@@ -172,9 +172,9 @@ public class Login extends AppCompatActivity {
             countryNumber.setText(country.getDialCode());
             country_code = country.getDialCode();
         } else {
-            countryImage.setImageResource(R.drawable.flag_in);
-            countryNumber.setText("IN");
-            country_code = "+91";
+            countryImage.setImageResource(R.drawable.flag_au);
+            countryNumber.setText("AU");
+            country_code = "+61";
         }
     }
 
