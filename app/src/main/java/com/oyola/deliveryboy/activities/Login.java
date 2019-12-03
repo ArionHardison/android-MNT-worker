@@ -32,6 +32,10 @@ import com.oyola.deliveryboy.model.Otp;
 import com.oyola.deliveryboy.model.Profile;
 import com.oyola.deliveryboy.model.Token;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -120,8 +124,20 @@ public class Login extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     launchActivity(response.body().getOtp());
                 } else {
-                    APIError error = ErrorUtils.parseError(response);
-                    Toast.makeText(Login.this, error.getError(), Toast.LENGTH_SHORT).show();
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        if (jObjError.has("message")) {
+                            Toast.makeText(Login.this, jObjError.optString("message"), Toast.LENGTH_LONG).show();
+                        } else if (jObjError.has("phone")) {
+                            Toast.makeText(Login.this, jObjError.optString("phone"), Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(Login.this, jObjError.optString("error"), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+//                    APIError error = ErrorUtils.parseError(response);
+//                    Toast.makeText(Login.this, error.getError(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -166,14 +182,14 @@ public class Login extends AppCompatActivity {
     }
 
     private void getUserCountryInfo() {
-        Country country = Country.getCountrydetails("IN");
+        Country country = Country.getCountryFromSIM(this);
         if (country != null) {
             countryImage.setImageResource(country.getFlag());
             countryNumber.setText(country.getDialCode());
             country_code = country.getDialCode();
         } else {
             countryImage.setImageResource(R.drawable.flag_au);
-            countryNumber.setText("AU");
+            countryNumber.setText("+61");
             country_code = "+61";
         }
     }
