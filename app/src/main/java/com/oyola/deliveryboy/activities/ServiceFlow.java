@@ -488,7 +488,7 @@ public class ServiceFlow extends AppCompatActivity {
                     final EditText amount_paid = dialogView.findViewById(R.id.amount_paid);
                     final TextView balance = dialogView.findViewById(R.id.balance);
                     mRoundedAmt = GlobalData.roundoff(invoice.getPayable());
-                    amount_to_pay.setText(numberFormat + GlobalData.roundoff(invoice.getPayable()));
+                    amount_to_pay.setText(numberFormat + invoice.getPayable());
                     amount_paid.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before,
