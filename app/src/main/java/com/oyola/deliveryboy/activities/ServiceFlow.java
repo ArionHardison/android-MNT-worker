@@ -415,7 +415,13 @@ public class ServiceFlow extends AppCompatActivity {
                 userDetailsLayout.setVisibility(View.VISIBLE);
                 shopDetailsLayout.setVisibility(View.GONE);
                 shiftStatusLayout.setVisibility(View.GONE);
-                rate();
+//                rate();
+                HashMap<String, String> map = new HashMap<>();
+                map.put("order_id", String.valueOf(GlobalData.order.getId()));
+                map.put("rating", "1");
+                map.put("comment", "");
+                rateUser(map);
+//                finish();
                 break;
             default:
                 break;
