@@ -37,6 +37,7 @@
                 android:id="@+id/country_image"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:background="@drawable/flag_au"
                 android:contentDescription="@string/enter_mobile_number"
                 android:padding="8dp" />
 
@@ -46,6 +47,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/nunito_regular"
                 android:gravity="center"
+                android:text="+61"
                 android:textSize="16sp" />
 
             <EditText
@@ -58,6 +60,7 @@
                 android:hint="@string/enter_mobile_number"
                 android:inputType="phone"
                 android:maxLines="1"
+                android:maxLength="10"
                 android:padding="16dp"
                 android:textColor="@color/colorPrimaryText"
                 android:textColorHint="@color/colorSecondaryText"
