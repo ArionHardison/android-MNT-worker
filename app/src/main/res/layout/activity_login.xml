@@ -39,7 +39,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/flag_au"
                 android:contentDescription="@string/enter_mobile_number"
-                android:padding="8dp" />
+                android:padding="@dimen/_6sdp" />
 
             <TextView
                 android:id="@+id/country_number"
