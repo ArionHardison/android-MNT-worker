@@ -37,7 +37,7 @@
                 android:id="@+id/country_image"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@drawable/flag_au"
+                android:src="@drawable/flag_au"
                 android:contentDescription="@string/enter_mobile_number"
                 android:padding="@dimen/_6sdp" />
 

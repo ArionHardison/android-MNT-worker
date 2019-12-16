@@ -58,6 +58,7 @@ import com.oyola.deliveryboy.model.Shiftbreaktime;
 import com.oyola.deliveryboy.model.Vehicle;
 import com.oyola.deliveryboy.service.GPSTrackerService;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -540,9 +541,14 @@ public class ShiftStatus extends AppCompatActivity {
                     View dialogView = inflater.inflate(R.layout.amount_paid_popup, frameView);
 
                     final TextView amountToBePaid = dialogView.findViewById(R.id.amount_to_be_paid);
-                    amountToBePaid.setText(String.format("%s %d",
+                   /* amountToBePaid.setText(String.format("%s %d",
                             GlobalData.profile.getCurrency(),
-                            GlobalData.shift.getTotalAmountPay()));
+                            GlobalData.shift.getTotalAmountPay()));*/
+                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                    amountToBePaid.setText(
+                            GlobalData.profile.getCurrency()+
+                                    decimalFormat.format(GlobalData.shift.getTotalAmountPay()));
+
                     endShift = dialogView.findViewById(R.id.end_shift);
                     endShift.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {

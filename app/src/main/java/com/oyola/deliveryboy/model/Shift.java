@@ -33,10 +33,10 @@ public class Shift {
     private String deletedAt;
     @SerializedName("total_amount")
     @Expose
-    private int totalAmount;
+    private double totalAmount;
     @SerializedName("total_amount_pay")
     @Expose
-    private int totalAmountPay;
+    private double totalAmountPay;
     @SerializedName("vehicle")
     @Expose
     private Vehicle vehicle;
@@ -135,28 +135,28 @@ public class Shift {
         return this;
     }
 
-    public int getTotalAmount() {
+    public double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(int totalAmount) {
+    public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public Shift withTotalAmount(int totalAmount) {
+    public Shift withTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
         return this;
     }
 
-    public int getTotalAmountPay() {
+    public double getTotalAmountPay() {
         return totalAmountPay;
     }
 
-    public void setTotalAmountPay(int totalAmountPay) {
+    public void setTotalAmountPay(double totalAmountPay) {
         this.totalAmountPay = totalAmountPay;
     }
 
-    public Shift withTotalAmountPay(int totalAmountPay) {
+    public Shift withTotalAmountPay(double totalAmountPay) {
         this.totalAmountPay = totalAmountPay;
         return this;
     }

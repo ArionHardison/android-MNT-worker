@@ -11,6 +11,7 @@
             android:padding="6dp"
             android:src="@drawable/search"
             android:layout_width="50dp"
+            android:visibility="gone"
             android:layout_height="match_parent" />
 
         <EditText

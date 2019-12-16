@@ -477,7 +477,7 @@ public class Home extends AppCompatActivity
             switch (value) {
                 case "online":
                     if (orders.size() <= 0) errorLayout.setVisibility(View.VISIBLE);
-                    errorImg.setImageResource(R.drawable.hour_glass);
+                    errorImg.setImageResource(R.drawable.bg_waiting);
                     errorMessage.setText(Home.this.getResources().getString(R.string.waiting_for_new_task));
                     navigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
                     break;
