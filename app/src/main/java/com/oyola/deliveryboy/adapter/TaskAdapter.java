@@ -147,7 +147,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
                 if (response.isSuccessful()) {
                     if (response.body().getItems() != null) {
                         GlobalData.order = response.body();
-                        countDownTimer.cancel();
+                        if (countDownTimer != null && isRunning) {
+                            countDownTimer.cancel();
+                        }
                         update(order);
                         context.startActivity(new Intent(context, ServiceFlow.class));
                     } else {
