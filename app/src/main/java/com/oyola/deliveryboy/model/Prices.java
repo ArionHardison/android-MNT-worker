@@ -11,7 +11,7 @@ public class Prices {
     private Integer id;
     @SerializedName("price")
     @Expose
-    private int price;
+    private double price;
     @SerializedName("orignal_price")
     @Expose
     private double orignalPrice;
@@ -38,7 +38,7 @@ public class Prices {
         return this;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
