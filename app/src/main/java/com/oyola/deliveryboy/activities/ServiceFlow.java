@@ -170,7 +170,7 @@ public class ServiceFlow extends AppCompatActivity {
     TextView walletDetection;
     private String isPinView;
     private double bal = 0;
-    private double mRoundedAmt=0;
+    private double mRoundedAmt = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -531,44 +531,44 @@ public class ServiceFlow extends AppCompatActivity {
                     paid.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            /*if (pinView.getText().toString().equals("")) {
+                            if (pinView.getText().toString().equals("")) {
                                 Toast.makeText(getApplicationContext(), getString(R.string
-                                .enter_otp), Toast.LENGTH_SHORT).show();
+                                        .enter_otp), Toast.LENGTH_SHORT).show();
                             } else if (!pinView.getText().toString().equals("") || !pinView
-                            .getText().toString().equals("null")) {
+                                    .getText().toString().equals("null")) {
                                 if (order != null) {
                                     if (!String.valueOf(order.getOrderOtp()).equals(pinView
-                                    .getText().toString())) {
+                                            .getText().toString())) {
                                         Toast.makeText(getApplicationContext(), getString(R
-                                        .string.invalid_otp), Toast.LENGTH_SHORT).show();
-                                    } else {*/
+                                                .string.invalid_otp), Toast.LENGTH_SHORT).show();
+                                    } else {
 
 
-                            if (!amount_paid.getText().toString().equalsIgnoreCase("")) {
+                                        if (!amount_paid.getText().toString().equalsIgnoreCase("")) {
 
-                                Double amount = Double.parseDouble(amount_paid.getText().toString());
+                                            Double amount = Double.parseDouble(amount_paid.getText().toString());
 
-                                if (amount >= invoice.getPayable()) {
-                                    map = new HashMap<>();
-                                    map.put("status", status);
-                                    map.put("total_pay", amount_paid.getText().toString());
-                                    map.put("tender_pay", String.valueOf(bal));
-                                    map.put("payment_mode", invoice.getPaymentMode());
-                                    map.put("payment_status", "success");
-                                    updateStatus();
-                                    alertDialog.dismiss();
-                                } else {
-                                    Toast.makeText(getApplicationContext(),
-                                            getString(R.string.full_amount), Toast.LENGTH_SHORT).show();
+                                            if (amount >= invoice.getPayable()) {
+                                                map = new HashMap<>();
+                                                map.put("status", status);
+                                                map.put("total_pay", amount_paid.getText().toString());
+                                                map.put("tender_pay", String.valueOf(bal));
+                                                map.put("payment_mode", invoice.getPaymentMode());
+                                                map.put("payment_status", "success");
+                                                updateStatus();
+                                                alertDialog.dismiss();
+                                            } else {
+                                                Toast.makeText(getApplicationContext(),
+                                                        getString(R.string.full_amount), Toast.LENGTH_SHORT).show();
+                                            }
+                                        } else {
+                                            Toast.makeText(getApplicationContext(),
+                                                    getString(R.string.enter_the_amount_paid),
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
                                 }
-                            } else {
-                                Toast.makeText(getApplicationContext(),
-                                        getString(R.string.enter_the_amount_paid),
-                                        Toast.LENGTH_SHORT).show();
                             }
-                                   /* }
-                                }
-                            }*/
                             //service_flow.setText("PAYMENT RECEIVED");
                             //img_5.setColorFilter(ContextCompat.getColor(ServiceFlow.this, R
                             // .color.colorAccent), android.graphics.PorterDuff.Mode.MULTIPLY);
