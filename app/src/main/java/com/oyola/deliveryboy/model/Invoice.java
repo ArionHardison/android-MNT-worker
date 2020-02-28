@@ -19,7 +19,7 @@ public class Invoice {
     private Integer quantity;
     @SerializedName("paid")
     @Expose
-    private Double paid;
+    private Integer paid;
     @SerializedName("gross")
     @Expose
     private Double gross;
@@ -84,11 +84,11 @@ public class Invoice {
         this.quantity = quantity;
     }
 
-    public Double getPaid() {
+    public Integer getPaid() {
         return paid;
     }
 
-    public void setPaid(Double paid) {
+    public void setPaid(Integer paid) {
         this.paid = paid;
     }
 

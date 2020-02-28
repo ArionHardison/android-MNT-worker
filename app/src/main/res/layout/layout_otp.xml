@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:background="@color/colorWhite"
+    app:cardCornerRadius="15dp"
+    app:contentPadding="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:contentDescription="@null"
+            android:padding="16dp"
+            android:src="@drawable/coin" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                fontPath="fonts/Nunito-Bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="16dp"
+                android:gravity="center"
+                android:text="@string/otp"
+                android:textSize="16sp"
+                android:textAllCaps="true"
+                android:textColor="@color/colorBlack"
+                tools:ignore="MissingPrefix" />
+
+            <com.chaos.view.PinView
+                android:id="@+id/pinView"
+                style="@style/PinWidget.PinView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:cursorVisible="true"
+                android:inputType="number"
+                android:padding="2dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"
+                app:cursorColor="@color/colorGray"
+                app:cursorWidth="2dp"
+                app:itemCount="6"
+                app:itemHeight="35dp"
+                app:itemRadius="2dp"
+                app:itemSpacing="3dp"
+                app:itemWidth="35dp"
+                app:lineColor="@color/colorGray"
+                app:lineWidth="2dp"
+                app:viewType="rectangle" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                fontPath="fonts/Nunito-Bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="16dp"
+                android:text="@string/amount_to_pay"
+                android:textSize="16sp"
+                tools:ignore="MissingPrefix" />
+
+            <TextView
+                android:id="@+id/amount_to_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="end"
+                android:padding="16dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"
+                tools:ignore="MissingPrefix" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                fontPath="fonts/Nunito-Bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="16dp"
+                android:text="@string/enter_the_amount_paid"
+                android:textSize="16sp"
+                tools:ignore="MissingPrefix" />
+
+            <TextView
+                android:id="@+id/amount_paid_currency_symbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/amount_paid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="end"
+                android:inputType="numberDecimal|numberSigned|number"
+                android:longClickable="false"
+                android:padding="16dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                tools:ignore="MissingPrefix" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                fontPath="fonts/Nunito-Bold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="16dp"
+                android:text="@string/balance"
+                android:textSize="16sp"
+                tools:ignore="MissingPrefix" />
+
+            <TextView
+                android:id="@+id/balance_currency_symbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/balance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="end"
+                android:padding="8dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                tools:ignore="MissingPrefix" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/paid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:alpha="128"
+            android:background="@color/colorAccent"
+            android:text="@string/paid"
+            android:textColor="@color/colorWhite" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

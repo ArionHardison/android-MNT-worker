@@ -584,12 +584,53 @@ public class ServiceFlow extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
-            map = new HashMap<>();
-            map.put("status", status);
-            updateStatus();
+            otpValidation(order, status);
+//            map = new HashMap<>();
+//            map.put("status", status);
+//            updateStatus();
         }
 
 
+    }
+
+    private void otpValidation(final Order order, final String status) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ServiceFlow.this);
+        final FrameLayout frameView = new FrameLayout(ServiceFlow.this);
+        builder.setView(frameView);
+        alertDialog = builder.create();
+        LayoutInflater inflater = alertDialog.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.layout_otp, frameView);
+        alertDialog.setCancelable(false);
+        if (paymentOnce) {
+            paymentOnce = false;
+            final Button paid = dialogView.findViewById(R.id.paid);
+            final PinView pinView = dialogView.findViewById(R.id.pinView);
+            paid.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (pinView.getText().toString().equals("")) {
+                        Toast.makeText(getApplicationContext(), getString(R.string
+                                .enter_otp), Toast.LENGTH_SHORT).show();
+                    } else if (!pinView.getText().toString().equals("") || !pinView
+                            .getText().toString().equals("null")) {
+                        if (order != null) {
+                            if (!String.valueOf(order.getOrderOtp()).equals(pinView
+                                    .getText().toString())) {
+                                Toast.makeText(getApplicationContext(), getString(R
+                                        .string.invalid_otp), Toast.LENGTH_SHORT).show();
+                            } else {
+                                map = new HashMap<>();
+                                map.put("status", status);
+                                updateStatus();
+                            }
+                        }
+                    }
+                }
+            });
+            if (alertDialog.getWindow() != null)
+                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            alertDialog.show();
+        }
     }
 
     private void rate() {
