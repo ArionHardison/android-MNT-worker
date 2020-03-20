@@ -152,7 +152,7 @@ public class ShiftStatus extends AppCompatActivity {
                 shiftBtn.setVisibility(View.VISIBLE);
                 breakSwitch.setVisibility(View.VISIBLE);
             }
-            owedAmount.setVisibility(View.VISIBLE);
+//            owedAmount.setVisibility(View.VISIBLE);
             shiftBreakRv.setVisibility(View.VISIBLE);
             messageLayout.setVisibility(View.GONE);
             CharSequence amount = color(Color.BLACK, getResources().getString(R.string.you_owed),
@@ -219,7 +219,7 @@ public class ShiftStatus extends AppCompatActivity {
                         shiftBtn.setVisibility(View.VISIBLE);
                         messageLayout.setVisibility(View.VISIBLE);
                         breakSwitch.setVisibility(View.GONE);
-                        owedAmount.setVisibility(View.GONE);
+//                        owedAmount.setVisibility(View.GONE);
                         shiftBreakRv.setVisibility(View.GONE);
                     }
 

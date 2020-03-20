@@ -86,7 +86,7 @@
                 android:padding="16dp"
                 android:textColor="@color/primary_text"
                 android:textSize="22sp"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:ignore="MissingPrefix" />
 
             <android.support.v4.widget.NestedScrollView
