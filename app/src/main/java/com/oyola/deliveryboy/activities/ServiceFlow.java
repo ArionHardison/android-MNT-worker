@@ -408,8 +408,15 @@ public class ServiceFlow extends AppCompatActivity {
                 shopDetailsLayout.setVisibility(View.GONE);
                 shiftStatusLayout.setVisibility(View.GONE);
                 paymentMode.setVisibility(View.VISIBLE);
-                if (paymentOnce)
-                    paymentPopupWindow(GlobalData.getNextOrderStatus("ARRIVED"));
+                map = new HashMap<>();
+                map.put("status", GlobalData.getNextOrderStatus("ARRIVED"));
+                map.put("total_pay", GlobalData.order.getInvoice().getPayable().toString());
+                map.put("tender_pay", String.valueOf(bal));
+                map.put("payment_mode", GlobalData.order.getInvoice().getPaymentMode());
+                map.put("payment_status", "success");
+                updateStatus();
+                /*if (paymentOnce)
+                    paymentPopupWindow(GlobalData.getNextOrderStatus("ARRIVED"));*/
                 break;
             case "COMPLETED":
                 userDetailsLayout.setVisibility(View.VISIBLE);
