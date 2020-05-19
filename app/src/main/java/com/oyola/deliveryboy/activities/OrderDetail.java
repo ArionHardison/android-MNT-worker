@@ -136,7 +136,8 @@ public class OrderDetail extends AppCompatActivity {
             User user = GlobalData.order.getUser();
             userName.setText(user.getName());
             Address address = GlobalData.order.getAddress();
-            userAddress.setText(address.getMapAddress());
+            userAddress.setText((address.getBuilding() != null ? address.getBuilding() + ", " : "") +
+                    address.getMapAddress());
             setIcon(userAddressType, address.getType());
 
             items.clear();
