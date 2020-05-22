@@ -6,7 +6,7 @@ package com.oyola.deliveryboy;
 
 public class BuildConfigure {
 
-    public static String BASE_URL = "https://oyola.com.au/";
+    public static String BASE_URL = "https://oyola.co/";
     public static String CLIENT_SECRET = "aCaCS0Kf2MArewwGDgHqfTz9q4U3GRqZwgK1LR70";
     public static String CLIENT_ID = "2";
 }
