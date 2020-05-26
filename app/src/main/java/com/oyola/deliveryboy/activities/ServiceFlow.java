@@ -180,7 +180,7 @@ public class ServiceFlow extends AppCompatActivity {
         numberFormat = Application.getNumberFormat();
         Toolbar toolbar = findViewById(R.id.toolbar);
         assert toolbar != null;
-        toolbar.setTitle(getResources().getString(R.string.live_tasks));
+        toolbar.setTitle(getString(R.string.live_tasks));
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -205,7 +205,6 @@ public class ServiceFlow extends AppCompatActivity {
                     seekBar.getThumb().setColorFilter(getResources().getColor(R.color.colorGray),
                             PorterDuff.Mode.MULTIPLY);
                 }
-
             }
 
             @Override
@@ -222,13 +221,10 @@ public class ServiceFlow extends AppCompatActivity {
                 }
             }
         });
-
         initOrder();
-
     }
 
     private void initOrder() {
-
         if (GlobalData.shift == null) {
             startActivity(new Intent(this, ShiftStatus.class));
             finish();
@@ -242,12 +238,11 @@ public class ServiceFlow extends AppCompatActivity {
             }
         };
         handler.postDelayed(runnable, 3000);
-
         if (GlobalData.order != null && GlobalData.order.getInvoice() != null) {
             initShop();
             initUser();
             Invoice invoice = GlobalData.order.getInvoice();
-            orderId.setText(getResources().getString(R.string.order_message, invoice.getOrderId()));
+            orderId.setText(getString(R.string.order_message, invoice.getOrderId()));
             orderCreatedAt.setText(GlobalData.getTimeFromString(invoice.getCreatedAt()));
             itemTotal.setText(numberFormat + invoice.getGross());
             serviceTax.setText(numberFormat + invoice.getTax());
@@ -262,9 +257,9 @@ public class ServiceFlow extends AppCompatActivity {
             walletDetection.setText(numberFormat + invoice.getWalletAmount());
             total.setText(numberFormat + invoice.getPayable());
             if (invoice.getPaymentMode().equalsIgnoreCase("stripe")) {
-                paymentMode.setText(getResources().getString(R.string.payment_mode) + "Card");
+                paymentMode.setText(getString(R.string.payment_mode) + "Card");
             } else {
-                paymentMode.setText(getResources().getString(R.string.payment_mode) + invoice.getPaymentMode());
+                paymentMode.setText(getString(R.string.payment_mode) + invoice.getPaymentMode());
             }
 
             items.clear();
@@ -295,7 +290,6 @@ public class ServiceFlow extends AppCompatActivity {
                             previousStatus = GlobalData.order.getStatus();
                             updateFlowUI(GlobalData.order.getStatus());
                         }
-
 //                        handler.removeCallbacks(runnable);
                         /*handler.postDelayed(runnable, 3000);*/
                     } else {
@@ -304,7 +298,6 @@ public class ServiceFlow extends AppCompatActivity {
                             alertDialog();
                         }
                     }
-
                 } else {
                     APIError error = ErrorUtils.parseError(response);
                     Toast.makeText(ServiceFlow.this, error.getError(), Toast.LENGTH_SHORT).show();
@@ -327,8 +320,8 @@ public class ServiceFlow extends AppCompatActivity {
     public void alertDialog() {
         handler.removeCallbacks(runnable);
         AlertDialog.Builder builder = new AlertDialog.Builder(ServiceFlow.this);
-        builder.setMessage(getResources().getString(R.string.the_order_has_been_cancelled_by_user))
-                .setPositiveButton(getResources().getString(R.string.okay),
+        builder.setMessage(getString(R.string.the_order_has_been_cancelled_by_user))
+                .setPositiveButton(getString(R.string.okay),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
@@ -338,14 +331,12 @@ public class ServiceFlow extends AppCompatActivity {
 
                             }
                         });
-
         AlertDialog alert = builder.create();
         alert.setCancelable(false);
         alert.show();
         Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
         pbutton.setTextColor(ContextCompat.getColor(ServiceFlow.this, R.color.colorAccent));
         pbutton.setTypeface(pbutton.getTypeface(), Typeface.BOLD);
-
         /*if (!((ServiceFlow) this).isFinishing()) {
             alert.show();
         }*/
@@ -362,12 +353,11 @@ public class ServiceFlow extends AppCompatActivity {
         return false;
     }
 
-
     private void updateFlowUI(String value) {
         initFlowIcons();
         switch (value) {
             case "ASSIGNED":
-                statusLabel.setText(this.getResources().getString(R.string.started_restaurant));
+                statusLabel.setText(getString(R.string.started_restaurant));
                 shopDetailsLayout.setVisibility(View.VISIBLE);
                 userDetailsLayout.setVisibility(View.GONE);
                 paymentMode.setVisibility(View.GONE);
@@ -376,7 +366,7 @@ public class ServiceFlow extends AppCompatActivity {
                 break;
             case "PROCESSING":
                 shiftStatus.setThumb(getResources().getDrawable(R.drawable.ic_thumb_reached_restaurant));
-                statusLabel.setText(this.getResources().getString(R.string.reached_restaurant));
+                statusLabel.setText(getString(R.string.reached_restaurant));
                 shopDetailsLayout.setVisibility(View.VISIBLE);
                 userDetailsLayout.setVisibility(View.GONE);
                 paymentMode.setVisibility(View.GONE);
@@ -385,7 +375,7 @@ public class ServiceFlow extends AppCompatActivity {
                 break;
             case "REACHED":
                 shiftStatus.setThumb(getResources().getDrawable(R.drawable.ic_thumb_order_picked_up));
-                statusLabel.setText(this.getResources().getString(R.string.order_picked_up));
+                statusLabel.setText(getString(R.string.order_picked_up));
                 shopDetailsLayout.setVisibility(View.VISIBLE);
                 userDetailsLayout.setVisibility(View.GONE);
                 paymentMode.setVisibility(View.VISIBLE);
@@ -394,7 +384,7 @@ public class ServiceFlow extends AppCompatActivity {
                 break;
             case "PICKEDUP":
                 shiftStatus.setThumb(getResources().getDrawable(R.drawable.ic_thumb_order_delivered));
-                statusLabel.setText(this.getResources().getString(R.string.order_delivered));
+                statusLabel.setText(getString(R.string.order_delivered));
                 userDetailsLayout.setVisibility(View.VISIBLE);
                 shopDetailsLayout.setVisibility(View.GONE);
                 paymentMode.setVisibility(View.VISIBLE);
@@ -403,7 +393,7 @@ public class ServiceFlow extends AppCompatActivity {
                 break;
             case "ARRIVED":
                 shiftStatus.setThumb(getResources().getDrawable(R.drawable.ic_thumb_payment_received));
-                statusLabel.setText(this.getResources().getString(R.string.payment_received));
+                statusLabel.setText(getString(R.string.payment_received));
                 userDetailsLayout.setVisibility(View.VISIBLE);
                 shopDetailsLayout.setVisibility(View.GONE);
                 shiftStatusLayout.setVisibility(View.GONE);
@@ -414,9 +404,9 @@ public class ServiceFlow extends AppCompatActivity {
                 map.put("tender_pay", String.valueOf(bal));
                 map.put("payment_mode", GlobalData.order.getInvoice().getPaymentMode());
                 map.put("payment_status", "success");
-                updateStatus();
-                /*if (paymentOnce)
-                    paymentPopupWindow(GlobalData.getNextOrderStatus("ARRIVED"));*/
+//                updateStatus();
+                if (paymentOnce)
+                    paymentPopupWindow(GlobalData.getNextOrderStatus("ARRIVED"));
                 break;
             case "COMPLETED":
                 userDetailsLayout.setVisibility(View.VISIBLE);
@@ -435,9 +425,7 @@ public class ServiceFlow extends AppCompatActivity {
         }
     }
 
-
     private void updateStatus() {
-
         if (!connectionHelper.isConnectingToInternet() || GlobalData.order == null)
             return;
         String header = SharedHelper.getKey(this, "token_type") + " " + SharedHelper.getKey(this,
@@ -471,13 +459,11 @@ public class ServiceFlow extends AppCompatActivity {
     }
 
     private void paymentPopupWindow(final String status) {
-
         if (GlobalData.order == null || GlobalData.order.getInvoice() == null) {
             return;
         }
         final Invoice invoice = GlobalData.order.getInvoice();
         final Order order = GlobalData.order;
-
         if (invoice.getPaid() != 1) {
             try {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ServiceFlow.this);
@@ -504,13 +490,11 @@ public class ServiceFlow extends AppCompatActivity {
                     amount_to_pay.setText(numberFormat + invoice.getPayable());
                     amount_paid.addTextChangedListener(new TextWatcher() {
                         @Override
-                        public void onTextChanged(CharSequence s, int start, int before,
-                                                  int count) {
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
                         }
 
                         @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count,
-                                                      int after) {
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                         }
 
                         @Override
@@ -519,7 +503,6 @@ public class ServiceFlow extends AppCompatActivity {
                                 double amountPaid = Double.parseDouble(s.toString());
                                 bal = amountPaid - mRoundedAmt;
                                 balance.setText(/*String.format("%.2f", */bal + "");
-
                                 if (bal >= 0) {
                                     paid.setEnabled(true);
                                     paid.getBackground().setAlpha(255);
@@ -532,7 +515,6 @@ public class ServiceFlow extends AppCompatActivity {
                                 // paid.setEnabled(false);
                                 paid.getBackground().setAlpha(128);
                             }
-
                         }
                     });
                     paid.setOnClickListener(new View.OnClickListener() {
@@ -549,12 +531,8 @@ public class ServiceFlow extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), getString(R
                                                 .string.invalid_otp), Toast.LENGTH_SHORT).show();
                                     } else {
-
-
                                         if (!amount_paid.getText().toString().equalsIgnoreCase("")) {
-
                                             Double amount = Double.parseDouble(amount_paid.getText().toString());
-
                                             if (amount >= invoice.getPayable()) {
                                                 map = new HashMap<>();
                                                 map.put("status", status);
@@ -596,8 +574,6 @@ public class ServiceFlow extends AppCompatActivity {
 //            map.put("status", status);
 //            updateStatus();
         }
-
-
     }
 
     private void otpValidation(final Order order, final String status) {
@@ -641,17 +617,12 @@ public class ServiceFlow extends AppCompatActivity {
     }
 
     private void rate() {
-
-
         AlertDialog.Builder builder = new AlertDialog.Builder(ServiceFlow.this);
-
         final FrameLayout frameView = new FrameLayout(ServiceFlow.this);
         builder.setView(frameView);
-
         final AlertDialog rateDialog = builder.create();
         final LayoutInflater inflater = rateDialog.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.feedback_popup, frameView);
-
         rating = 5;
         rateRadioGroup = dialogView.findViewById(R.id.rate_radiogroup);
         rateRadioGroup.clearCheck();
@@ -659,9 +630,7 @@ public class ServiceFlow extends AppCompatActivity {
         rateRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-
                 //rating = i;
-
                 if (i == R.id.one) {
                     //do work when radioButton1 is active
                     rating = 1;
@@ -679,10 +648,8 @@ public class ServiceFlow extends AppCompatActivity {
                     rating = 5;
                 }
                 Log.d("gfgfgf", "onCheckedChanged: " + rating);
-
             }
         });
-
         final EditText comment = dialogView.findViewById(R.id.comment);
         Button feedbackSubmit = dialogView.findViewById(R.id.feedback_submit);
         feedbackSubmit.setOnClickListener(new View.OnClickListener() {
@@ -696,27 +663,23 @@ public class ServiceFlow extends AppCompatActivity {
                     rateUser(map);
                     rateDialog.dismiss();
                 }
-
             }
         });
         if (rateDialog.getWindow() != null)
             rateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         rateDialog.show();
-
     }
 
     private void rateUser(HashMap<String, String> map) {
         System.out.println(map.toString());
         if (!connectionHelper.isConnectingToInternet())
             return;
-
         String header = SharedHelper.getKey(this, "token_type") + " " + SharedHelper.getKey(this,
                 "access_token");
         Call<Message> call = GlobalData.api.rateUser(header, map);
         call.enqueue(new Callback<Message>() {
             @Override
-            public void onResponse(@NonNull Call<Message> call,
-                                   @NonNull Response<Message> response) {
+            public void onResponse(@NonNull Call<Message> call, @NonNull Response<Message> response) {
                 if (response.isSuccessful()) {
                     Message message = response.body();
                     Toast.makeText(ServiceFlow.this, message.getMessage(), Toast.LENGTH_SHORT).show();
@@ -755,29 +718,25 @@ public class ServiceFlow extends AppCompatActivity {
             startActivity(new Intent(ServiceFlow.this, Dispute.class));
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     private void initFlowIcons() {
         if (GlobalData.order != null && GlobalData.order.getOrdertiming() != null) {
-
             System.out.println("Current Status " + GlobalData.order.getStatus());
             String nextStatus = GlobalData.getNextOrderStatus(GlobalData.order.getStatus());
             System.out.println("nextStatus " + nextStatus);
-
             for (Ordertiming obj : GlobalData.order.getOrdertiming()) {
-
                 if (obj.getStatus().equals("PROCESSING") || GlobalData.order.getStatus().equals(
                         "PROCESSING")) {
                     iconStartedTowardsRestaurant.setBackgroundResource(R.drawable.round_accent);
-                    iconStartedTowardsRestaurant.setColorFilter(ContextCompat.getColor(ServiceFlow.this, R.color.colorWhite), PorterDuff.Mode.SRC_IN);
+                    iconStartedTowardsRestaurant.setColorFilter(ContextCompat.getColor(ServiceFlow.this,
+                            R.color.colorWhite), PorterDuff.Mode.SRC_IN);
                     iconReachedRestaurant.setBackgroundResource(R.drawable.round_grey);
                     iconReachedRestaurant.setColorFilter(ContextCompat.getColor(ServiceFlow.this,
                             R.color.colorWhite), PorterDuff.Mode.SRC_IN);
                 }
-                if (obj.getStatus().equals("REACHED") || GlobalData.order.getStatus().equals(
-                        "REACHED")) {
+                if (obj.getStatus().equals("REACHED") || GlobalData.order.getStatus().equals("REACHED")) {
                     iconReachedRestaurant.setBackgroundResource(R.drawable.round_accent);
                     iconReachedRestaurant.setColorFilter(ContextCompat.getColor(ServiceFlow.this,
                             R.color.colorWhite), PorterDuff.Mode.SRC_IN);
@@ -785,8 +744,7 @@ public class ServiceFlow extends AppCompatActivity {
                     iconOrderPickedUp.setColorFilter(ContextCompat.getColor(ServiceFlow.this,
                             R.color.colorWhite), PorterDuff.Mode.SRC_IN);
                 }
-                if (obj.getStatus().equals("PICKEDUP") || GlobalData.order.getStatus().equals(
-                        "PICKEDUP")) {
+                if (obj.getStatus().equals("PICKEDUP") || GlobalData.order.getStatus().equals("PICKEDUP")) {
                     iconOrderPickedUp.setBackgroundResource(R.drawable.round_accent);
                     iconOrderPickedUp.setColorFilter(ContextCompat.getColor(ServiceFlow.this,
                             R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
@@ -794,8 +752,7 @@ public class ServiceFlow extends AppCompatActivity {
                     iconOrderDelivered.setColorFilter(ContextCompat.getColor(ServiceFlow.this,
                             R.color.colorWhite), PorterDuff.Mode.SRC_IN);
                 }
-                if (obj.getStatus().equals("ARRIVED") || GlobalData.order.getStatus().equals(
-                        "ARRIVED")) {
+                if (obj.getStatus().equals("ARRIVED") || GlobalData.order.getStatus().equals("ARRIVED")) {
                     iconOrderDelivered.setBackgroundResource(R.drawable.round_accent);
                     iconOrderDelivered.setColorFilter(ContextCompat.getColor(ServiceFlow.this,
                             R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
@@ -803,8 +760,7 @@ public class ServiceFlow extends AppCompatActivity {
                     iconPaymentReceived.setColorFilter(ContextCompat.getColor(ServiceFlow.this,
                             R.color.colorWhite), PorterDuff.Mode.SRC_IN);
                 }
-                if (obj.getStatus().equals("COMPLETED") || GlobalData.order.getStatus().equals(
-                        "COMPLETED")) {
+                if (obj.getStatus().equals("COMPLETED") || GlobalData.order.getStatus().equals("COMPLETED")) {
                     iconPaymentReceived.setBackgroundResource(R.drawable.round_accent);
                     iconPaymentReceived.setColorFilter(ContextCompat.getColor(ServiceFlow.this,
                             R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
@@ -838,7 +794,6 @@ public class ServiceFlow extends AppCompatActivity {
                 "&daddr=" + d_address);
 //      Uri naviUri2 = Uri.parse("https://www.google.com/maps/search/?api=1&query="+s_address+",
 //      "+d_address);
-
         Intent intent = new Intent(Intent.ACTION_VIEW, naviUri2);
         intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
         startActivity(intent);
@@ -876,7 +831,6 @@ public class ServiceFlow extends AppCompatActivity {
         }
     }
 
-
     @OnClick({R.id.shop_call, R.id.shop_navigation, R.id.user_call, R.id.user_navigation})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -910,15 +864,13 @@ public class ServiceFlow extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_CALL_PHONE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 } else
                     Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-
             }
         }
     }
@@ -938,10 +890,5 @@ public class ServiceFlow extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         handler.removeCallbacks(runnable);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 }
