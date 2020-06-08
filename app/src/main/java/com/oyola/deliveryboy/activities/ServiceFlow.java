@@ -531,26 +531,26 @@ public class ServiceFlow extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), getString(R
                                                 .string.invalid_otp), Toast.LENGTH_SHORT).show();
                                     } else {
-                                        if (!amount_paid.getText().toString().equalsIgnoreCase("")) {
-                                            Double amount = Double.parseDouble(amount_paid.getText().toString());
-                                            if (amount >= invoice.getPayable()) {
-                                                map = new HashMap<>();
-                                                map.put("status", status);
-                                                map.put("total_pay", amount_paid.getText().toString());
-                                                map.put("tender_pay", String.valueOf(bal));
-                                                map.put("payment_mode", invoice.getPaymentMode());
-                                                map.put("payment_status", "success");
-                                                updateStatus();
-                                                alertDialog.dismiss();
-                                            } else {
-                                                Toast.makeText(getApplicationContext(),
-                                                        getString(R.string.full_amount), Toast.LENGTH_SHORT).show();
-                                            }
+                                        /*if (!amount_paid.getText().toString().equalsIgnoreCase("")) {*/
+                                        Double amount = Double.parseDouble(amount_paid.getText().toString());
+                                        if (amount >= invoice.getPayable()) {
+                                            map = new HashMap<>();
+                                            map.put("status", status);
+                                            map.put("total_pay", amount_paid.getText().toString());
+                                            map.put("tender_pay", String.valueOf(bal));
+                                            map.put("payment_mode", invoice.getPaymentMode());
+                                            map.put("payment_status", "success");
+                                            updateStatus();
+                                            alertDialog.dismiss();
                                         } else {
+                                            Toast.makeText(getApplicationContext(),
+                                                    getString(R.string.full_amount), Toast.LENGTH_SHORT).show();
+                                        }
+                                        /*} else {
                                             Toast.makeText(getApplicationContext(),
                                                     getString(R.string.enter_the_amount_paid),
                                                     Toast.LENGTH_SHORT).show();
-                                        }
+                                        }*/
                                     }
                                 }
                             }
