@@ -9,7 +9,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.crashlytics.android.Crashlytics;
 import com.oyola.deliveryboy.helper.GlobalData;
 import com.oyola.deliveryboy.helper.LocaleUtils;
 import com.oyola.deliveryboy.helper.SharedHelper;
@@ -20,7 +19,6 @@ import org.json.JSONObject;
 
 import java.util.Iterator;
 
-import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 import com.facebook.stetho.Stetho;
@@ -38,14 +36,12 @@ public class Application extends android.app.Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleUtils.onAttach(base));
-        //super.attachBaseContext(LocaleUtils.onAttach(base, "en"));
         MultiDex.install(this);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
         Stetho.initializeWithDefaults(this);
 
         mInstance = this;
