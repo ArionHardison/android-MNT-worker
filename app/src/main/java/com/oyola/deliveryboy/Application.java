@@ -1,7 +1,7 @@
 package com.oyola.deliveryboy;
 
 import android.content.Context;
-import android.support.multidex.MultiDex;
+import androidx.multidex.MultiDex;
 import android.text.TextUtils;
 import android.util.Log;
 
