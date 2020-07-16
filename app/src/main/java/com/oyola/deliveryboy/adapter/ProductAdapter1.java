@@ -1,18 +1,20 @@
 package com.oyola.deliveryboy.adapter;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.oyola.deliveryboy.Application;
 import com.oyola.deliveryboy.R;
 import com.oyola.deliveryboy.model.CartAddon;
 import com.oyola.deliveryboy.model.Item;
 import com.oyola.deliveryboy.model.Product;
+import com.oyola.deliveryboy.utils.JavaUtils;
 
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class ProductAdapter1 extends RecyclerView.Adapter<ProductAdapter1.MyView
 
     private List<Item> list;
     String numberFormat;
+
     public ProductAdapter1(List<Item> list, Context con) {
         numberFormat = Application.getNumberFormat();
         this.list = list;
@@ -42,18 +45,20 @@ public class ProductAdapter1 extends RecyclerView.Adapter<ProductAdapter1.MyView
         Item item = list.get(position);
 
         Product product = item.getProduct();
+        List<CartAddon> cartAddonList = item.getCartAddons();
         holder.productName.setText(product.getName() + " x " + item.getQuantity());
         double priceAmount = item.getProduct().getPrices().getOriginalPrice() * item.getQuantity();
-        if (list.get(position).getCartAddons() != null && !list.get(position).getCartAddons().isEmpty()) {
-            for (int j = 0; j < list.get(position).getCartAddons().size(); j++) {
-                priceAmount = priceAmount + (list.get(position).getQuantity() * (list.get(position).getCartAddons().get(j).getQuantity() *
-                        list.get(position).getCartAddons().get(j).getAddonProduct().getPrice()));
+        if (!JavaUtils.isNullOrEmpty(cartAddonList)) {
+            for (int j = 0, size = cartAddonList.size(); j < size; j++) {
+                CartAddon cartAddon = cartAddonList.get(j);
+                double price = (cartAddon.getAddonProduct() != null && cartAddon.getAddonProduct().getPrice() != null) ?
+                        cartAddon.getAddonProduct().getPrice() : 0;
+                priceAmount = priceAmount + (item.getQuantity() * (cartAddon.getQuantity() * price));
             }
         }
         holder.productPrice.setText(numberFormat + priceAmount);
 
         if (item.getCartAddons() != null && !item.getCartAddons().isEmpty()) {
-            List<CartAddon> cartAddonList = item.getCartAddons();
             for (int i = 0; i < cartAddonList.size(); i++) {
                 if (i == 0) {
                     if (cartAddonList.get(i).getAddonProduct().getAddon() != null) {
@@ -78,7 +83,7 @@ public class ProductAdapter1 extends RecyclerView.Adapter<ProductAdapter1.MyView
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView productName, productPrice,addons;
+        private TextView productName, productPrice, addons;
 
         private MyViewHolder(View view) {
             super(view);
