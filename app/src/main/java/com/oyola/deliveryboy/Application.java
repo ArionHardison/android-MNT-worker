@@ -1,14 +1,19 @@
 package com.oyola.deliveryboy;
 
 import android.content.Context;
-import androidx.multidex.MultiDex;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.multidex.MultiDex;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.facebook.stetho.Stetho;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.oyola.deliveryboy.helper.GlobalData;
 import com.oyola.deliveryboy.helper.LocaleUtils;
 import com.oyola.deliveryboy.helper.SharedHelper;
@@ -18,8 +23,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Iterator;
-
-import com.facebook.stetho.Stetho;
 
 public class Application extends android.app.Application {
 
@@ -43,6 +46,20 @@ public class Application extends android.app.Application {
         Stetho.initializeWithDefaults(this);
 
         mInstance = this;
+        fetchDeviceToken();
+    }
+
+    public void fetchDeviceToken() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
+                instanceIdResult -> {
+                    String newToken = instanceIdResult.getToken();
+                    SharedHelper.putKey(getApplicationContext(), "device_token", "" + newToken);
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("FireBaseToken", "onFailure : " + e.toString());
+            }
+        });
     }
 
     public static synchronized Application getInstance() {
