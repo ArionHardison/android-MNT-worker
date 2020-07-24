@@ -2,7 +2,6 @@ package com.oyola.deliveryboy.activities;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -53,7 +52,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -290,11 +288,6 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @OnClick({R.id.back, R.id.upload_profile, R.id.update})

@@ -26,16 +26,16 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/id_newtasklayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/id_newtasklayout"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/new_task_label"
-                        fontPath="fonts/Nunito-Bold.ttf"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_bold"
                         android:padding="16dp"
                         android:text="@string/new_task"
                         tools:ignore="MissingPrefix" />
@@ -59,7 +59,8 @@
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="gone"
+                            tools:visibility="visible">
 
                             <ImageView
                                 android:id="@+id/error_img"
@@ -69,10 +70,10 @@
 
                             <TextView
                                 android:id="@+id/error_message"
-                                fontPath="fonts/Nunito-Bold.ttf"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                android:fontFamily="@font/nunito_bold"
                                 android:gravity="center"
                                 android:padding="8dp"
                                 android:textAllCaps="true"
@@ -94,9 +95,9 @@
 
                     <TextView
                         android:id="@+id/completed_task_label"
-                        fontPath="fonts/Nunito-Bold.ttf"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_bold"
                         android:padding="16dp"
                         android:visibility="visible"
                         tools:ignore="MissingPrefix" />
@@ -133,11 +134,11 @@
                 android:src="@drawable/no_internet" />
 
             <TextView
-                fontPath="fonts/Nunito-Bold.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@color/colorWhite"
+                android:fontFamily="@font/nunito_bold"
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="@string/network_error"

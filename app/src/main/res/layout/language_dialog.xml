@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorWhite">
+
     <RadioGroup
         android:id="@+id/choose_language"
         android:layout_width="match_parent"
@@ -19,6 +19,7 @@
             android:drawableRight="@drawable/language_select_unselect"
             android:drawablePadding="30dp"
             android:ellipsize="end"
+            android:fontFamily="@font/nunito_bold"
             android:padding="12dp"
             android:singleLine="true"
             android:text="@string/lang_english"
@@ -33,11 +34,12 @@
             android:drawableRight="@drawable/language_select_unselect"
             android:drawablePadding="30dp"
             android:ellipsize="end"
-            android:visibility="gone"
+            android:fontFamily="@font/nunito_bold"
             android:padding="12dp"
             android:singleLine="true"
             android:text="@string/lang_japnese"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/text_medium" />
+            android:textSize="@dimen/text_medium"
+            android:visibility="gone" />
     </RadioGroup>
 </LinearLayout>

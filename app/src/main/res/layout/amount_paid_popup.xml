@@ -7,9 +7,9 @@
 
 
     <TextView
-        fontPath="fonts/Nunito-Bold.ttf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_bold"
         android:gravity="center_horizontal"
         android:maxLines="1"
         android:padding="8dp"
@@ -21,13 +21,13 @@
 
     <TextView
         android:id="@+id/amount_to_be_paid"
-        fontPath="fonts/Nunito-Bold.ttf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/nunito_bold"
         android:gravity="center_horizontal"
         android:maxLines="1"
         android:padding="8dp"
-        android:layout_marginBottom="16dp"
         android:textAllCaps="true"
         android:textColor="@color/colorAccent"
         android:textSize="30sp"
@@ -36,8 +36,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:fontFamily="@font/nunito_regular"
         android:gravity="center"
+        android:padding="8dp"
         android:text="@string/please_handover_the_amount_earned"
         android:textSize="16sp" />
 
@@ -48,8 +49,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@color/colorAccent"
-        android:visibility="visible"
+        android:fontFamily="@font/nunito_bold"
         android:text="@string/end_shift"
-        android:textColor="@color/colorWhite" />
+        android:textColor="@color/colorWhite"
+        android:visibility="visible" />
 
 </LinearLayout>

@@ -1,6 +1,5 @@
 package com.oyola.deliveryboy.activities;
 
-import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.snackbar.Snackbar;
@@ -33,7 +32,6 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class NoticeBoard extends AppCompatActivity {
 
@@ -111,11 +109,6 @@ public class NoticeBoard extends AppCompatActivity {
                 Toast.makeText(NoticeBoard.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @OnClick(R.id.back)

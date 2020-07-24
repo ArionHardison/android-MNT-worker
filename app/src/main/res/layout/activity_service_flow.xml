@@ -89,8 +89,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -112,6 +111,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_regular"
                             android:maxLines="1"
                             android:padding="8dp"
                             android:text="@string/time_left"
@@ -124,6 +124,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
+                            android:fontFamily="@font/nunito_semibold"
                             android:maxLines="1"
                             android:padding="8dp"
                             android:text="@string/time_left_txt"
@@ -158,9 +159,9 @@
 
                             <TextView
                                 android:id="@+id/shop_name"
-                                fontPath="fonts/Nunito-Bold.ttf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_bold"
                                 android:maxLines="1"
                                 android:textAllCaps="true"
                                 android:textSize="16sp"
@@ -172,6 +173,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
                                 android:layout_marginLeft="4dp"
+                                android:fontFamily="@font/nunito_regular"
                                 android:maxLines="1"
                                 android:textColor="@color/colorAccent" />
                         </LinearLayout>
@@ -185,6 +187,7 @@
                             android:layout_marginBottom="16dp"
                             android:layout_toEndOf="@+id/shop_avatar"
                             android:layout_toRightOf="@+id/shop_avatar"
+                            android:fontFamily="@font/nunito_regular"
                             android:maxLines="3" />
 
                         <LinearLayout
@@ -243,9 +246,9 @@
 
                             <TextView
                                 android:id="@+id/user_name"
-                                fontPath="fonts/Nunito-Bold.ttf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_bold"
                                 android:maxLines="1"
                                 android:textAllCaps="true"
                                 android:textSize="16sp"
@@ -257,6 +260,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
                                 android:layout_marginLeft="4dp"
+                                android:fontFamily="@font/nunito_regular"
                                 android:maxLines="1"
                                 android:textColor="@color/colorAccent" />
                         </LinearLayout>
@@ -270,6 +274,7 @@
                             android:layout_marginBottom="16dp"
                             android:layout_toEndOf="@+id/user_avatar"
                             android:layout_toRightOf="@+id/user_avatar"
+                            android:fontFamily="@font/nunito_regular"
                             android:maxLines="3" />
 
                         <LinearLayout
@@ -318,10 +323,10 @@
 
                             <TextView
                                 android:id="@+id/order_id"
-                                fontPath="fonts/Nunito-Bold.ttf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:fontFamily="@font/nunito_bold"
                                 android:padding="16dp"
                                 android:textColor="@color/colorAccent"
                                 android:textSize="16sp"
@@ -329,10 +334,10 @@
 
                             <TextView
                                 android:id="@+id/payment_mode"
-                                fontPath="fonts/Nunito-Bold.ttf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:fontFamily="@font/nunito_bold"
                                 android:gravity="end"
                                 android:padding="16dp"
                                 android:textAllCaps="true"
@@ -342,10 +347,10 @@
 
                             <TextView
                                 android:id="@+id/order_created_at"
-                                fontPath="fonts/Nunito-Bold.ttf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:fontFamily="@font/nunito_bold"
                                 android:gravity="end"
                                 android:padding="16dp"
                                 android:textSize="16sp"
@@ -384,6 +389,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/nunito_bold"
                                     android:padding="8dp"
                                     android:text="@string/item_total"
                                     android:textSize="16sp" />
@@ -393,6 +399,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2"
+                                    android:fontFamily="@font/nunito_bold"
                                     android:gravity="end"
                                     android:padding="8dp"
                                     android:textSize="16sp"
@@ -402,13 +409,14 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:visibility="gone"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:visibility="gone">
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/nunito_regular"
                                     android:padding="8dp"
                                     android:text="@string/service_tax"
                                     android:textSize="16sp" />
@@ -418,6 +426,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2"
+                                    android:fontFamily="@font/nunito_regular"
                                     android:gravity="end"
                                     android:padding="8dp"
                                     android:textSize="16sp"
@@ -433,6 +442,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/nunito_regular"
                                     android:padding="8dp"
                                     android:text="@string/delivery_charges"
                                     android:textSize="16sp" />
@@ -442,6 +452,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2"
+                                    android:fontFamily="@font/nunito_bold"
                                     android:gravity="end"
                                     android:padding="8dp"
                                     android:textSize="16sp"
@@ -458,6 +469,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/nunito_regular"
                                     android:padding="8dp"
                                     android:text="@string/promocode_amount"
                                     android:textSize="16sp" />
@@ -467,6 +479,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2"
+                                    android:fontFamily="@font/nunito_bold"
                                     android:gravity="end"
                                     android:padding="8dp"
                                     android:textSize="16sp" />
@@ -481,6 +494,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/nunito_regular"
                                     android:padding="8dp"
                                     android:text="@string/discount"
                                     android:textSize="16sp" />
@@ -490,6 +504,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2"
+                                    android:fontFamily="@font/nunito_bold"
                                     android:gravity="end"
                                     android:padding="8dp"
                                     android:textSize="16sp" />
@@ -504,6 +519,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/nunito_regular"
                                     android:padding="8dp"
                                     android:text="Wallet Detection"
                                     android:textSize="16sp" />
@@ -513,6 +529,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2"
+                                    android:fontFamily="@font/nunito_bold"
                                     android:gravity="end"
                                     android:padding="8dp"
                                     android:textSize="16sp" />
@@ -524,10 +541,10 @@
                                 android:layout_height="wrap_content">
 
                                 <TextView
-                                    fontPath="fonts/Nunito-Bold.ttf"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/nunito_bold"
                                     android:gravity="end"
                                     android:padding="8dp"
                                     android:text="@string/total"
@@ -537,10 +554,10 @@
 
                                 <TextView
                                     android:id="@+id/total"
-                                    fontPath="fonts/Nunito-Bold.ttf"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2"
+                                    android:fontFamily="@font/nunito_bold"
                                     android:gravity="end"
                                     android:padding="8dp"
                                     android:textColor="@color/primary_text"
@@ -590,10 +607,10 @@
 
         <TextView
             android:id="@+id/status_label"
-            fontPath="fonts/Nunito-Bold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:fontFamily="@font/nunito_bold"
             android:maxLines="1"
             android:paddingStart="24dp"
             android:paddingLeft="24dp"
@@ -611,5 +628,4 @@
             tools:visibility="visible" />
 
     </RelativeLayout>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

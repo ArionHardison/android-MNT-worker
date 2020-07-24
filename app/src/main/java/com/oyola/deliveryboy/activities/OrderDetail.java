@@ -26,7 +26,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class OrderDetail extends AppCompatActivity {
 
@@ -186,11 +185,4 @@ public class OrderDetail extends AppCompatActivity {
     public void onViewClicked() {
         onBackPressed();
     }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
-
-
 }

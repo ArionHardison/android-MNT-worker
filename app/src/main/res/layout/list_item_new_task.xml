@@ -28,9 +28,9 @@
 
                 <TextView
                     android:id="@+id/order_status"
-                    fontPath="fonts/Nunito-Bold.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_bold"
                     android:maxLines="1"
                     android:padding="8dp"
                     android:textColor="@android:color/black"
@@ -43,6 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
+                    android:fontFamily="@font/nunito_semibold"
                     android:maxLines="1"
                     android:padding="8dp"
                     android:text="@string/time_left_txt"
@@ -69,11 +70,11 @@
 
                 <TextView
                     android:id="@+id/shop_name"
-                    fontPath="fonts/Nunito-Bold.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/shop_avatar"
                     android:layout_toRightOf="@+id/shop_avatar"
+                    android:fontFamily="@font/nunito_bold"
                     android:maxLines="1"
                     android:text="@string/new_order_txt"
                     android:textSize="16sp"
@@ -88,6 +89,7 @@
                     android:layout_marginRight="26dp"
                     android:layout_toEndOf="@+id/shop_avatar"
                     android:layout_toRightOf="@+id/shop_avatar"
+                    android:fontFamily="@font/nunito_regular"
                     android:maxLines="3" />
 
                 <ImageView
@@ -117,6 +119,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/colorRed"
+                    android:fontFamily="@font/nunito_bold"
                     android:text="@string/reject" />
 
                 <Button
@@ -128,6 +131,7 @@
                     android:layout_marginEnd="0dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/colorGreen"
+                    android:fontFamily="@font/nunito_bold"
                     android:text="@string/accept" />
             </LinearLayout>
 

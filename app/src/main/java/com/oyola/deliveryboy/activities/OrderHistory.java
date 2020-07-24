@@ -1,14 +1,7 @@
 package com.oyola.deliveryboy.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,8 +13,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
+import com.google.android.material.snackbar.Snackbar;
 import com.oyola.deliveryboy.R;
 import com.oyola.deliveryboy.adapter.OrderHistoryAdapter;
 import com.oyola.deliveryboy.api.APIError;
@@ -42,7 +42,6 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class OrderHistory extends AppCompatActivity {
     OrderHistoryAdapter orderHistoryAdapter;
@@ -63,6 +62,7 @@ public class OrderHistory extends AppCompatActivity {
     RelativeLayout rootView;
 
     private SkeletonScreen skeletonScreen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,7 +121,6 @@ public class OrderHistory extends AppCompatActivity {
 
         skeletonScreen = Skeleton.bind(rootView)
                 .load(R.layout.skeleton_order)
-                .color(R.color.shimmer_color)
                 .angle(0)
                 .show();
 
@@ -165,11 +164,6 @@ public class OrderHistory extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @OnClick(R.id.back)

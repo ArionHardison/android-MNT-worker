@@ -6,8 +6,7 @@
     android:orientation="vertical"
     tools:context="com.oyola.deliveryboy.activities.OrderDetail">
 
-    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -35,16 +34,16 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:paddingEnd="4dp"
+                android:paddingStart="8dp"
                 android:paddingLeft="8dp"
-                android:paddingRight="4dp"
-                android:paddingStart="8dp">
+                android:paddingEnd="4dp"
+                android:paddingRight="4dp">
 
                 <TextView
                     android:id="@+id/title"
-                    fontPath="fonts/Nunito-Bold.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_bold"
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:textAllCaps="true"
@@ -56,6 +55,7 @@
                     android:id="@+id/status_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_semibold"
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:textColor="@color/secondary_text"
@@ -105,9 +105,9 @@
 
                         <TextView
                             android:id="@+id/shop_name"
-                            fontPath="fonts/Nunito-Bold.ttf"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_bold"
                             android:maxLines="1"
                             android:textColor="@color/primary_text"
                             android:textSize="16sp"
@@ -117,6 +117,7 @@
                             android:id="@+id/shop_address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_regular"
                             android:maxLines="2"
                             android:textColor="@color/secondary_text"
                             android:textSize="14sp" />
@@ -127,8 +128,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
                     android:contentDescription="@null"
                     android:src="@drawable/line" />
 
@@ -154,9 +155,9 @@
 
                         <TextView
                             android:id="@+id/user_name"
-                            fontPath="fonts/Nunito-Bold.ttf"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_bold"
                             android:maxLines="1"
                             android:textColor="@color/primary_text"
                             android:textSize="16sp"
@@ -166,6 +167,7 @@
                             android:id="@+id/user_address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_regular"
                             android:maxLines="2"
                             android:textColor="@color/secondary_text"
                             android:textSize="14sp" />
@@ -178,8 +180,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginLeft="50dp"
                 android:layout_marginStart="50dp"
+                android:layout_marginLeft="50dp"
                 android:background="@color/grey_" />
 
             <LinearLayout
@@ -201,6 +203,7 @@
                     android:id="@+id/order_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_semibold"
                     android:maxLines="1"
                     android:text="@string/order_delivered_successfully"
                     android:textColor="@color/green"
@@ -218,10 +221,10 @@
 
                 <TextView
                     android:id="@+id/order_id"
-                    fontPath="fonts/Nunito-Bold.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/nunito_bold"
                     android:padding="16dp"
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp"
@@ -230,10 +233,10 @@
 
                 <TextView
                     android:id="@+id/order_created_at"
-                    fontPath="fonts/Nunito-Bold.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/nunito_bold"
                     android:gravity="end"
                     android:padding="16dp"
                     android:textSize="16sp"
@@ -270,6 +273,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_regular"
                         android:padding="8dp"
                         android:text="@string/item_total"
                         android:textSize="16sp" />
@@ -279,6 +283,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="end"
                         android:padding="8dp"
                         android:textSize="16sp" />
@@ -287,13 +292,14 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:visibility="gone"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_regular"
                         android:padding="8dp"
                         android:text="@string/service_tax"
                         android:textSize="16sp" />
@@ -303,6 +309,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="end"
                         android:padding="8dp"
                         android:textSize="16sp" />
@@ -317,6 +324,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_regular"
                         android:padding="8dp"
                         android:text="@string/delivery_charges"
                         android:textSize="16sp" />
@@ -326,6 +334,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="end"
                         android:padding="8dp"
                         android:textSize="16sp" />
@@ -340,6 +349,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_regular"
                         android:padding="8dp"
                         android:text="@string/discount"
                         android:textSize="16sp" />
@@ -349,11 +359,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="end"
                         android:padding="8dp"
                         android:textSize="16sp" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -362,6 +374,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_regular"
                         android:padding="8dp"
                         android:text="@string/wallet_detection"
                         android:textSize="16sp" />
@@ -371,6 +384,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="end"
                         android:padding="8dp"
                         android:textSize="16sp" />
@@ -382,10 +396,10 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        fontPath="fonts/Nunito-Bold.ttf"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_bold"
                         android:gravity="end"
                         android:padding="8dp"
                         android:text="@string/total"
@@ -395,10 +409,10 @@
 
                     <TextView
                         android:id="@+id/total"
-                        fontPath="fonts/Nunito-Bold.ttf"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
+                        android:fontFamily="@font/nunito_bold"
                         android:gravity="end"
                         android:padding="8dp"
                         android:textColor="@color/primary_text"
@@ -418,10 +432,10 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    fontPath="fonts/Nunito-Bold.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/nunito_bold"
                     android:padding="16dp"
                     android:text="@string/payment_mode"
                     android:textSize="16sp"
@@ -429,10 +443,10 @@
 
                 <TextView
                     android:id="@+id/payment_mode"
-                    fontPath="fonts/Nunito-Bold.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/nunito_bold"
                     android:gravity="end"
                     android:padding="16dp"
                     android:textAllCaps="true"
@@ -461,6 +475,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_regular"
                         android:padding="8dp"
                         android:text="@string/no_of_items"
                         android:textSize="16sp" />
@@ -470,6 +485,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="end"
                         android:padding="8dp"
                         android:textSize="16sp"
@@ -485,6 +501,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_regular"
                         android:padding="8dp"
                         android:text="@string/bill_amount"
                         android:textSize="16sp" />
@@ -494,6 +511,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="end"
                         android:padding="8dp"
                         android:textSize="16sp"
@@ -509,6 +527,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_regular"
                         android:padding="8dp"
                         android:text="@string/bill_paid"
                         android:textSize="16sp" />
@@ -518,9 +537,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="end"
-                        android:text="-"
                         android:padding="8dp"
+                        android:text="-"
                         android:textSize="16sp"
                         tools:ignore="MissingPrefix" />
 
@@ -534,6 +554,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_regular"
                         android:padding="8dp"
                         android:text="@string/returned"
                         android:textColor="@color/colorAccent"
@@ -544,6 +565,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="end"
                         android:padding="8dp"
                         android:text="-"
@@ -556,8 +578,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="32dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
                 android:background="@color/grey_" />
 
 

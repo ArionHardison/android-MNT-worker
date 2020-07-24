@@ -11,19 +11,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.NonNull;
-import com.google.android.material.navigation.NavigationView;
-import androidx.core.content.ContextCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -35,11 +22,25 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.oyola.deliveryboy.R;
 import com.oyola.deliveryboy.adapter.TaskAdapter;
@@ -69,7 +70,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.oyola.deliveryboy.receiver.NetworkChangeReceiver.IS_NETWORK_AVAILABLE;
 
@@ -341,7 +341,6 @@ public class Home extends AppCompatActivity
                         errorLayout.setVisibility(View.GONE);
                     } else {
                         orders.clear();
-                        newTaskAdapter.notifyDataSetChanged();
                         handler.removeCallbacks(runnable);
                         handler.postDelayed(runnable, 5000);
                         errorLayout.setVisibility(View.VISIBLE);
@@ -407,7 +406,6 @@ public class Home extends AppCompatActivity
         if (skeletonScreen == null) {
             skeletonScreen = Skeleton.bind(completedTaskRootview)
                     .load(R.layout.skeloton_list_item_new_task)
-                    .color(R.color.shimmer_color)
                     .angle(0)
                     .show();
         } else {
@@ -645,11 +643,6 @@ public class Home extends AppCompatActivity
                 recreate();
                 break;
         }
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     public void onDestroy() {

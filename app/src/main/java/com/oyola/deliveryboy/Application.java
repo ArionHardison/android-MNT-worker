@@ -19,8 +19,6 @@ import org.json.JSONObject;
 
 import java.util.Iterator;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-
 import com.facebook.stetho.Stetho;
 
 public class Application extends android.app.Application {
@@ -45,15 +43,6 @@ public class Application extends android.app.Application {
         Stetho.initializeWithDefaults(this);
 
         mInstance = this;
-        initCalligraphyConfig();
-    }
-
-    private void initCalligraphyConfig() {
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setFontAttrId(R.attr.fontPath)
-                .setDefaultFontPath("fonts/Nunito-Regular.ttf")
-                .build()
-        );
     }
 
     public static synchronized Application getInstance() {

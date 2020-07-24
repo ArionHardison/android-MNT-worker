@@ -1,6 +1,5 @@
 package com.oyola.deliveryboy.activities;
 
-import android.content.Context;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.webkit.WebView;
@@ -15,7 +14,6 @@ import com.oyola.deliveryboy.helper.SharedHelper;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.oyola.deliveryboy.BuildConfigure.BASE_URL;
 
@@ -67,11 +65,5 @@ public class TermsAndConditions extends AppCompatActivity {
     @OnClick(R.id.back)
     public void onViewClicked() {
         onBackPressed();
-    }
-
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

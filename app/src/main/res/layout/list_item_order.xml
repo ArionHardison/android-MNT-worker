@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -8,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        <androidx.cardview.widget.CardView
             android:id="@+id/history_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,23 +39,23 @@
 
                     <TextView
                         android:id="@+id/shop_name"
-                        fontPath="fonts/Nunito-Bold.ttf"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/shop_avatar"
                         android:layout_toEndOf="@+id/shop_avatar"
+                        android:layout_toRightOf="@+id/shop_avatar"
+                        android:fontFamily="@font/nunito_bold"
                         android:maxLines="1"
                         android:textSize="16sp"
                         tools:ignore="MissingPrefix" />
 
                     <TextView
                         android:id="@+id/order_id"
-                        fontPath="fonts/Nunito-Bold.ttf"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/shop_name"
-                        android:layout_toRightOf="@+id/shop_avatar"
                         android:layout_toEndOf="@+id/shop_avatar"
+                        android:layout_toRightOf="@+id/shop_avatar"
+                        android:fontFamily="@font/nunito_bold"
                         android:maxLines="1"
                         android:textAllCaps="true"
                         android:textColor="@color/colorAccent"
@@ -73,8 +74,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawablePadding="8dp"
                         android:drawableTop="@drawable/clock"
+                        android:drawablePadding="8dp"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="center"
                         android:textAllCaps="true" />
 
@@ -83,8 +85,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawablePadding="8dp"
                         android:drawableTop="@drawable/list"
+                        android:drawablePadding="8dp"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="center"
                         android:textAllCaps="true" />
 
@@ -93,8 +96,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawablePadding="8dp"
                         android:drawableTop="@drawable/ic_coin"
+                        android:drawablePadding="8dp"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="center"
                         android:textAllCaps="true" />
                 </LinearLayout>
@@ -110,11 +114,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|end"
+        android:layout_marginTop="62dp"
         android:layout_marginEnd="13dp"
         android:layout_marginRight="13dp"
-        android:layout_marginTop="62dp"
         android:alpha="0.8"
         android:background="@drawable/ribbon"
+        android:fontFamily="@font/nunito_semibold"
         android:gravity="center_vertical|end"
         android:text="@string/delivered"
         android:textAllCaps="true"

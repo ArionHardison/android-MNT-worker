@@ -30,10 +30,10 @@
             android:visibility="visible">
 
             <TextView
-                fontPath="fonts/Nunito-Bold.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/nunito_bold"
                 android:padding="16dp"
                 android:text="@string/otp"
                 android:textSize="16sp"
@@ -46,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:cursorVisible="true"
+                android:fontFamily="@font/nunito_semibold"
                 android:inputType="number"
                 android:padding="2dp"
                 android:textColor="@color/colorAccent"
@@ -67,10 +68,10 @@
             android:layout_height="wrap_content">
 
             <TextView
-                fontPath="fonts/Nunito-Bold.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/nunito_bold"
                 android:padding="16dp"
                 android:text="@string/amount_to_pay"
                 android:textSize="16sp"
@@ -81,6 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:fontFamily="@font/nunito_bold"
                 android:gravity="end"
                 android:padding="16dp"
                 android:textColor="@color/colorAccent"
@@ -94,10 +96,10 @@
             android:visibility="gone">
 
             <TextView
-                fontPath="fonts/Nunito-Bold.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/nunito_bold"
                 android:padding="16dp"
                 android:text="@string/enter_the_amount_paid"
                 android:textSize="16sp"
@@ -107,6 +109,7 @@
                 android:id="@+id/amount_paid_currency_symbol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_semibold"
                 android:padding="16dp"
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp" />
@@ -116,6 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:fontFamily="@font/nunito_regular"
                 android:gravity="end"
                 android:inputType="numberDecimal|numberSigned|number"
                 android:longClickable="false"
@@ -131,10 +135,10 @@
             android:visibility="gone">
 
             <TextView
-                fontPath="fonts/Nunito-Bold.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/nunito_bold"
                 android:padding="16dp"
                 android:text="@string/balance"
                 android:textSize="16sp"
@@ -144,6 +148,7 @@
                 android:id="@+id/balance_currency_symbol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_regular"
                 android:padding="16dp"
                 android:textColor="@color/colorAccent"
                 android:textSize="16sp" />
@@ -153,6 +158,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:fontFamily="@font/nunito_bold"
                 android:gravity="end"
                 android:padding="8dp"
                 android:textColor="@color/colorAccent"
@@ -167,6 +173,7 @@
             android:layout_marginTop="16dp"
             android:alpha="128"
             android:background="@color/colorAccent"
+            android:fontFamily="@font/nunito_bold"
             android:text="@string/paid"
             android:textColor="@color/colorWhite" />
     </LinearLayout>

@@ -16,10 +16,10 @@
 
         <TextView
             android:id="@+id/product_name"
-            fontPath="fonts/Nunito-Bold.ttf"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/nunito_bold"
             android:maxLines="1"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
@@ -29,9 +29,9 @@
 
         <TextView
             android:id="@+id/product_price"
-            fontPath="fonts/Nunito-Bold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_bold"
             android:gravity="end"
             android:maxLines="1"
             android:paddingLeft="12dp"
@@ -46,6 +46,7 @@
         android:id="@+id/addons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_semibold"
         android:gravity="start"
         android:maxLines="1"
         android:paddingLeft="12dp"
