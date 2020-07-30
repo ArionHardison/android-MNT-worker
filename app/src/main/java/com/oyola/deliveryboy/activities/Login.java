@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.oyola.deliveryboy.Application;
 import com.oyola.deliveryboy.CountryPicker.Country;
 import com.oyola.deliveryboy.CountryPicker.CountryPicker;
 import com.oyola.deliveryboy.CountryPicker.CountryPickerListener;
@@ -70,6 +71,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        Application.getInstance().fetchDeviceToken();
         getDeviceToken();
         customDialog = new CustomDialog(Login.this);
         connectionHelper = new ConnectionHelper(this);
