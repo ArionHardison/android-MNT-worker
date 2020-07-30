@@ -64,7 +64,9 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_amount_to_pay"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content">
 
             <TextView
@@ -91,6 +93,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_enter_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone">

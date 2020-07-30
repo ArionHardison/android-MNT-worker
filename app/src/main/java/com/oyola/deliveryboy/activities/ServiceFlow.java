@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -171,6 +172,7 @@ public class ServiceFlow extends AppCompatActivity {
     private String isPinView;
     private double bal = 0;
     private double mRoundedAmt = 0;
+    private boolean isCashPayment = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -258,8 +260,10 @@ public class ServiceFlow extends AppCompatActivity {
             total.setText(numberFormat + invoice.getPayable());
             if (invoice.getPaymentMode().equalsIgnoreCase("stripe")) {
                 paymentMode.setText(getString(R.string.payment_mode) + "Card");
+                isCashPayment = false;
             } else {
                 paymentMode.setText(getString(R.string.payment_mode) + invoice.getPaymentMode());
+                isCashPayment = true;
             }
 
             items.clear();
@@ -477,6 +481,8 @@ public class ServiceFlow extends AppCompatActivity {
                     paymentOnce = false;
                     final Button paid = dialogView.findViewById(R.id.paid);
                     final PinView pinView = dialogView.findViewById(R.id.pinView);
+                    LinearLayout layoutAmountToPay = dialogView.findViewById(R.id.layout_amount_to_pay);
+                    LinearLayout layoutEnterAmount = dialogView.findViewById(R.id.layout_enter_amount);
                     TextView amount_paid_currency_symbol =
                             dialogView.findViewById(R.id.amount_paid_currency_symbol);
                     amount_paid_currency_symbol.setText(numberFormat/*.getCurrency().getSymbol()*/);
@@ -486,9 +492,16 @@ public class ServiceFlow extends AppCompatActivity {
                     final TextView amount_to_pay = dialogView.findViewById(R.id.amount_to_pay);
                     final EditText amount_paid = dialogView.findViewById(R.id.amount_paid);
                     final TextView balance = dialogView.findViewById(R.id.balance);
+
+                    layoutAmountToPay.setVisibility(!isCashPayment ? View.GONE : View.VISIBLE);
+                    layoutEnterAmount.setVisibility(!isCashPayment ? View.GONE : View.VISIBLE);
+
+                    if (isCashPayment) {
+                        amount_to_pay.setText(numberFormat + invoice.getPayable());
+                    }
+
                     mRoundedAmt = GlobalData.roundoff(invoice.getPayable());
-                    amount_to_pay.setText(numberFormat + invoice.getPayable());
-                    amount_paid.addTextChangedListener(new TextWatcher() {
+                    amount_paid.addTextChangedListener(!isCashPayment ? null : new TextWatcher() {
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
                         }
@@ -531,26 +544,31 @@ public class ServiceFlow extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), getString(R
                                                 .string.invalid_otp), Toast.LENGTH_SHORT).show();
                                     } else {
-                                        /*if (!amount_paid.getText().toString().equalsIgnoreCase("")) {*/
-                                        Double amount = Double.parseDouble(amount_paid.getText().toString());
-                                        if (amount >= invoice.getPayable()) {
+                                        if (!isCashPayment) {
                                             map = new HashMap<>();
                                             map.put("status", status);
-                                            map.put("total_pay", amount_paid.getText().toString());
+                                            map.put("total_pay", String.valueOf(invoice.getPayable() != null ? invoice.getPayable() : 0));
                                             map.put("tender_pay", String.valueOf(bal));
                                             map.put("payment_mode", invoice.getPaymentMode());
                                             map.put("payment_status", "success");
                                             updateStatus();
-                                            alertDialog.dismiss();
                                         } else {
-                                            Toast.makeText(getApplicationContext(),
-                                                    getString(R.string.full_amount), Toast.LENGTH_SHORT).show();
+                                            String amountPaid = amount_paid.getText().toString();
+                                            double amount = !TextUtils.isEmpty(amountPaid) ? Double.parseDouble(amountPaid) : 0;
+                                            if (!TextUtils.isEmpty(amountPaid) && amount >= invoice.getPayable()) {
+                                                map = new HashMap<>();
+                                                map.put("status", status);
+                                                map.put("total_pay", String.valueOf(invoice.getPayable()));
+                                                map.put("tender_pay", String.valueOf(bal));
+                                                map.put("payment_mode", invoice.getPaymentMode());
+                                                map.put("payment_status", "success");
+                                                updateStatus();
+                                                alertDialog.dismiss();
+                                            } else {
+                                                Toast.makeText(getApplicationContext(),
+                                                        getString(R.string.full_amount), Toast.LENGTH_SHORT).show();
+                                            }
                                         }
-                                        /*} else {
-                                            Toast.makeText(getApplicationContext(),
-                                                    getString(R.string.enter_the_amount_paid),
-                                                    Toast.LENGTH_SHORT).show();
-                                        }*/
                                     }
                                 }
                             }
