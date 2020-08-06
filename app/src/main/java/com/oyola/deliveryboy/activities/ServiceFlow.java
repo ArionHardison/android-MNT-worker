@@ -358,6 +358,9 @@ public class ServiceFlow extends AppCompatActivity {
     }
 
     private void updateFlowUI(String value) {
+        if (!TextUtils.isEmpty(value)) {
+            shiftStatus.setEnabled(value.equalsIgnoreCase("SEARCHING"));
+        }
         initFlowIcons();
         switch (value) {
             case "ASSIGNED":
@@ -430,6 +433,8 @@ public class ServiceFlow extends AppCompatActivity {
     }
 
     private void updateStatus() {
+        if (map.size() == 0)
+            return;
         if (!connectionHelper.isConnectingToInternet() || GlobalData.order == null)
             return;
         String header = SharedHelper.getKey(this, "token_type") + " " + SharedHelper.getKey(this,
