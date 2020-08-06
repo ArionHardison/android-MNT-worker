@@ -119,8 +119,8 @@ public class OrderDetail extends AppCompatActivity {
 
             if (invoice.getTotalPay() != 0)
                 billPaid.setText(numberFormat + invoice.getTotalPay());
-            if (invoice.getTenderPay() != 0)
-                returned.setText(numberFormat + invoice.getTenderPay());
+//            if (invoice.getTenderPay() != 0)
+//                returned.setText(numberFormat + invoice.getTenderPay());
 
             billAmount.setText(numberFormat + invoice.getNet());
             title.setText(getResources().getString(R.string.order_message, invoice.getOrderId()));

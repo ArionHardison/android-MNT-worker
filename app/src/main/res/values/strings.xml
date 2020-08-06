@@ -54,7 +54,7 @@
     <string name="item_total">"Item Total"</string>
     <string name="service_tax">"Service Tax"</string>
     <string name="delivery_charges">"Delivery Charges"</string>
-    <string name="discount">"Shop Discount"</string>
+    <string name="discount">Kitchen Discount</string>
     <string name="promocode_amount">"Promocode Amount"</string>
     <string name="total">"Total"</string>
     <string name="payment_mode">"Payment "</string>
@@ -125,7 +125,7 @@
     <string name="select_country">Select Country</string>
     <string name="success_profile">Profile Updated Successfully</string>
     <string name="dont_pick_image">You haven\'t picked Image</string>
-    <string name="wallet_detection">Wallet Detection</string>
+    <string name="wallet_detection">Oyola Credit applied</string>
     <string name="live_tasks">LIVE TASK</string>
     <string name="image_view">ImageView</string>
     <string name="agree_policies">By signing up you agree to Oyola\'s <u>Terms of Service</u>, <u>Privacy Policy</u> and <u>Content Policies</u></string>

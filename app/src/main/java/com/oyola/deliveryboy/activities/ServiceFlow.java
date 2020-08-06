@@ -837,8 +837,8 @@ public class ServiceFlow extends AppCompatActivity {
             User user = GlobalData.order.getUser();
             userName.setText(user.getName());
             Address address = GlobalData.order.getAddress();
-            userAddress.setText((address.getBuilding() != null ? address.getBuilding() + ", " : "") +
-                    address.getMapAddress());
+            String userAddressData = address == null ? "" : !TextUtils.isEmpty(address.getBuilding()) ? address.getBuilding() : !TextUtils.isEmpty(address.getMapAddress()) ? address.getMapAddress() : "";
+            userAddress.setText(userAddressData);
             Glide.with(getApplicationContext())
                     .load(user.getAvatar())
                     .apply(new RequestOptions()
