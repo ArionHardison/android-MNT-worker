@@ -358,9 +358,6 @@ public class ServiceFlow extends AppCompatActivity {
     }
 
     private void updateFlowUI(String value) {
-        if (!TextUtils.isEmpty(value)) {
-            shiftStatus.setEnabled(value.equalsIgnoreCase("SEARCHING"));
-        }
         initFlowIcons();
         switch (value) {
             case "ASSIGNED":
