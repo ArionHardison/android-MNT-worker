@@ -91,6 +91,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         if (isNewTask && obj.getStatus().equalsIgnoreCase("SEARCHING")) {
             Home.errorLayout.setVisibility(View.GONE);
             holder.acceptRejectLayout.setVisibility(View.VISIBLE);
+            holder.imgArrow.setVisibility(View.INVISIBLE);
             holder.timeLeft.setVisibility(View.VISIBLE);
             if (obj.getResponseTime() != null && obj.getResponseTime() > 0) {
                 Home.errorLayout.setVisibility(View.GONE);
@@ -113,6 +114,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
             }
         } else {
             holder.acceptRejectLayout.setVisibility(View.GONE);
+            holder.imgArrow.setVisibility(View.VISIBLE);
             holder.timeLeft.setVisibility(View.GONE);
         }
         holder.acceptBtn.setOnClickListener(new View.OnClickListener() {
@@ -232,9 +234,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private CardView taskCard;
         private TextView orderStatus, shopName, shopAddress, timeLeft;
-        private ImageView shopAvatar;
-        LinearLayout acceptRejectLayout;
-        Button acceptBtn, rejectBtn;
+        private ImageView shopAvatar, imgArrow;
+        private LinearLayout acceptRejectLayout;
+        private Button acceptBtn, rejectBtn;
 
         private MyViewHolder(View view) {
             super(view);
@@ -244,6 +246,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
             shopName = view.findViewById(R.id.shop_name);
             shopAddress = view.findViewById(R.id.shop_address);
             shopAvatar = view.findViewById(R.id.shop_avatar);
+            imgArrow = view.findViewById(R.id.img_arrow);
             acceptRejectLayout = view.findViewById(R.id.accept_reject_layout);
             acceptBtn = view.findViewById(R.id.accept_btn);
             rejectBtn = view.findViewById(R.id.reject_btn);
@@ -255,10 +258,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
             int position = getAdapterPosition();
             if (v.getId() == taskCard.getId()) {
                 GlobalData.order = list.get(position);
-                if ((GlobalData.order.getStatus().equals("COMPLETED") && GlobalData.order.getIsRated() != null && GlobalData.order.getIsRated().equalsIgnoreCase("1")) || GlobalData.order.getStatus().equals("CANCELLED")) {
-                    context.startActivity(new Intent(context, OrderDetail.class));
-                } else {
-                    context.startActivity(new Intent(context, ServiceFlow.class));
+                if (acceptRejectLayout.getVisibility() == View.GONE) {
+                    if ((GlobalData.order.getStatus().equals("COMPLETED") && GlobalData.order.getIsRated() != null && GlobalData.order.getIsRated().equalsIgnoreCase("1")) || GlobalData.order.getStatus().equals("CANCELLED")) {
+                        context.startActivity(new Intent(context, OrderDetail.class));
+                    } else {
+                        context.startActivity(new Intent(context, ServiceFlow.class));
+                    }
                 }
             }
         }
