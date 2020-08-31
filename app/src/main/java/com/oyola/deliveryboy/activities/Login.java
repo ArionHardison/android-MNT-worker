@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +42,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,6 +59,8 @@ public class Login extends AppCompatActivity {
     ImageView countryImage;
     @BindView(R.id.country_number)
     TextView countryNumber;
+    @BindView(R.id.tv_terms_policy)
+    TextView tvTermsAndPolicy;
     @BindView(R.id.mobile_no)
     EditText mobileNo;
     @BindView(R.id.submit)
@@ -66,11 +70,23 @@ public class Login extends AppCompatActivity {
     ConnectionHelper connectionHelper;
     private CountryPicker mCountryPicker;
 
+    private void addLink(TextView textView, String patternToMatch,
+                         final String link) {
+        Linkify.TransformFilter filter = (match, url) -> link;
+        Linkify.addLinks(textView, Pattern.compile(patternToMatch), null, null,
+                filter);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        tvTermsAndPolicy.setText(getString(R.string.login_terms_privacy_policy));
+        addLink(tvTermsAndPolicy, getString(R.string.login_terms_and_conditions_label), getString(R.string.login_terms_and_conditions_url));
+        addLink(tvTermsAndPolicy, getString(R.string.login_privacy_policy_label), getString(R.string.login_privacy_policy_url));
+
         Application.getInstance().fetchDeviceToken();
         getDeviceToken();
         customDialog = new CustomDialog(Login.this);
@@ -196,7 +212,7 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.submit, R.id.tv_agree_policies})
+    @OnClick(R.id.submit)
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.submit:
@@ -210,11 +226,6 @@ public class Login extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 }
                 break;
-
-            case R.id.tv_agree_policies:
-                startActivity(new Intent(getApplicationContext(), TermsAndConditions.class));
-                break;
-
             default:
                 break;
         }

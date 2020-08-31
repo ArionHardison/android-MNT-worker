@@ -37,9 +37,9 @@
                 android:id="@+id/country_image"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/flag_au"
                 android:contentDescription="@string/enter_mobile_number"
-                android:padding="@dimen/_6sdp" />
+                android:padding="@dimen/_6sdp"
+                android:src="@drawable/flag_au" />
 
             <TextView
                 android:id="@+id/country_number"
@@ -59,8 +59,8 @@
                 android:gravity="center_vertical"
                 android:hint="@string/enter_mobile_number"
                 android:inputType="phone"
-                android:maxLines="1"
                 android:maxLength="10"
+                android:maxLines="1"
                 android:padding="16dp"
                 android:textColor="@color/colorPrimaryText"
                 android:textColorHint="@color/colorSecondaryText"
@@ -80,17 +80,18 @@
 
     </LinearLayout>
 
+
     <TextView
-        android:id="@+id/tv_agree_policies"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_terms_policy"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="30dp"
-        android:background="?attr/selectableItemBackground"
+        android:layout_gravity="center_horizontal"
         android:fontFamily="@font/nunito_regular"
-        android:gravity="start"
-        android:text="@string/agree_policies"
-        android:textColor="@color/colorSecondaryText"
-        android:textSize="12sp" />
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:text="@string/login_terms_privacy_policy"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 
 </RelativeLayout>
