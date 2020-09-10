@@ -3,9 +3,6 @@ package com.oyola.deliveryboy.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
-import androidx.core.content.ContextCompat;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +11,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -38,12 +39,12 @@ import retrofit2.Response;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> {
 
-    private List<Order> list;
-    private Context context;
-    private boolean isNewTask;
     CustomDialog customDialog;
     CountDownTimer countDownTimer;
     boolean isRunning = false;
+    private List<Order> list;
+    private Context context;
+    private boolean isNewTask;
 
     public TaskAdapter(List<Order> list, Context con, boolean isNewTask) {
         this.list = list;
@@ -59,6 +60,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 
     public void remove(Order order) {
         int position = list.indexOf(order);
+        if (position < 0)
+            return;
         list.remove(position);
         notifyItemRemoved(position);
         notifyDataSetChanged();
