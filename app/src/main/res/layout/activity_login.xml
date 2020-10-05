@@ -7,7 +7,7 @@
     android:background="@color/colorWhite"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context="com.oyola.deliveryboy.activities.Login">
+    tools:context="com.dietmanager.deliveryboy.activities.Login">
 
     <ImageView
         android:id="@+id/app_logo"

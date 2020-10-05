@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.oyola.deliveryboy">
+    package="com.dietmanager.deliveryboy">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,14 +16,14 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <permission
-        android:name="com.oyola.deliveryboy.permission.C2D_MESSAGE"
+        android:name="com.dietmanager.deliveryboy.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.foodie.provider.permission.C2D_MESSAGE" />
 
 
     <application
-        android:name="com.oyola.deliveryboy.Application"
+        android:name="com.dietmanager.deliveryboy.Application"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
@@ -35,7 +35,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <service
-            android:name="com.oyola.deliveryboy.service.GPSTracker"
+            android:name="com.dietmanager.deliveryboy.service.GPSTracker"
             android:enabled="true"
             android:exported="false" />
 
@@ -44,13 +44,13 @@
             android:required="false" />
 
         <service
-            android:name="com.oyola.deliveryboy.service.GPSTrackerService"
+            android:name="com.dietmanager.deliveryboy.service.GPSTrackerService"
             android:enabled="true"
             android:exported="false"
             android:stopWithTask="false" />
 
         <receiver
-            android:name="com.oyola.deliveryboy.helper.SmsReceiver"
+            android:name="com.dietmanager.deliveryboy.helper.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
@@ -58,7 +58,7 @@
         </receiver>
 
         <activity
-            android:name="com.oyola.deliveryboy.activities.Splash"
+            android:name="com.dietmanager.deliveryboy.activities.Splash"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -67,63 +67,63 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.oyola.deliveryboy.activities.Login"
+            android:name="com.dietmanager.deliveryboy.activities.Login"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.oyola.deliveryboy.activities.Home"
+            android:name="com.dietmanager.deliveryboy.activities.Home"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.oyola.deliveryboy.activities.ServiceFlow"
+            android:name="com.dietmanager.deliveryboy.activities.ServiceFlow"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.oyola.deliveryboy.activities.OTP"
+            android:name="com.dietmanager.deliveryboy.activities.OTP"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.oyola.deliveryboy.activities.ShiftStatus"
+            android:name="com.dietmanager.deliveryboy.activities.ShiftStatus"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.oyola.deliveryboy.activities.ProfileActivity"
+            android:name="com.dietmanager.deliveryboy.activities.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.oyola.deliveryboy.activities.OrderDetail"
+            android:name="com.dietmanager.deliveryboy.activities.OrderDetail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.oyola.deliveryboy.activities.Dispute"
+            android:name="com.dietmanager.deliveryboy.activities.Dispute"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.oyola.deliveryboy.activities.OrderHistory"
+            android:name="com.dietmanager.deliveryboy.activities.OrderHistory"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.oyola.deliveryboy.activities.Others"
+            android:name="com.dietmanager.deliveryboy.activities.Others"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
 
 
         <activity
-            android:name="com.oyola.deliveryboy.activities.NoticeBoard"
+            android:name="com.dietmanager.deliveryboy.activities.NoticeBoard"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.oyola.deliveryboy.activities.TermsAndConditions"
+            android:name="com.dietmanager.deliveryboy.activities.TermsAndConditions"
             android:theme="@style/AppTheme.NoActionBar" />
         <!-- Firebase Notifications -->
-        <service android:name="com.oyola.deliveryboy.fcm.MyFirebaseMessagingService">
+        <service android:name="com.dietmanager.deliveryboy.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="com.oyola.deliveryboy.fcm.MyFirebaseInstanceIDService">
+        <service android:name="com.dietmanager.deliveryboy.fcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <receiver android:name="com.oyola.deliveryboy.receiver.NetworkChangeReceiver">
+        <receiver android:name="com.dietmanager.deliveryboy.receiver.NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>

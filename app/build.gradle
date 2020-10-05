@@ -4,7 +4,7 @@ apply plugin: 'com.google.firebase.crashlytics'
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.oyola.deliveryboy"
+        applicationId "com.dietmanager.deliveryboy"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
