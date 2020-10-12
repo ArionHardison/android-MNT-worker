@@ -4,14 +4,19 @@ package com.dietmanager.deliveryboy.fcm;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import android.util.Log;
 
+import com.dietmanager.deliveryboy.Application;
 import com.dietmanager.deliveryboy.R;
 import com.dietmanager.deliveryboy.activities.Splash;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -21,6 +26,7 @@ import com.google.firebase.messaging.RemoteMessage;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMsgService";
+    public static Ringtone mRingtone;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -47,6 +53,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "PUSH");
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
         inboxStyle.addLine(messageBody);
+
+        if (messageBody != null)
+            if (messageBody.equalsIgnoreCase("New order request") ||
+                    messageBody.equalsIgnoreCase("You Have One Incoming Request")) {
+                playNotificationSound();
+            }
 
         long when = System.currentTimeMillis();         // notification time
 
@@ -88,6 +100,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             return R.drawable.ic_stat_push;
         } else return R.drawable.ic_stat_push;
     }*/
+
+    public void playNotificationSound() {
+        try {
+            Uri alarmSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + Application.getInstance().getApplicationContext().getPackageName() + "/raw/alert_tone");
+            mRingtone = RingtoneManager.getRingtone(Application.getInstance().getApplicationContext(), alarmSound);
+            mRingtone.play();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private int getNotificationIcon(NotificationCompat.Builder notificationBuilder) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
