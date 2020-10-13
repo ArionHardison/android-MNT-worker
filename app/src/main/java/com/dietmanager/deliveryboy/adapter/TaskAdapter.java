@@ -2,6 +2,7 @@ package com.dietmanager.deliveryboy.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,10 +47,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
     private Context context;
     private boolean isNewTask;
 
+    public static MediaPlayer mPlayer;
+
     public TaskAdapter(List<Order> list, Context con, boolean isNewTask) {
         this.list = list;
         this.context = con;
         this.isNewTask = isNewTask;
+        mPlayer = MediaPlayer.create(context, R.raw.alert_tone);
+        mPlayer.isLooping();
     }
 
     @Override
@@ -114,6 +119,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
                         remove(obj);
                     }
                 }.start();
+                mPlayer.start();
             }
         } else {
             holder.acceptRejectLayout.setVisibility(View.GONE);
@@ -125,6 +131,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
             public void onClick(View view) {
                 Order order = list.get(position);
                 accpetRequest(order);
+                mPlayer.stop();
             }
         });
         holder.rejectBtn.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +139,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
             public void onClick(View view) {
                 Order order = list.get(position);
                 rejectRequest(order);
+                mPlayer.stop();
             }
         });
     }
