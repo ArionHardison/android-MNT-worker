@@ -136,4 +136,7 @@
     <string name="image_view">ImageView</string>
     <string name="agree_policies">By signing up you agree to Oyola\'s <u>Terms of Service</u>, <u>Privacy Policy</u> and <u>Content Policies</u></string>
     <string name="invalid_otp">Please enter valid OTP</string>
+
+    <string name="already_you_have_account">Already you have an account?</string>
+    <string name="forgot_password">Forgot Password ?</string>
 </resources>
