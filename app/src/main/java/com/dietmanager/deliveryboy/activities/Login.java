@@ -59,8 +59,8 @@ public class Login extends AppCompatActivity {
     ImageView countryImage;
     @BindView(R.id.country_number)
     TextView countryNumber;
-    @BindView(R.id.tv_terms_policy)
-    TextView tvTermsAndPolicy;
+    /*@BindView(R.id.tv_terms_policy)
+    TextView tvTermsAndPolicy;*/
     @BindView(R.id.mobile_no)
     EditText mobileNo;
     @BindView(R.id.submit)
@@ -83,9 +83,9 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        tvTermsAndPolicy.setText(getString(R.string.login_terms_privacy_policy));
-        addLink(tvTermsAndPolicy, getString(R.string.login_terms_and_conditions_label), getString(R.string.login_terms_and_conditions_url));
-        addLink(tvTermsAndPolicy, getString(R.string.login_privacy_policy_label), getString(R.string.login_privacy_policy_url));
+        //tvTermsAndPolicy.setText(getString(R.string.login_terms_privacy_policy));
+        //addLink(tvTermsAndPolicy, getString(R.string.login_terms_and_conditions_label), getString(R.string.login_terms_and_conditions_url));
+        //addLink(tvTermsAndPolicy, getString(R.string.login_privacy_policy_label), getString(R.string.login_privacy_policy_url));
 
         Application.getInstance().fetchDeviceToken();
         getDeviceToken();
