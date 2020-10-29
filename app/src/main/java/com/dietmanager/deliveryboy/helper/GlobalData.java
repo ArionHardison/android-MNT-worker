@@ -30,10 +30,14 @@ import java.util.Locale;
 
 public class GlobalData {
     public static Otp otp;
+    public static String accessToken = "";
+
     public static Token token;
     public static Profile profile;
     public static Shift shift;
     public static Order order;
+    public static String mobile = "";
+    public static int otpValue = 0;
     public static ApiInterface api = ApiClient.getRetrofit().create(ApiInterface.class);
     public static List<String> ORDER_STATUS = Arrays.asList("ORDERED", "RECEIVED", "ASSIGNED",
             "PROCESSING", "REACHED", "PICKEDUP", "ARRIVED", "COMPLETED");

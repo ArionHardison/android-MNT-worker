@@ -38,6 +38,9 @@ public class Profile {
     @SerializedName("otp")
     @Expose
     private String otp;
+    @SerializedName("access_token")
+    @Expose
+    private String access_token;
     @SerializedName("device_token")
     @Expose
     private String deviceToken;
@@ -87,6 +90,14 @@ public class Profile {
     public Profile withId(Integer id) {
         this.id = id;
         return this;
+    }
+
+    public String getAccess_token() {
+        return access_token;
+    }
+
+    public void setAccess_token(String access_token) {
+        this.access_token = access_token;
     }
 
     public String getName() {

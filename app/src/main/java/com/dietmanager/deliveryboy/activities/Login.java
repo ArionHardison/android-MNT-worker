@@ -6,7 +6,10 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.provider.Settings;
 import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dietmanager.deliveryboy.BuildConfigure;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.dietmanager.deliveryboy.Application;
 import com.dietmanager.deliveryboy.CountryPicker.Country;
@@ -47,6 +51,7 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.internal.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,21 +60,28 @@ public class Login extends AppCompatActivity {
 
     private static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE = 0;
     CustomDialog customDialog;
-    @BindView(R.id.country_image)
+    @BindView(R.id.countryImage)
     ImageView countryImage;
-    @BindView(R.id.country_number)
+    @BindView(R.id.countryNumber)
     TextView countryNumber;
     /*@BindView(R.id.tv_terms_policy)
     TextView tvTermsAndPolicy;*/
-    @BindView(R.id.mobile_no)
+    @BindView(R.id.et_mobile_number)
     EditText mobileNo;
-    @BindView(R.id.submit)
+    @BindView(R.id.next_btn)
     Button submit;
     String country_code;
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
     ConnectionHelper connectionHelper;
     private CountryPicker mCountryPicker;
+    String GRANT_TYPE = "password";
 
+    String TAG = "Login";
+    String device_token, device_UDID;
+    @BindView(R.id.et_current_password)
+    EditText etCurrentPassword;
+    @BindView(R.id.et_current_password_eye_img)
+    ImageView etCurrentPasswordEyeImg;
     private void addLink(TextView textView, String patternToMatch,
                          final String link) {
         Linkify.TransformFilter filter = (match, url) -> link;
@@ -119,6 +131,8 @@ public class Login extends AppCompatActivity {
                             Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                     ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
         }
+        etCurrentPasswordEyeImg.setTag(1);
+        getDeviceToken();
     }
 
 
@@ -212,18 +226,48 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.submit)
+    private boolean isValidMobile(String phone) {
+        return !(phone == null || phone.length() < 6 || phone.length() > 13) && android.util.Patterns.PHONE.matcher(phone).matches();
+    }
+    @OnClick({R.id.next_btn,R.id.et_current_password_eye_img,R.id.donnot_have_account})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.submit:
-                String phone = mobileNo.getText().toString().trim();
-                if (!TextUtils.isEmpty(phone)) {
-                    String mobileNumber = countryNumber.getText().toString().trim() + phone;
-                    SharedHelper.putKey(Login.this, "mobile_number", mobileNumber);
-                    getOtpVerification(mobileNumber);
+            case R.id.next_btn:
+                String mobileNumber = country_code + mobileNo.getText().toString();
+                if (!isValidMobile(mobileNumber)) {
+                    Toast.makeText(this, getResources().getString(R.string.please_enter_valid_number), Toast.LENGTH_SHORT).show();
+//                    startActivity(new Intent(this,OtpActivity.class));
+                } else if (etCurrentPassword.getText().toString().isEmpty()) {
+                    Toast.makeText( this, getResources().getString(R.string.please_enter_password),Toast.LENGTH_LONG).show();
+                } else if (etCurrentPassword.getText().toString().length() < 6) {
+                    Toast.makeText( this, getResources().getString(R.string.please_enter_minimum_length_password),Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(Login.this, getString(R.string.please_enternumber_pswd),
-                            Toast.LENGTH_SHORT).show();
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("mobile", mobileNo.getText().toString());
+                    map.put("dial_code", country_code);
+                    map.put("password", etCurrentPassword.getText().toString());
+                    //map.put("grant_type", GRANT_TYPE);
+                    //map.put("client_id", BuildConfigure.CLIENT_ID);
+                    //map.put("client_secret", BuildConfigure.CLIENT_SECRET);
+                    map.put("device_type", "android");
+                    map.put("device_id", device_UDID);
+                    map.put("device_token", device_token);
+                    login(map);
+                }
+                break;
+
+            case R.id.donnot_have_account:
+                startActivity(new Intent(Login.this, SignUpActivity.class));
+                break;
+            case R.id.et_current_password_eye_img:
+                if (etCurrentPasswordEyeImg.getTag().equals(1)) {
+                    etCurrentPassword.setTransformationMethod(null);
+                    etCurrentPasswordEyeImg.setImageResource(R.drawable.ic_eye_close);
+                    etCurrentPasswordEyeImg.setTag(0);
+                } else {
+                    etCurrentPassword.setTransformationMethod(new PasswordTransformationMethod());
+                    etCurrentPasswordEyeImg.setImageResource(R.drawable.ic_eye_open);
+                    etCurrentPasswordEyeImg.setTag(1);
                 }
                 break;
             default:
@@ -235,19 +279,19 @@ public class Login extends AppCompatActivity {
         if (customDialog != null)
             customDialog.show();
 
-        Call<Token> call = apiInterface.postLogin(map);
-        call.enqueue(new Callback<Token>() {
+        Call<Profile> call = apiInterface.login(map);
+        call.enqueue(new Callback<Profile>() {
             @Override
-            public void onResponse(@NonNull Call<Token> call, @NonNull Response<Token> response) {
+            public void onResponse(@NonNull Call<Profile> call, @NonNull Response<Profile> response) {
                 customDialog.cancel();
                 if (response.isSuccessful()) {
-                    if (response.body().getAccessToken() != null) {
-                        GlobalData.token = response.body();
+                    if (response.body().getAccess_token() != null) {
+                        GlobalData.profile = response.body();
                         SharedHelper.putKey(Login.this, "token_type",
-                                GlobalData.token.getTokenType());
+                                "Bearer");
                         SharedHelper.putKey(Login.this, "access_token",
-                                GlobalData.token.getAccessToken());
-                        System.out.println("login " + GlobalData.token.getTokenType() + " " + GlobalData.token.getAccessToken());
+                                GlobalData.profile.getAccess_token());
+                        //System.out.println("login " + GlobalData.token.getTokenType() + " " + GlobalData.token.getAccessToken());
                         getProfile();
                     }
                 } else {
@@ -257,7 +301,7 @@ public class Login extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<Token> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
                 customDialog.cancel();
                 Toast.makeText(Login.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
             }
@@ -305,8 +349,7 @@ public class Login extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case ASK_MULTIPLE_PERMISSION_REQUEST_CODE:
                 break;
@@ -315,32 +358,28 @@ public class Login extends AppCompatActivity {
 
 
     public void getDeviceToken() {
-        String TAG = "FCM";
         try {
-            if (!SharedHelper.getKey(this, "device_token").equals("") && SharedHelper.getKey(this
-                    , "device_token") != null) {
-                String device_token = SharedHelper.getKey(this, "device_token");
+            if (!SharedHelper.getKey(Login.this, "device_token").equals("") && SharedHelper.getKey(Login.this, "device_token") != null) {
+                device_token = SharedHelper.getKey(Login.this, "device_token");
                 Log.d(TAG, "GCM Registration Token: " + device_token);
             } else {
-                String device_token = FirebaseInstanceId.getInstance().getToken();
-                SharedHelper.putKey(this, "device_token",
-                        "" + FirebaseInstanceId.getInstance().getToken());
+                device_token = "" + FirebaseInstanceId.getInstance().getToken();
+                SharedHelper.putKey(Login.this, "device_token", "" + FirebaseInstanceId.getInstance().getToken());
                 Log.d(TAG, "Failed to complete token refresh: " + device_token);
             }
         } catch (Exception e) {
-            String device_token = "COULD NOT GET FCM TOKEN";
+            device_token = "COULD NOT GET FCM TOKEN";
             Log.d(TAG, "Failed to complete token refresh");
         }
 
         try {
-            String device_UDID = android.provider.Settings.Secure.getString(getContentResolver(),
-                    android.provider.Settings.Secure.ANDROID_ID);
+            device_UDID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
             Log.d(TAG, "Device UDID:" + device_UDID);
-            SharedHelper.putKey(this, "device_id", "" + device_UDID);
         } catch (Exception e) {
-            String device_UDID = "COULD NOT GET UDID";
+            device_UDID = "COULD NOT GET UDID";
             e.printStackTrace();
             Log.d(TAG, "Failed to complete device UDID");
         }
     }
+
 }

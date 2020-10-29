@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dietmanager.deliveryboy.utils.Utils;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.dietmanager.deliveryboy.BuildConfig;
 import com.dietmanager.deliveryboy.R;
@@ -46,6 +47,7 @@ public class OTP extends AppCompatActivity {
     @BindView(R.id.otp)
     PinEntryView otp;
     SmsVerifyCatcher smsVerifyCatcher;
+    boolean isSignUp = false;
 
     CustomDialog customDialog;
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
@@ -67,10 +69,17 @@ public class OTP extends AppCompatActivity {
         ButterKnife.bind(this);
         getDeviceToken();
         customDialog = new CustomDialog(this);
+        Bundle bundle = getIntent().getExtras();
+
 
         phone.setText(SharedHelper.getKey(this, "mobile_number"));
-        if (BuildConfig.DEBUG)
-            otp.setText(String.valueOf(getIntent().getIntExtra("otp", -1)));
+        if (bundle != null) {
+            isSignUp = bundle.getBoolean("signup", false);
+            if (isSignUp){
+                phone.setText(GlobalData.mobile);
+                otp.setText(String.valueOf(GlobalData.otpValue));
+            }
+        }
 
         smsVerifyCatcher = new SmsVerifyCatcher(this, new OnSmsCatchListener<String>() {
             @Override
@@ -102,7 +111,7 @@ public class OTP extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null
                         && response.body().getAccessToken() != null) {
                     SharedHelper.putKey(OTP.this, "token_type",
-                            response.body().getTokenType());
+                            "Bearer");
                     SharedHelper.putKey(OTP.this, "access_token",
                             response.body().getAccessToken());
                     getProfile();
@@ -174,10 +183,21 @@ public class OTP extends AppCompatActivity {
         if (userOtp.length() < 4) {
             Toast.makeText(this, getString(R.string.invalid_otp), Toast.LENGTH_LONG).show();
         } else {
-            HashMap<String, String> map = new HashMap<>();
-            map.put("phone", SharedHelper.getKey(this, "mobile_number"));
-            map.put("otp", userOtp);
-            login(map);
+            if (isSignUp){
+                if (String.valueOf(GlobalData.otpValue).equalsIgnoreCase(userOtp)){
+                    Intent intent = new Intent();
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+                else {
+                    Utils.displayMessage(this, getString(R.string.wrong_otp));
+                }
+            }else {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("phone", SharedHelper.getKey(this, "mobile_number"));
+                map.put("otp", userOtp);
+                login(map);
+            }
         }
     }
 

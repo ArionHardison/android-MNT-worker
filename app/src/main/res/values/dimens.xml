@@ -13,5 +13,6 @@
     <dimen name="text_small">@dimen/_11sdp</dimen>
     <dimen name="text_small_large">@dimen/_12sdp</dimen>
     <dimen name="text_tiny">@dimen/_10sdp</dimen>
+    <dimen name="activity_horizontal_margin">@dimen/_14sdp</dimen>
 
 </resources>

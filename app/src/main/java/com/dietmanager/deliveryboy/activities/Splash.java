@@ -43,6 +43,8 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
+        SharedHelper.putKey(Splash.this, "token_type",
+                "Bearer");
         helper = new ConnectionHelper(this);
         getDeviceToken();
 

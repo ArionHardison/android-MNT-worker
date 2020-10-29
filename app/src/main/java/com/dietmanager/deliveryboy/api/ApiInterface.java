@@ -8,6 +8,7 @@ import com.dietmanager.deliveryboy.model.Message;
 import com.dietmanager.deliveryboy.model.Notice;
 import com.dietmanager.deliveryboy.model.Order;
 import com.dietmanager.deliveryboy.model.Profile;
+import com.dietmanager.deliveryboy.model.RegisterResponse;
 import com.dietmanager.deliveryboy.model.Shift;
 import com.dietmanager.deliveryboy.model.Token;
 import com.dietmanager.deliveryboy.model.Otp;
@@ -38,74 +39,87 @@ import retrofit2.http.QueryMap;
 public interface ApiInterface {
 
 
-    @GET("api/transporter/profile")
+    @GET("api/chef/profile")
     Call<Profile> getProfile(@Header("Authorization") String authorization, @QueryMap HashMap<String, String> params);
 
     @FormUrlEncoded
-    @POST("api/transporter/profile")
+    @POST("api/chef/register/otp")
+    Call<Otp> postOtp(@FieldMap HashMap<String, String> params);
+
+    @FormUrlEncoded
+    @POST("api/chef/register")
+    Call<RegisterResponse> postRegister(@FieldMap HashMap<String, String> params);
+
+
+    @FormUrlEncoded
+    @POST("api/chef/profile")
     Call<Profile> updateProfile(@Header("Authorization") String authorization, @FieldMap HashMap<String, String> params);
 
     @FormUrlEncoded
-    @POST("api/transporter/profile/location")
+    @POST("api/chef/profile/location")
     Call<Profile> updateLocation(@Header("Authorization") String authorization, @FieldMap HashMap<String, Double> params);
 
     @Multipart
-    @POST("api/transporter/profile")
+    @POST("api/chef/profile")
     Call<Profile> updateProfileWithImage(@Header("Authorization") String authorization, @PartMap() Map<String, RequestBody> partMap, @Part MultipartBody.Part filename);
 
     @FormUrlEncoded
-    @POST("api/transporter/login")
+    @POST("api/chef/login")
     Call<Otp> getOtp(@Field("phone") String mobile);
 
-    @GET("api/transporter/logout")
+    @GET("api/chef/logout")
     Call<Message> logout(@Header("Authorization") String authorization);
 
     @FormUrlEncoded
-    @POST("api/transporter/verify/otp")
+    @POST("api/chef/verify/otp")
     Call<Token> postLogin(@FieldMap HashMap<String, String> params);
 
-    @GET("api/transporter/shift")
+    @FormUrlEncoded
+    @POST("api/chef/oauth/token")
+    Call<Profile> login(@FieldMap HashMap<String, String> params);
+
+    @GET("api/chef/shift")
     Call<List<Shift>> getShift(@Header("Authorization") String authorization);
 
     @FormUrlEncoded
-    @POST("api/transporter/shift")
+    @POST("api/chef/shift")
     Call<List<Shift>> shiftStart(@Header("Authorization") String authorization, @FieldMap HashMap<String, String> params);
 
-    @DELETE("api/transporter/shift/{id}")
+    @DELETE("api/chef/shift/{id}")
     Call<List<Shift>> shiftEnd(@Header("Authorization") String authorization, @Path("id") int shiftId);
 
     @FormUrlEncoded
-    @POST("api/transporter/shift/timing")
+    @POST("api/chef/shift/timing")
     Call<List<Shift>> shiftBreakStart(@Header("Authorization") String authorization, @FieldMap HashMap<String, String> params);
 
-    @DELETE("api/transporter/shift/timing/{id}")
+    @DELETE("api/chef/shift/timing/{id}")
     Call<List<Shift>> shiftBreakEnd(@Header("Authorization") String authorization, @Path("id") int breakId);
 
-    @GET("api/transporter/vehicles")
+    @GET("api/chef/vehicles")
     Call<List<Vehicle>> getVehicles(@Header("Authorization") String authorization);
 
-    @GET("api/transporter/order")
+    @GET("api/chef/order")
     Call<List<Order>> getOrder(@Header("Authorization") String authorization);
 
-    @GET("api/transporter/history")
+    @GET("api/chef/history")
     Call<List<Order>> getCompletedOrder(@Header("Authorization") String authorization, @Query("type") String type);
 
     @FormUrlEncoded
-    @PATCH("api/transporter/order/{id}")
+    @PATCH("api/chef/order/{id}")
     Call<Order> updateStatus(@Path("id") int id, @FieldMap HashMap<String, String> params, @Header("Authorization") String authorization);
 
     @FormUrlEncoded
-    @POST("api/transporter/rating")
+    @POST("api/chef/rating")
     Call<Message> rateUser(@Header("Authorization") String authorization, @FieldMap HashMap<String, String> params);
 
-    @GET("api/transporter/notice")
+    @GET("api/chef/notice")
     Call<List<Notice>> getNoticeBoard(@Header("Authorization") String authorization);
 
     @FormUrlEncoded
-    @POST("api/transporter/request/order")
+    @POST("api/chef/request/order")
     Call<Order> acceptRequest(@Header("Authorization") String authorization, @FieldMap HashMap<String, String> params);
 
     @FormUrlEncoded
-    @POST("api/transporter/request/order")
+    @POST("api/chef/request/order")
     Call<Message> rejectRequest(@Header("Authorization") String authorization, @FieldMap HashMap<String, String> params);
 }

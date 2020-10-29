@@ -136,7 +136,22 @@
     <string name="image_view">ImageView</string>
     <string name="agree_policies">By signing up you agree to Oyola\'s <u>Terms of Service</u>, <u>Privacy Policy</u> and <u>Content Policies</u></string>
     <string name="invalid_otp">Please enter valid OTP</string>
+    <string name="please_enter_minimum_length_password">Please enter atleast 6 characters in password</string>
 
+    <string name="register_this_account">Don\'t have an account?</string>
+    <string name="please_enter_valid_number">Please enter valid mobile number</string>
+    <string name="please_enter_password">Please enter your password</string>
     <string name="already_you_have_account">Already you have an account?</string>
     <string name="forgot_password">Forgot Password ?</string>
+    <string name="login_using">Login using</string>
+    <string name="please_enter_username">Please enter your username</string>
+    <string name="please_enter_your_email">Please enter your email</string>
+    <string name="please_enter_valid_email">Please enter valid email</string>
+    <string name="please_enter_your_mobile_number">Please enter your mobile number</string>
+    <string name="please_enter_your_confirm_password">Please enter your confirm password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="wrong_otp">Wrong OTP</string>
+
+    <string name="password_and_confirm_password_doesnot_match">Password and Confirm Password doesn\'t match!</string>
+    <string name="register">Register</string>
 </resources>
