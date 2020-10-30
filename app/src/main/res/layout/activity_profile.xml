@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_2"
                     android:fontFamily="@font/nunito_regular"
-                    android:inputType="textPersonName|textCapCharacters"
+                    android:inputType="textPersonName"
                     android:maxLines="1"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"

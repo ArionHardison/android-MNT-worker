@@ -184,6 +184,8 @@ public class ProfileActivity extends AppCompatActivity {
                 name.getText().toString()));
         map.put("email", RequestBody.create(MediaType.parse("text/plain"),
                 email.getText().toString()));
+        map.put("mobile", RequestBody.create(MediaType.parse("text/plain"),
+                mobileNo.getText().toString()));
         MultipartBody.Part filePart = null;
 
         if (imgFile != null)

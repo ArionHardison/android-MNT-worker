@@ -23,7 +23,7 @@ public class Profile {
     @SerializedName("email")
     @Expose
     private String email;
-    @SerializedName("phone")
+    @SerializedName("mobile")
     @Expose
     private String phone;
     @SerializedName("avatar")
