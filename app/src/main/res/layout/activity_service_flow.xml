@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    tools:context="com.dietmanager.deliveryboy.activities.ServiceFlow">
+    tools:context="com.dietmanager.chef.activities.ServiceFlow">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -589,7 +589,7 @@
         android:layout_gravity="bottom"
         android:layout_margin="16dp">
 
-        <com.dietmanager.deliveryboy.helper.OnlySeekableSeekBar
+        <com.dietmanager.chef.helper.OnlySeekableSeekBar
             android:id="@+id/shift_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
