@@ -13,6 +13,7 @@ import com.dietmanager.chef.model.Shift;
 import com.dietmanager.chef.model.Token;
 import com.dietmanager.chef.model.Otp;
 import com.dietmanager.chef.model.Vehicle;
+import com.dietmanager.chef.model.orderrequest.OrderRequestItem;
 
 import java.util.HashMap;
 import java.util.List;
@@ -122,4 +123,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("api/chef/request/order")
     Call<Message> rejectRequest(@Header("Authorization") String authorization, @FieldMap HashMap<String, String> params);
+
+    @GET("api/chef/order")
+    Call<List<OrderRequestItem>> getHistory(@Header("Authorization") String authorization,@Query("status") String status);
 }

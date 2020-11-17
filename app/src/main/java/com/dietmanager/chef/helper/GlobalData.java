@@ -15,6 +15,7 @@ import com.dietmanager.chef.model.Otp;
 import com.dietmanager.chef.model.Profile;
 import com.dietmanager.chef.model.Shift;
 import com.dietmanager.chef.model.Token;
+import com.dietmanager.chef.model.orderrequest.OrderRequestItem;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -31,6 +32,7 @@ import java.util.Locale;
 public class GlobalData {
     public static Otp otp;
     public static String accessToken = "";
+    public static OrderRequestItem selectedOrder;
 
     public static Token token;
     public static Profile profile;

@@ -5,32 +5,45 @@
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_user"
-            android:title="@string/profile" />
+            android:title="@string/profile"
+            android:visible="false"  />
+        <item
+            android:id="@+id/nav_home"
+            android:title="@string/home" />
+        <item
+            android:id="@+id/nav_order_request"
+            android:title="@string/order_request" />
+        <item
+            android:id="@+id/nav_earning"
+            android:title="@string/earning" />
         <item
             android:id="@+id/nav_shift_status"
             android:icon="@drawable/ic_shop"
-            android:title="@string/shift_status" />
+            android:title="@string/shift_status"
+            android:visible="false"  />
         <item
             android:id="@+id/nav_notice_board"
             android:icon="@drawable/ic_note"
-            android:title="@string/notice_board" />
+            android:title="@string/notice_board"
+            android:visible="false"  />
         <item
             android:id="@+id/nav_order_history"
             android:icon="@drawable/ic_history"
-            android:title="@string/order_history" />
+            android:title="@string/order_history"
+            android:visible="false"  />
         <item
             android:id="@+id/nav_terms_conditions"
             android:icon="@drawable/ic_book"
-            android:title="@string/terms_and_conditions" />
+            android:title="@string/terms_and_conditions"
+            android:visible="false"  />
         <item
             android:id="@+id/nav_language"
             android:icon="@drawable/ic_translate"
-            android:title="@string/change_language" />
+            android:title="@string/change_language"
+            android:visible="false" />
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_logout"
-            android:title="@string/logout"
-            android:visible="false" />
+            android:title="@string/logout"/>
     </group>
 
 </menu>

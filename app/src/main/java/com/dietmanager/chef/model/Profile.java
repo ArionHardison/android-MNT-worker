@@ -55,7 +55,7 @@ public class Profile {
     private String status;
     @SerializedName("currency")
     @Expose
-    private String currency;
+    private String currency="$";
     @SerializedName("currency_code")
     @Expose
     private String currencyCode;

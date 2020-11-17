@@ -109,12 +109,11 @@ public class Splash extends AppCompatActivity {
                     SharedHelper.putKey(Splash.this, "logged_in", "1");
                     SharedHelper.putKey(Splash.this, "currency_code",
                             GlobalData.profile.getCurrency());
-                    if (isNotification)
+                    //if (isNotification)
                         startActivity(new Intent(Splash.this, Home.class).putExtra("is_splash",
                                 true));
-                    else
-                        startActivity(new Intent(Splash.this, ShiftStatus.class).putExtra(
-                                "is_splash", true));
+                    //else
+                        //startActivity(new Intent(Splash.this, ShiftStatus.class).putExtra("is_splash", true));
 
                     finish();
                 } else {

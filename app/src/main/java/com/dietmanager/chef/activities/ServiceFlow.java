@@ -227,11 +227,11 @@ public class ServiceFlow extends AppCompatActivity {
     }
 
     private void initOrder() {
-        if (GlobalData.shift == null) {
-            startActivity(new Intent(this, ShiftStatus.class));
+        /*if (GlobalData.shift == null) {
+            startActivity(new Intent(this, Home.class));
             finish();
             return;
-        }
+        }*/
         handler = new Handler();
         runnable = new Runnable() {
             public void run() {

@@ -6,7 +6,7 @@ package com.dietmanager.chef;
 
 public class BuildConfigure {
 
-    public static String BASE_URL = "http://dietmanager.com/";
+    public static String BASE_URL = "https://dietmanager.com/";
     public static String CLIENT_SECRET = "jHwkBi09BdDHCIswdhYszBT78tRc2LBmttngQ1A0";
     public static String CLIENT_ID = "2";
 }

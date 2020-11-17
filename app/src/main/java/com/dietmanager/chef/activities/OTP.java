@@ -170,7 +170,7 @@ public class OTP extends AppCompatActivity {
     }
 
     private void launchActivity() {
-        Intent intent = new Intent(getApplicationContext(), ShiftStatus.class);
+        Intent intent = new Intent(getApplicationContext(), Home.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

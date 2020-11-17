@@ -19,6 +19,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="new_order_request">"New &order; Request"</string>
+    <string name="order_request">Order Request</string>
     <string name="deliver">"Delivered"</string>
     <string name="delivered">"Delivered"</string>
     <string name="order_delivered_successfully">"&order; Delivered Successfully"</string>
@@ -154,4 +155,14 @@
 
     <string name="password_and_confirm_password_doesnot_match">Password and Confirm Password doesn\'t match!</string>
     <string name="register">Register</string>
+    <string name="ongoing_order">Ongoing Orders</string>
+    <string name="past_order">Past Orders</string>
+    <string name="cancelled_order">Cancelled Orders</string>
+    <string name="no_ongoing_orders_found">No ongoing orders found</string>
+    <string name="price">Price</string>
+    <string name="no_past_orders_found">No past orders found</string>
+    <string name="no_cancelled_orders_found">No cancelled orders found</string>
+    <string name="home">Home</string>
+    <string name="earning">Earnings</string>
+    <string name="waiting_for_the_new_task">Waiting for the new task</string>
 </resources>

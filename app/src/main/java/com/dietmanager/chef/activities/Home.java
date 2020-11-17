@@ -209,7 +209,7 @@ public class Home extends AppCompatActivity
             public void run() {
 //                getProfile();
 //                getOrder();
-                incommingReq();
+                //incommingReq();
             }
         };
 
@@ -483,24 +483,24 @@ public class Home extends AppCompatActivity
                     if (orders.size() <= 0) errorLayout.setVisibility(View.VISIBLE);
                     errorImg.setImageResource(R.drawable.bg_waiting);
                     errorMessage.setText(Home.this.getResources().getString(R.string.waiting_for_new_task));
-                    navigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
+                    //navigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
                     break;
                 case "unsettled":
                     errorImg.setImageResource(R.drawable.coins);
                     errorMessage.setText(Home.this.getResources().getString(R.string.please_settle_the_amount_to_the_respective_restaurant));
                     errorLayout.setVisibility(View.VISIBLE);
-                    navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
+                    //navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
                     break;
                 case "offline":
                     errorImg.setImageResource(R.drawable.purchase);
                     errorMessage.setText(Home.this.getResources().getString(R.string.turn_on_start_shift));
                     errorLayout.setVisibility(View.VISIBLE);
                     handler.removeCallbacks(runnable);
-                    if (GlobalData.shift != null) {
+                    /*if (GlobalData.shift != null) {
                         navigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
                     } else {
                         navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
-                    }
+                    }*/
                     break;
                 default:
                     break;
@@ -521,7 +521,12 @@ public class Home extends AppCompatActivity
         } else if (id == R.id.nav_notice_board) {
             startActivity(new Intent(Home.this, NoticeBoard.class));
         } else if (id == R.id.nav_order_history) {
-            startActivity(new Intent(Home.this, OrderHistory.class));
+            startActivity(new Intent(Home.this, OrderRequestActivity.class));
+        } else if (id == R.id.nav_home) {
+            onBackPressed();
+        } else if (id == R.id.nav_order_request) {
+            startActivity(new Intent(Home.this, OrderRequestActivity.class));
+        } else if (id == R.id.nav_earning) {
         } else if (id == R.id.nav_terms_conditions) {
             startActivity(new Intent(Home.this, TermsAndConditions.class));
         } else if (id == R.id.nav_language) {

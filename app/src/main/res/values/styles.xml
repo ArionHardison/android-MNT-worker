@@ -51,6 +51,10 @@
         <item name="android:textColor">#000</item>
     </style>
 
+    <style name="TextAppearance.Text.SemiBold" parent="android:TextAppearance">
+        <item name="android:fontFamily">fonts/nunito_semibold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
     <style name="ButtonStyle" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:background">@drawable/button_curved</item>
         <item name="android:fontFamily">@font/nunito_bold</item>

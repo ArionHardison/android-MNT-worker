@@ -58,11 +58,10 @@
         </receiver>
 
         <activity
-            android:name="com.dietmanager.chef.activities.Splash"
+            android:name=".activities.Splash"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -88,6 +87,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.dietmanager.chef.activities.ShiftStatus"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.dietmanager.chef.activities.OrderRequestActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

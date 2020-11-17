@@ -100,7 +100,7 @@ public class Login extends AppCompatActivity {
         customDialog = new CustomDialog(Login.this);
         connectionHelper = new ConnectionHelper(this);
         if (SharedHelper.getKey(Login.this, "logged_in").equalsIgnoreCase("1")) {
-            startActivity(new Intent(Login.this, ShiftStatus.class));
+            startActivity(new Intent(Login.this, Home.class));
             finish();
         }
         mCountryPicker =
@@ -229,7 +229,7 @@ public class Login extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.next_btn:
-               /* String mobileNumber = country_code + mobileNo.getText().toString();
+                String mobileNumber = country_code + mobileNo.getText().toString();
                 if (!isValidMobile(mobileNumber)) {
                     Toast.makeText(this, getResources().getString(R.string.please_enter_valid_number), Toast.LENGTH_SHORT).show();
 //                    startActivity(new Intent(this,OtpActivity.class));
@@ -249,11 +249,7 @@ public class Login extends AppCompatActivity {
                     map.put("device_id", device_UDID);
                     map.put("device_token", device_token);
                     login(map);
-                }*/
-
-                startActivity(new Intent(this, Home.class));
-                finish();
-
+                }
                 break;
 
             case R.id.donnot_have_account:
@@ -331,7 +327,7 @@ public class Login extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     GlobalData.profile = response.body();
                     SharedHelper.putKey(Login.this, "logged_in", "1");
-                    startActivity(new Intent(Login.this, ShiftStatus.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    startActivity(new Intent(Login.this, Home.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();
                 } else {
                     APIError error = ErrorUtils.parseError(response);
