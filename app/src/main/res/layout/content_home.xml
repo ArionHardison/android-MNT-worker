@@ -23,9 +23,9 @@
             android:gravity="center"
             android:orientation="vertical">
             <ImageView
-                android:layout_width="@dimen/_145sdp"
-                android:layout_height="@dimen/_185sdp"
-                android:src="@drawable/ic_searching"/>
+                android:layout_width="@dimen/_75sdp"
+                android:layout_height="@dimen/_95sdp"
+                android:src="@drawable/hour_glass"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -37,13 +39,19 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.dietmanager.chef.adapter.ViewPagerAdapter;
+import com.dietmanager.chef.fragment.CancelOrderFragment;
+import com.dietmanager.chef.fragment.PastVisitFragment;
+import com.dietmanager.chef.fragment.UpcomingVisitFragment;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.dietmanager.chef.R;
 import com.dietmanager.chef.adapter.TaskAdapter;
@@ -74,12 +82,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
 import static com.dietmanager.chef.receiver.NetworkChangeReceiver.IS_NETWORK_AVAILABLE;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    CustomDialog customDialog;
+    public static CustomDialog customDialog;
     @BindView(R.id.new_task_rv)
     RecyclerView newTaskRv;
 
@@ -102,7 +111,10 @@ public class Home extends AppCompatActivity
     TextView completedTaskLabel;
     @BindView(R.id.completed_task_rv)
     RecyclerView completedTaskRv;
-
+    @BindView(R.id.tabLayout)
+    TabLayout tabLayout;
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
     CircleImageView userAvatar;
     TextView name;
     TextView userId;
@@ -190,7 +202,7 @@ public class Home extends AppCompatActivity
         userId = navigationView.getHeaderView(0).findViewById(R.id.user_id);
         navigationView.setNavigationItemSelectedListener(this);
 
-        orders = new ArrayList<>();
+/*        orders = new ArrayList<>();
         newTaskAdapter = new TaskAdapter(orders, this, true);
         newTaskRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         newTaskRv.setItemAnimator(new DefaultItemAnimator());
@@ -204,14 +216,7 @@ public class Home extends AppCompatActivity
 
 //        startService(new Intent(this, GPSTracker.class));
 
-        handler = new Handler();
-        runnable = new Runnable() {
-            public void run() {
-//                getProfile();
-//                getOrder();
-                //incommingReq();
-            }
-        };
+
 
         /*Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -221,7 +226,11 @@ public class Home extends AppCompatActivity
                 getOrder();
             }
         }*/
-
+        handler = new Handler();
+        runnable = new Runnable() {
+            public void run() {
+            }
+        };
         IntentFilter intentFilter = new IntentFilter(getApplication().getPackageName());
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
             @Override
@@ -237,26 +246,62 @@ public class Home extends AppCompatActivity
             }
         }, intentFilter);
 
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(),BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        adapter.addFragment(new UpcomingVisitFragment(), getString(R.string.ongoing_order));
+        adapter.addFragment(new PastVisitFragment(), getString(R.string.past_order));
+        adapter.addFragment(new CancelOrderFragment(), getString(R.string.cancelled_order));
+        viewPager.setAdapter(adapter);
+        //set ViewPager
+        tabLayout.setupWithViewPager(viewPager);
+        changeTabsFont();
+        viewPager.setOffscreenPageLimit(3);
+        customDialog = new CustomDialog(this);
+
     }
 
+    public static void showDialog() {
+        if (customDialog != null && !customDialog.isShowing()) {
+            customDialog.setCancelable(false);
+            customDialog.show();
+        }
+    }
+    private void changeTabsFont() {
+        ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
+        int tabsCount = vg.getChildCount();
+        for (int j = 0; j < tabsCount; j++) {
+            ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
+            int tabChildsCount = vgTab.getChildCount();
+            for (int i = 0; i < tabChildsCount; i++) {
+                View tabViewChild = vgTab.getChildAt(i);
+                if (tabViewChild instanceof TextView) {
+                    Typeface custom_font = ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold);
+                    ((TextView) tabViewChild).setTypeface(custom_font);
+                }
+            }
+        }
+    }
+    public static void dismissDialog() {
+        if (customDialog != null & customDialog.isShowing())
+            customDialog.dismiss();
+    }
     @Override
     public void onResume() {
         super.onResume();
         initProfileView();
-        orders.clear();
+/*        orders.clear();
         newTaskAdapter.notifyDataSetChanged();
         completedOrders.clear();
-        completedTaskAdapter.notifyDataSetChanged();
+        completedTaskAdapter.notifyDataSetChanged();*/
         /*if (GlobalData.shift != null) {
             getOrder();
             getCompletedOrder();
         } else getShift();
         getProfile();*/
 
-        errorLayout.setVisibility(View.GONE);
-        newTaskRv.setVisibility(View.VISIBLE);
+        //errorLayout.setVisibility(View.GONE);
+        //newTaskRv.setVisibility(View.VISIBLE);
 
-        incommingReq();
+
 
 
         getNetworkStatus();

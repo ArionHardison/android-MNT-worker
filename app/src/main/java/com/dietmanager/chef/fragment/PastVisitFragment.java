@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dietmanager.chef.R;
 import com.dietmanager.chef.activities.Login;
-import com.dietmanager.chef.activities.OrderRequestActivity;
+import com.dietmanager.chef.activities.Home;
 import com.dietmanager.chef.adapter.HistoryAdapter;
 import com.dietmanager.chef.api.ApiClient;
 import com.dietmanager.chef.api.ApiInterface;
@@ -92,13 +92,13 @@ public class PastVisitFragment extends BaseFragment {
     }
 
     private void getHistory() {
-        OrderRequestActivity.showDialog();
+        Home.showDialog();
         String header = SharedHelper.getKey(context, "token_type") + " " + SharedHelper.getKey(context, "access_token");
         Call<List<OrderRequestItem>> call = apiInterface.getHistory(header,"COMPLETED");
         call.enqueue(new Callback<List<OrderRequestItem>>() {
             @Override
             public void onResponse(Call<List<OrderRequestItem>> call, Response<List<OrderRequestItem>> response) {
-                OrderRequestActivity.dismissDialog();
+                Home.dismissDialog();
                 if (response.isSuccessful()) {
                     orderList.clear();
                     List<OrderRequestItem> historyModel = response.body();
@@ -138,7 +138,7 @@ public class PastVisitFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<List<OrderRequestItem>> call, Throwable t) {
-                OrderRequestActivity.dismissDialog();
+                Home.dismissDialog();
                 Utils.displayMessage(activity, getString(R.string.something_went_wrong));
             }
         });

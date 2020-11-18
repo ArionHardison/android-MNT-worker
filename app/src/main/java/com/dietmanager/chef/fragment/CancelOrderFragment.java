@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dietmanager.chef.R;
-import com.dietmanager.chef.activities.OrderRequestActivity;
+import com.dietmanager.chef.activities.Home;
 import com.dietmanager.chef.adapter.HistoryAdapter;
 import com.dietmanager.chef.api.ApiClient;
 import com.dietmanager.chef.api.ApiInterface;
@@ -110,14 +110,14 @@ public class CancelOrderFragment extends BaseFragment {
     }
 
     private void getHistory() {
-        OrderRequestActivity.showDialog();
+        Home.showDialog();
         String header = SharedHelper.getKey(context, "token_type") + " " + SharedHelper.getKey(context, "access_token");
 
         Call<List<OrderRequestItem>> call = apiInterface.getHistory(header,"CANCELLED");
         call.enqueue(new Callback<List<OrderRequestItem>>() {
             @Override
             public void onResponse(Call<List<OrderRequestItem>> call, Response<List<OrderRequestItem>> response) {
-                OrderRequestActivity.dismissDialog();
+                Home.dismissDialog();
                 if (response.isSuccessful()) {
                     orderList.clear();
                     List<OrderRequestItem> historyModel = response.body();
@@ -150,7 +150,7 @@ public class CancelOrderFragment extends BaseFragment {
                         ServerError serverError = gson.fromJson(response.errorBody().charStream(), ServerError.class);
                         Utils.displayMessage(activity, serverError.getError());
                         if (response.code() == 401) {
-                            context.startActivity(new Intent(context, OrderRequestActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                            context.startActivity(new Intent(context, Home.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             activity.finish();
                         }
                     } catch (JsonSyntaxException e) {
@@ -161,7 +161,7 @@ public class CancelOrderFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<List<OrderRequestItem>> call, Throwable t) {
-                OrderRequestActivity.dismissDialog();
+                Home.dismissDialog();
                 Utils.displayMessage(activity, getString(R.string.something_went_wrong));
             }
         });

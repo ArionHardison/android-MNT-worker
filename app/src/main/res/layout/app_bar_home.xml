@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,6 +8,7 @@
     tools:context="com.dietmanager.chef.activities.Home">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:elevation="1dp"
         android:layout_height="wrap_content">
@@ -23,6 +25,38 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_home" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appbar"
+        >
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <!-- our tablayout to display tabs  -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:elevation="@dimen/_2sdp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorWhite"
+            app:tabMode="fixed"
+            app:tabGravity="fill"
+            app:tabIndicatorHeight="0dp"
+            android:layout_gravity="center"
+            app:tabTextAppearance="@style/TextAppearance.Text.SemiBold"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabTextColor="@color/colorSecondaryText" />
+
+
+        <!-- View pager to swipe views -->
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tabLayout"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </RelativeLayout>
+    <include layout="@layout/content_home"
+        android:visibility="gone"/>
+
+</RelativeLayout>
