@@ -4,12 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_marginStart="@dimen/_12sdp"
+    android:layout_marginEnd="@dimen/_12sdp"
+    android:background="@android:color/transparent"
     android:padding="@dimen/_5sdp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
+        android:background="@drawable/bg_white_dialog_curved"
+        android:paddingTop="@dimen/_18sdp"
+        android:paddingBottom="@dimen/_18sdp"
+        android:paddingStart="@dimen/_8sdp"
+        android:paddingEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
         android:orientation="vertical">
 
         <TextView
@@ -17,10 +25,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="16dp"
+            android:layout_marginBottom="22dp"
             android:gravity="center"
             android:text="New Request"
             android:textAllCaps="false"
+            android:textStyle="bold"
             android:textSize="@dimen/_18sdp"
             tools:ignore="MissingPrefix" />
 
@@ -40,6 +49,7 @@
                 android:textSize="@dimen/_14sdp" />
 
             <TextView
+                android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -65,6 +75,7 @@
                 android:textSize="@dimen/_14sdp" />
 
             <TextView
+                android:id="@+id/tvAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -90,6 +101,7 @@
                 android:textSize="@dimen/_14sdp" />
 
             <TextView
+                android:id="@+id/tvFoodName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -115,6 +127,7 @@
                 android:textSize="@dimen/_14sdp" />
 
             <TextView
+                android:id="@+id/tvIngredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -136,9 +149,9 @@
             android:id="@+id/accept_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_3sdp"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="@drawable/button_curved"
             android:text="Accept"
             android:textColor="@color/colorWhite" />
 
@@ -146,9 +159,9 @@
             android:id="@+id/reject_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_marginStart="@dimen/_3sdp"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="@drawable/button_curved"
             android:text="Reject"
             android:textColor="@color/colorWhite" />
 

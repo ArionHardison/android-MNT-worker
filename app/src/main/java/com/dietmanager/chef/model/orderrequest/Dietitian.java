@@ -2,7 +2,9 @@ package com.dietmanager.chef.model.orderrequest;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Dietitian{
+import java.io.Serializable;
+
+public class Dietitian implements Serializable {
 
 	@SerializedName("unique_id")
 	private String uniqueId;

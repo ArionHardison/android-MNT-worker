@@ -81,8 +81,15 @@ public class PastVisitFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         setupAdapter();
+        //getHistory();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         getHistory();
     }
+
 
     private void setupAdapter() {
         historyAdapter = new HistoryAdapter(orderList, context);

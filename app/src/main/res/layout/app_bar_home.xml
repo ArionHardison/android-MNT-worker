@@ -30,7 +30,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/appbar"
         >
-
         <!-- our tablayout to display tabs  -->
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"

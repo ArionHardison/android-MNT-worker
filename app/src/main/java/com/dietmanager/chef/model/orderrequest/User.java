@@ -2,7 +2,9 @@ package com.dietmanager.chef.model.orderrequest;
 
 import com.google.gson.annotations.SerializedName;
 
-public class User{
+import java.io.Serializable;
+
+public class User implements Serializable {
 
 	@SerializedName("stripe_cust_id")
 	private Object stripeCustId;
@@ -14,7 +16,7 @@ public class User{
 	private Object deviceId;
 
 	@SerializedName("latitude")
-	private Object latitude;
+	private double latitude;
 
 	@SerializedName("wallet_balance")
 	private Integer walletBalance;
@@ -53,7 +55,7 @@ public class User{
 	private String referralAmount;
 
 	@SerializedName("map_address")
-	private Object mapAddress;
+	private String mapAddress ="";
 
 	@SerializedName("id")
 	private Integer id;
@@ -68,7 +70,7 @@ public class User{
 	private Object braintreeId;
 
 	@SerializedName("longitude")
-	private Object longitude;
+	private double longitude;
 
 	public void setStripeCustId(Object stripeCustId){
 		this.stripeCustId = stripeCustId;
@@ -94,11 +96,11 @@ public class User{
 		return deviceId;
 	}
 
-	public void setLatitude(Object latitude){
+	public void setLatitude(double latitude){
 		this.latitude = latitude;
 	}
 
-	public Object getLatitude(){
+	public double getLatitude(){
 		return latitude;
 	}
 
@@ -198,11 +200,11 @@ public class User{
 		return referralAmount;
 	}
 
-	public void setMapAddress(Object mapAddress){
+	public void setMapAddress(String mapAddress){
 		this.mapAddress = mapAddress;
 	}
 
-	public Object getMapAddress(){
+	public String getMapAddress(){
 		return mapAddress;
 	}
 
@@ -238,11 +240,11 @@ public class User{
 		return braintreeId;
 	}
 
-	public void setLongitude(Object longitude){
+	public void setLongitude(double longitude){
 		this.longitude = longitude;
 	}
 
-	public Object getLongitude(){
+	public double getLongitude(){
 		return longitude;
 	}
 }

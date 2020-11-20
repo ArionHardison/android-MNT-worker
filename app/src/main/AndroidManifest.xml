@@ -18,9 +18,9 @@
     <permission
         android:name="com.dietmanager.chef.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="com.foodie.provider.permission.C2D_MESSAGE" />
-
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:name="com.dietmanager.chef.Application"
@@ -94,6 +94,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".activities.OrderFlowActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name="com.dietmanager.chef.activities.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -116,6 +120,9 @@
             android:name="com.dietmanager.chef.activities.NoticeBoard"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name="com.dietmanager.chef.activities.OrderRequestDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name="com.dietmanager.chef.activities.TermsAndConditions"
             android:theme="@style/AppTheme.NoActionBar" />
         <!-- Firebase Notifications -->
@@ -129,6 +136,11 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+        <!-- Required OpenGL ES 2.0. for Maps V2 -->
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
         <receiver android:name="com.dietmanager.chef.receiver.NetworkChangeReceiver">
             <intent-filter>

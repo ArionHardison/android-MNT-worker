@@ -13,6 +13,7 @@
     <color name="colorGrayDark">#515151</color>
     <color name="colorGrayLight">#F2F2F2</color>
     <color name="colorGreen">#0D9600</color>
+    <color name="light_grey">#f1f1f1</color>
 
     <color name="primary_text">#000000</color>
     <color name="secondary_text">#616161</color>

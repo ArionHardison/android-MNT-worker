@@ -44,6 +44,16 @@ public interface ApiInterface {
     Call<Profile> getProfile(@Header("Authorization") String authorization, @QueryMap HashMap<String, String> params);
 
     @FormUrlEncoded
+    @POST("api/chef/order/{id}")
+    Call<OrderRequestItem> updateOrder(@Header("Authorization") String authorization, @Path("id") int id,@FieldMap HashMap<String, String> params);
+
+
+    @Multipart
+    @POST("api/chef/order/{id}")
+    Call<OrderRequestItem> updateOrderWithImage(@Header("Authorization") String authorization, @Path("id") int id, @PartMap() Map<String, RequestBody> partMap, @Part MultipartBody.Part filename);
+
+
+    @FormUrlEncoded
     @POST("api/chef/register/otp")
     Call<Otp> postOtp(@FieldMap HashMap<String, String> params);
 
@@ -101,6 +111,12 @@ public interface ApiInterface {
 
     @GET("api/chef/order")
     Call<List<Order>> getOrder(@Header("Authorization") String authorization);
+
+    @GET("api/chef/incoming/order")
+    Call<List<OrderRequestItem>> getIncomingRequest(@Header("Authorization") String authorization, @Query("latitude") double latitude, @Query("longitude") double longitude);
+
+    @GET("api/chef/order/{id}")
+    Call<OrderRequestItem> getOrderDetailById(@Header("Authorization") String authorization,@Path("id")int id);
 
     @GET("api/chef/history")
     Call<List<Order>> getCompletedOrder(@Header("Authorization") String authorization, @Query("type") String type);

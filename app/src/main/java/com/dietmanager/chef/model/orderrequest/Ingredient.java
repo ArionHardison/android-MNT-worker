@@ -2,7 +2,9 @@ package com.dietmanager.chef.model.orderrequest;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Ingredient{
+import java.io.Serializable;
+
+public class Ingredient implements Serializable {
 
 	@SerializedName("dietitian_id")
 	private Object dietitianId;
@@ -28,8 +30,15 @@ public class Ingredient{
 	@SerializedName("avatar")
 	private String avatar;
 
+	@SerializedName("quantity")
+	private String quantity;
+
+	public String getQuantity() {
+		return quantity;
+	}
+
 	@SerializedName("unit_type")
-	private Object unitType;
+	private UnitType unitType;
 
 	@SerializedName("status")
 	private String status;
@@ -98,11 +107,11 @@ public class Ingredient{
 		return avatar;
 	}
 
-	public void setUnitType(Object unitType){
+	public void setUnitType(UnitType unitType){
 		this.unitType = unitType;
 	}
 
-	public Object getUnitType(){
+	public UnitType getUnitType(){
 		return unitType;
 	}
 

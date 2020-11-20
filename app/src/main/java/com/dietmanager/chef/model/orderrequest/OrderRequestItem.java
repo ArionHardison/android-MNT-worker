@@ -1,9 +1,10 @@
 package com.dietmanager.chef.model.orderrequest;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class OrderRequestItem{
+public class OrderRequestItem implements Serializable {
 
 	@SerializedName("schedule_at")
 	private Object scheduleAt;
@@ -13,6 +14,28 @@ public class OrderRequestItem{
 
 	@SerializedName("created_at")
 	private String createdAt;
+
+	@SerializedName("customer_address")
+	private CustomerAddress customerAddress;
+
+	public CustomerAddress getCustomerAddress() {
+		return customerAddress;
+	}
+
+	public void setCustomerAddress(CustomerAddress customerAddress) {
+		this.customerAddress = customerAddress;
+	}
+
+	public void setPaymentMode(String paymentMode) {
+		this.paymentMode = paymentMode;
+	}
+
+	@SerializedName("payment_mode")
+	private String paymentMode="";
+
+	public String getPaymentMode() {
+		return paymentMode;
+	}
 
 	@SerializedName("discount")
 	private String discount;

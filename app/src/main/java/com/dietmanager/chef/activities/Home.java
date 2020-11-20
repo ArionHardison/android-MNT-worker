@@ -1,5 +1,6 @@
 package com.dietmanager.chef.activities;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
@@ -7,8 +8,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,6 +36,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
@@ -45,11 +51,26 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.dietmanager.chef.adapter.ViewPagerAdapter;
+import com.dietmanager.chef.api.ApiClient;
+import com.dietmanager.chef.api.ApiInterface;
 import com.dietmanager.chef.fragment.CancelOrderFragment;
 import com.dietmanager.chef.fragment.PastVisitFragment;
 import com.dietmanager.chef.fragment.UpcomingVisitFragment;
+import com.dietmanager.chef.model.Otp;
+import com.dietmanager.chef.model.orderrequest.OrderRequestItem;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -69,10 +90,16 @@ import com.dietmanager.chef.model.Shift;
 import com.dietmanager.chef.receiver.NetworkChangeReceiver;
 import com.dietmanager.chef.service.GPSTrackerService;
 
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,7 +113,9 @@ import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ON
 import static com.dietmanager.chef.receiver.NetworkChangeReceiver.IS_NETWORK_AVAILABLE;
 
 public class Home extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        LocationListener {
 
     public static CustomDialog customDialog;
     @BindView(R.id.new_task_rv)
@@ -96,9 +125,9 @@ public class Home extends AppCompatActivity
     List<Order> orders;
     TaskAdapter completedTaskAdapter;
     List<Order> completedOrders;
-    Activity activity = this;
+    Activity activity = this;/*
     Handler handler;
-    Runnable runnable;
+    Runnable runnable;*/
     ConnectionHelper connectionHelper;
     public static LinearLayout errorLayout;
     @BindView(R.id.error_message)
@@ -127,13 +156,20 @@ public class Home extends AppCompatActivity
     private SkeletonScreen skeletonScreen;
     String device_token, device_UDID;
 
+
+    ScheduledExecutorService scheduler;
+    private Location mylocation;
+    private GoogleApiClient googleApiClient;
+    private final static int REQUEST_CHECK_SETTINGS_GPS=0x1;
+    private final static int REQUEST_ID_MULTIPLE_PERMISSIONS=0x2;
+
+    public Location mLastKnownLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         getDeviceToken();
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         errorLayout = findViewById(R.id.error_layout);
         setSupportActionBar(toolbar);
@@ -214,23 +250,33 @@ public class Home extends AppCompatActivity
         //completedTaskRv.setItemAnimator(new DefaultItemAnimator());
         completedTaskRv.setAdapter(completedTaskAdapter);
 
-//        startService(new Intent(this, GPSTracker.class));
+//        startService(new Intent(this, GPSTracker.class));*/
 
 
-
-        /*Bundle extras = getIntent().getExtras();
+        Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String value1 = extras.getString("Notification");
             if (value1 != null) {
                 getProfile();
-                getOrder();
+                getInComingRequest();
             }
-        }*/
-        handler = new Handler();
+        }
+
+/*        handler = new Handler();
         runnable = new Runnable() {
             public void run() {
+                getInComingRequest();
             }
-        };
+        };*/
+
+        scheduler = Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleWithFixedDelay(new Runnable() {
+            @Override
+            public void run() {
+                getInComingRequest();
+            }
+        }, 0, 5, TimeUnit.SECONDS);
+
         IntentFilter intentFilter = new IntentFilter(getApplication().getPackageName());
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
             @Override
@@ -256,7 +302,146 @@ public class Home extends AppCompatActivity
         changeTabsFont();
         viewPager.setOffscreenPageLimit(3);
         customDialog = new CustomDialog(this);
+        setUpGClient();
+    }
 
+    private synchronized void setUpGClient() {
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, 0, this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        googleApiClient.connect();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        mylocation = location;
+        if (mylocation != null) {
+            mLastKnownLocation=location;
+        }
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        checkPermissions();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        //Do whatever you need
+        //You can display a message here
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        //You can display a message here
+    }
+
+    private void getMyLocation(){
+        if(googleApiClient!=null) {
+            if (googleApiClient.isConnected()) {
+                int permissionLocation = ContextCompat.checkSelfPermission(Home.this,
+                        Manifest.permission.ACCESS_FINE_LOCATION);
+                if (permissionLocation == PackageManager.PERMISSION_GRANTED) {
+                    mylocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+                    LocationRequest locationRequest = new LocationRequest();
+                    locationRequest.setInterval(3000);
+                    locationRequest.setFastestInterval(3000);
+                    locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                    LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                            .addLocationRequest(locationRequest);
+                    builder.setAlwaysShow(true);
+                    LocationServices.FusedLocationApi
+                            .requestLocationUpdates(googleApiClient, locationRequest, Home.this);
+                    PendingResult<LocationSettingsResult> result =
+                            LocationServices.SettingsApi
+                                    .checkLocationSettings(googleApiClient, builder.build());
+                    result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+
+                        @Override
+                        public void onResult(LocationSettingsResult result) {
+                            final Status status = result.getStatus();
+                            switch (status.getStatusCode()) {
+                                case LocationSettingsStatusCodes.SUCCESS:
+                                    // All location settings are satisfied.
+                                    // You can initialize location requests here.
+                                    int permissionLocation = ContextCompat
+                                            .checkSelfPermission(Home.this,
+                                                    Manifest.permission.ACCESS_FINE_LOCATION);
+                                    if (permissionLocation == PackageManager.PERMISSION_GRANTED) {
+                                        mylocation = LocationServices.FusedLocationApi
+                                                .getLastLocation(googleApiClient);
+                                    }
+                                    break;
+                                case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                                    // Location settings are not satisfied.
+                                    // But could be fixed by showing the user a dialog.
+                                    try {
+                                        // Show the dialog by calling startResolutionForResult(),
+                                        // and check the result in onActivityResult().
+                                        // Ask to turn on GPS automatically
+                                        status.startResolutionForResult(Home.this,
+                                                REQUEST_CHECK_SETTINGS_GPS);
+                                    } catch (IntentSender.SendIntentException e) {
+                                        // Ignore the error.
+                                    }
+                                    break;
+                                case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                                    // Location settings are not satisfied.
+                                    // However, we have no way
+                                    // to fix the
+                                    // settings so we won't show the dialog.
+                                    // finish();
+                                    break;
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_CHECK_SETTINGS_GPS:
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+                        getMyLocation();
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        break;
+                }
+                break;
+        }
+    }
+
+    private void checkPermissions(){
+        int permissionLocation = ContextCompat.checkSelfPermission(Home.this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION);
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        if (permissionLocation != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(android.Manifest.permission.ACCESS_FINE_LOCATION);
+            if (!listPermissionsNeeded.isEmpty()) {
+                ActivityCompat.requestPermissions(this,
+                        listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), REQUEST_ID_MULTIPLE_PERMISSIONS);
+            }
+        }else{
+            getMyLocation();
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        int permissionLocation = ContextCompat.checkSelfPermission(Home.this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        if (permissionLocation == PackageManager.PERMISSION_GRANTED) {
+            getMyLocation();
+        }
     }
 
     public static void showDialog() {
@@ -296,11 +481,11 @@ public class Home extends AppCompatActivity
             getOrder();
             getCompletedOrder();
         } else getShift();
-        getProfile();*/
-
+        */
+        getProfile();
+        getInComingRequest();
         //errorLayout.setVisibility(View.GONE);
         //newTaskRv.setVisibility(View.VISIBLE);
-
 
 
 
@@ -329,7 +514,43 @@ public class Home extends AppCompatActivity
         }
     }
 
-    private void getShift() {
+    ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
+
+    public void updateOrder(boolean isAccept,int id,HashMap<String, String> map) {
+        customDialog.show();
+
+        String header = SharedHelper.getKey(Home.this, "token_type") + " "
+                + SharedHelper.getKey(Home.this, "access_token");
+        Call<OrderRequestItem> call = apiInterface.updateOrder(header,id,map);
+        call.enqueue(new Callback<OrderRequestItem>() {
+            @Override
+            public void onResponse(@NonNull Call<OrderRequestItem> call, @NonNull Response<OrderRequestItem> response) {
+                customDialog.dismiss();
+                isIncomingDialogShowing=false;
+                if (response.isSuccessful()) {
+                    if(isAccept){
+                        GlobalData.selectedOrder = response.body();
+                        Intent intent = new Intent(Home.this, OrderRequestDetailActivity.class);
+                        intent.putExtra("userRequestItem", (Serializable)response.body());
+                        startActivity(intent);
+                    }
+                    else {
+                        Toast.makeText(Home.this, "Cancelled", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<OrderRequestItem> call, @NonNull Throwable t) {
+                customDialog.dismiss();
+                Toast.makeText(Home.this, getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+/*    private void getShift() {
 
         if (!getNetworkStatus())
             return;
@@ -346,8 +567,8 @@ public class Home extends AppCompatActivity
                         GlobalData.shift = list.get(0);
                         getOrder();
                     } else {
-                        /*startActivity(new Intent(Home.this, ShiftStatus.class));
-                        finish();*/
+                        *//*startActivity(new Intent(Home.this, ShiftStatus.class));
+                        finish();*//*
                         errorImg.setImageResource(R.drawable.purchase);
                         errorMessage.setText(getString(R.string.please_start_shift));
                         errorLayout.setVisibility(View.VISIBLE);
@@ -369,9 +590,9 @@ public class Home extends AppCompatActivity
                 Toast.makeText(Home.this, "Something wrong - getShift", Toast.LENGTH_LONG).show();
             }
         });
-    }
+    }*/
 
-    private void getOrder() {
+/*    private void getOrder() {
 
         if (!getNetworkStatus())
             return;
@@ -406,8 +627,50 @@ public class Home extends AppCompatActivity
                 }
             }
 
-            @Override
+            @Override`
             public void onFailure(@NonNull Call<List<Order>> call, @NonNull Throwable t) {
+                Toast.makeText(Home.this, "Something wrong.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }*/
+
+    private void getInComingRequest() {
+
+        if (!getNetworkStatus())
+            return;
+
+        if(mLastKnownLocation==null) {
+            checkPermissions();
+            return;
+        }
+
+        String header = SharedHelper.getKey(this, "token_type") + " " + SharedHelper.getKey(this, "access_token");
+        Call<List<OrderRequestItem>> call = GlobalData.api.getIncomingRequest(header,mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
+        call.enqueue(new Callback<List<OrderRequestItem>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<OrderRequestItem>> call, @NonNull Response<List<OrderRequestItem>> response) {
+                Log.d("getOrder", response.toString());
+                if (response.isSuccessful()) {
+                    if (response.body().size() > 0) {
+                        if(!isIncomingDialogShowing)
+                        {
+                            incomingReqDialog(response.body().get(0));
+                        }
+                    }
+                    /*handler.removeCallbacks(runnable);
+                    handler.postDelayed(runnable, 5000);*/
+                } else {
+                    APIError error = ErrorUtils.parseError(response);
+                    if (response.code() == 401) {
+                        SharedHelper.putKey(Home.this, "logged_in", "0");
+                        startActivity(new Intent(Home.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<OrderRequestItem>> call, @NonNull Throwable t) {
                 Toast.makeText(Home.this, "Something wrong.", Toast.LENGTH_SHORT).show();
             }
         });
@@ -449,7 +712,7 @@ public class Home extends AppCompatActivity
         });
     }
 
-    private void getCompletedOrder() {
+/*    private void getCompletedOrder() {
 
         if (!getNetworkStatus())
             return;
@@ -503,7 +766,7 @@ public class Home extends AppCompatActivity
 //                Toast.makeText(Home.this, "Something wrong - getCompletedOrder", Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
 
     private void initProfileView() {
         if (GlobalData.profile != null) {
@@ -540,7 +803,7 @@ public class Home extends AppCompatActivity
                     errorImg.setImageResource(R.drawable.purchase);
                     errorMessage.setText(Home.this.getResources().getString(R.string.turn_on_start_shift));
                     errorLayout.setVisibility(View.VISIBLE);
-                    handler.removeCallbacks(runnable);
+                    //handler.removeCallbacks(runnable);
                     /*if (GlobalData.shift != null) {
                         navigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
                     } else {
@@ -703,12 +966,13 @@ public class Home extends AppCompatActivity
 
     public void onDestroy() {
         super.onDestroy();
-        handler.removeCallbacks(runnable);
+        //handler.removeCallbacks(runnable);
+        scheduler.shutdown();
     }
 
     public void onPause() {
         super.onPause();
-        handler.removeCallbacks(runnable);
+        //handler.removeCallbacks(runnable);
     }
 
     private boolean isServiceRunning(Class<?> serviceClass) {
@@ -727,80 +991,56 @@ public class Home extends AppCompatActivity
         getNetworkStatus();
     }
 
-    public void incommingReq(){
+    private boolean isIncomingDialogShowing=false;
+    public void incomingReqDialog(OrderRequestItem orderRequestItem){
         try {
             AlertDialog.Builder builder = new AlertDialog.Builder(Home.this);
             final FrameLayout frameView = new FrameLayout(Home.this);
             builder.setView(frameView);
-            final AlertDialog rateDialog = builder.create();
-            rateDialog.setCancelable(false);
-            LayoutInflater inflater = rateDialog.getLayoutInflater();
+            final AlertDialog incomingDialog = builder.create();
+            incomingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            incomingDialog.setCancelable(false);
+            LayoutInflater inflater = incomingDialog.getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.incoming_popup, frameView);
+            ((TextView)dialogView.findViewById(R.id.tvName)).setText(orderRequestItem.getUser().getName());
+            ((TextView)dialogView.findViewById(R.id.tvAddress)).setText(orderRequestItem.getCustomerAddress().getMapAddress());
+            ((TextView)dialogView.findViewById(R.id.tvFoodName)).setText(orderRequestItem.getFood().getName());
+            StringBuilder sb = new StringBuilder();
+            boolean foundOne = false;
+
+            for (int i = 0; i < orderRequestItem.getOrderingredient().size(); ++i) {
+                    if (foundOne) {
+                        sb.append(", ");
+                    }
+
+                    foundOne = true;
+                    sb.append(orderRequestItem.getOrderingredient().get(i).getFoodingredient().getIngredient().getName());
+            }
+            ((TextView)dialogView.findViewById(R.id.tvIngredients)).setText(sb.toString());
             Button acceptBtn = dialogView.findViewById(R.id.accept_btn);
-            Button rejectBtn = dialogView.findViewById(R.id.reject_btn);
             acceptBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    orderDetailsAlert();
-                        rateDialog.dismiss();
-
+                    incomingDialog.dismiss();
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("_method","PATCH");
+                    map.put("status", "ASSIGNED");
+                    updateOrder(true,orderRequestItem.getId(),map);
                 }
             });
-            rejectBtn.setOnClickListener(new View.OnClickListener() {
+            Button reject_btn = dialogView.findViewById(R.id.reject_btn);
+            reject_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        rateDialog.dismiss();
-
+                    incomingDialog.dismiss();
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("_method","PATCH");
+                    map.put("status", "CANCELLED");
+                    updateOrder(false,orderRequestItem.getId(),map);
                 }
             });
-            rateDialog.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void orderDetailsAlert(){
-        try {
-            AlertDialog.Builder builder = new AlertDialog.Builder(Home.this);
-            final FrameLayout frameView = new FrameLayout(Home.this);
-            builder.setView(frameView);
-            final AlertDialog orderDetailsDialog = builder.create();
-            orderDetailsDialog.setCancelable(false);
-            LayoutInflater inflater = orderDetailsDialog.getLayoutInflater();
-            View dialogView = inflater.inflate(R.layout.orderdetails_popup, frameView);
-            Button purchaseBtn = dialogView.findViewById(R.id.purchase_btn);
-            purchaseBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    purchasedAlert();
-                    orderDetailsDialog.dismiss();
-
-                }
-            });
-            orderDetailsDialog.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void purchasedAlert(){
-        try {
-            AlertDialog.Builder builder = new AlertDialog.Builder(Home.this);
-            final FrameLayout frameView = new FrameLayout(Home.this);
-            builder.setView(frameView);
-            final AlertDialog purchasedDialog = builder.create();
-            purchasedDialog.setCancelable(false);
-            LayoutInflater inflater = purchasedDialog.getLayoutInflater();
-            View dialogView = inflater.inflate(R.layout.purchased_popup, frameView);
-            Button purchasedBtn = dialogView.findViewById(R.id.purchased_btn);
-            purchasedBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    purchasedDialog.dismiss();
-
-                }
-            });
-            purchasedDialog.show();
+            incomingDialog.show();
+            isIncomingDialogShowing=true;
         } catch (Exception e) {
             e.printStackTrace();
         }

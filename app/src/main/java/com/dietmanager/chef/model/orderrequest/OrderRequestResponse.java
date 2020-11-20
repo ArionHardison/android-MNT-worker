@@ -1,9 +1,10 @@
 package com.dietmanager.chef.model.orderrequest;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class OrderRequestResponse{
+public class OrderRequestResponse implements Serializable {
 
 	@SerializedName("orderRequest")
 	private List<OrderRequestItem> orderRequest;

@@ -85,7 +85,7 @@ public class CancelOrderFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, view);
         setupAdapter();
 
-        getHistory();
+        //getHistory();
 
         return view;
     }
@@ -97,11 +97,11 @@ public class CancelOrderFragment extends BaseFragment {
         cancelRv.setAdapter(historyAdapter);
     }
 
-    /*@Override
+    @Override
     public void onResume() {
         super.onResume();
-//        getHistory();
-    }*/
+        getHistory();
+    }
 
     @Override
     public void onDestroyView() {

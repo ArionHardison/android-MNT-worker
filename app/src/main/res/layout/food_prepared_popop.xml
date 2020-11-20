@@ -12,30 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_white_dialog_curved"
-        android:padding="@dimen/_5sdp"
+        android:padding="@dimen/_22sdp"
         android:orientation="vertical">
-
-        <TextView
-            fontPath="fonts/Nunito-Bold.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="16dp"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:text="Grocery"
-            android:textAllCaps="false"
-            android:textSize="@dimen/_18sdp"
-            tools:ignore="MissingPrefix" />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ingredients_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_6sdp"
-            android:nestedScrollingEnabled="false"
-            android:orientation="vertical" />
-
-
 
         <TextView
             fontPath="fonts/Nunito-Bold.ttf"
@@ -51,9 +29,9 @@
             tools:ignore="MissingPrefix" />
 
         <ImageView
-            android:id="@+id/imgPurchase"
-            android:layout_width="@dimen/_70sdp"
-            android:layout_height="@dimen/_70sdp"
+            android:id="@+id/imgPrepared"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_120sdp"
             android:layout_margin="@dimen/_5sdp"
             android:layout_gravity="center"
             android:background="@drawable/ic_document_placeholder"
@@ -68,14 +46,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/purchased_btn"
+            android:id="@+id/upload_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_2sdp"
             android:background="@drawable/button_curved"
             android:textAllCaps="false"
             android:textSize="@dimen/_14sdp"
-            android:text="Grocery Purchased"
+            android:text="Upload"
             android:textColor="@color/colorWhite" />
 
     </LinearLayout>

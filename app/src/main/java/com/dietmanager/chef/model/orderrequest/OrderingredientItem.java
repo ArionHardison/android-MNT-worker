@@ -2,7 +2,9 @@ package com.dietmanager.chef.model.orderrequest;
 
 import com.google.gson.annotations.SerializedName;
 
-public class OrderingredientItem{
+import java.io.Serializable;
+
+public class OrderingredientItem implements Serializable {
 
 	@SerializedName("foodingredient")
 	private Foodingredient foodingredient;

@@ -52,12 +52,12 @@
     <string name="order_history">"&order; History"</string>
     <string name="order_message">&order; #%d</string>
     <string name="you_owed">"You Owed "</string>
-    <string name="item_total">"Item Total"</string>
-    <string name="service_tax">"Service Tax"</string>
-    <string name="delivery_charges">"Delivery Charges"</string>
+    <string name="item_total">Item Total</string>
+    <string name="service_tax">Service Tax</string>
+    <string name="delivery_charges">Delivery Charges</string>
     <string name="discount">Kitchen Discount</string>
     <string name="promocode_amount">"Promocode Amount"</string>
-    <string name="total">"Total"</string>
+    <string name="total">Total</string>
     <string name="payment_mode">"Payment "</string>
     <string name="no_of_items">"No. of Items"</string>
     <string name="bill_amount">"Bill Amount"</string>
@@ -111,6 +111,7 @@
     <string name="cancelled">Cancelled</string>
     <string name="logout">Logout</string>
     <string name="something_went_wrong">Something went wrong</string>
+    <string name="please_upload_image">Please upload image</string>
     <string name="reject">Reject</string>
     <string name="accept">Accept</string>
     <string name="password">Password</string>
@@ -165,4 +166,9 @@
     <string name="home">Home</string>
     <string name="earning">Earnings</string>
     <string name="waiting_for_the_new_task">Waiting for the new task</string>
+    <string name="cancel">Cancel</string>
+    <string name="order_list">Order List</string>
+    <string name="start">Start</string>
+    <string name="started_toward_location">Started toward location</string>
+    <string name="waiting_for_user_approval">Waiting for user Approval</string>
 </resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/_2sdp"
+        android:paddingBottom="@dimen/_2sdp">
+
+        <TextView
+            android:id="@+id/ingredient_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/_9sdp"
+            android:drawableStart="@drawable/ic_rectangle"
+            android:fontFamily="@font/nunito_semibold"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="@dimen/text_medium" />
+
+        <TextView
+            android:id="@+id/ingredient_quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:fontFamily="@font/nunito_semibold"
+            android:gravity="end"
+            android:text="1"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="@dimen/text_medium" />
+    </LinearLayout>

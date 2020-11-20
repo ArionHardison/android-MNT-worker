@@ -1,8 +1,9 @@
 package com.dietmanager.chef.model.orderrequest;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class OngoingHistoryModel {
+public class OngoingHistoryModel implements Serializable {
 
     private String headerName;
     private List<OrderRequestItem> orderList;

@@ -17,11 +17,13 @@ import com.bumptech.glide.request.RequestOptions;
 import com.dietmanager.chef.BuildConfigure;
 import com.dietmanager.chef.R;
 import com.dietmanager.chef.activities.OrderRequestActivity;
+import com.dietmanager.chef.activities.OrderRequestDetailActivity;
 import com.dietmanager.chef.helper.AppConstants;
 import com.dietmanager.chef.helper.GlobalData;
 import com.dietmanager.chef.model.orderrequest.OrderRequestItem;
 import com.dietmanager.chef.utils.Utils;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHolder> {
@@ -70,8 +72,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         }*/
         holder.paymentMode.setText(payment_mode);
         holder.itemLayout.setOnClickListener(v -> {
-            GlobalData.selectedOrder = list.get(position);
-            //context.startActivity(new Intent(context, OrderRequestActivity.class));
+            GlobalData.selectedOrder = order;
+            Intent intent = new Intent(context, OrderRequestDetailActivity.class);
+            intent.putExtra("userRequestItem", (Serializable)order);
+            context.startActivity(intent);
         });
     }
 

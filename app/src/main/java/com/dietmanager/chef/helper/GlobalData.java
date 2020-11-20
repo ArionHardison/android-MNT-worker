@@ -41,8 +41,9 @@ public class GlobalData {
     public static String mobile = "";
     public static int otpValue = 0;
     public static ApiInterface api = ApiClient.getRetrofit().create(ApiInterface.class);
-    public static List<String> ORDER_STATUS = Arrays.asList("ORDERED", "RECEIVED", "ASSIGNED",
-            "PROCESSING", "REACHED", "PICKEDUP", "ARRIVED", "COMPLETED");
+
+    public static List<String> ORDER_STATUS = Arrays.asList("ASSIGNED", "PICKEDUP", "ARRIVED",
+            "PROCESSING", "PREPARED", "COMPLETED");
     public static Location CURRENT_LOCATION = null;
 
     public static NumberFormat getNumberFormat() {
