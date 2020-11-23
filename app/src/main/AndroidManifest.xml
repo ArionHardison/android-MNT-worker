@@ -25,6 +25,7 @@
     <application
         android:name="com.dietmanager.chef.Application"
         android:allowBackup="true"
+        android:requestLegacyExternalStorage="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

@@ -14,6 +14,7 @@ import com.dietmanager.chef.model.Token;
 import com.dietmanager.chef.model.Otp;
 import com.dietmanager.chef.model.Vehicle;
 import com.dietmanager.chef.model.orderrequest.OrderRequestItem;
+import com.dietmanager.chef.model.orderrequest.OrderRequestResponse;
 
 import java.util.HashMap;
 import java.util.List;
@@ -113,7 +114,7 @@ public interface ApiInterface {
     Call<List<Order>> getOrder(@Header("Authorization") String authorization);
 
     @GET("api/chef/incoming/order")
-    Call<List<OrderRequestItem>> getIncomingRequest(@Header("Authorization") String authorization, @Query("latitude") double latitude, @Query("longitude") double longitude);
+    Call<OrderRequestResponse> getIncomingRequest(@Header("Authorization") String authorization, @Query("latitude") double latitude, @Query("longitude") double longitude, @Query("address") String address);
 
     @GET("api/chef/order/{id}")
     Call<OrderRequestItem> getOrderDetailById(@Header("Authorization") String authorization,@Path("id")int id);

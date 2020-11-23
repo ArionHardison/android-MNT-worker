@@ -151,9 +151,12 @@
     <string name="please_enter_valid_email">Please enter valid email</string>
     <string name="please_enter_your_mobile_number">Please enter your mobile number</string>
     <string name="please_enter_your_confirm_password">Please enter your confirm password</string>
+    <string name="please_select_address">Please select Address</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="wrong_otp">Wrong OTP</string>
 
+    <string name="please_enter_mail_id">Please enter mail id</string>
+    <string name="please_enter_valid_mail_id">Please enter valid mail id</string>
     <string name="password_and_confirm_password_doesnot_match">Password and Confirm Password doesn\'t match!</string>
     <string name="register">Register</string>
     <string name="ongoing_order">Ongoing Orders</string>
@@ -171,4 +174,10 @@
     <string name="start">Start</string>
     <string name="started_toward_location">Started toward location</string>
     <string name="waiting_for_user_approval">Waiting for user Approval</string>
+    <string name="waiting_for_admin_approval">Waiting for admin Approval</string>
+    <string name="edit_underline"><u>Edit</u></string>
+
+    <string name="admin_verify">Your account is not yet verified by admin.</string>
+    <string name="pending_contact_admin">Please contact the admin.</string>
+    <string name="address">Address</string>
 </resources>

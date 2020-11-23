@@ -159,7 +159,7 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
         if (bundle != null) {
             userRequestItem = (OrderRequestItem) bundle.getSerializable("userRequestItem");
             tvName.setText(userRequestItem.getUser().getName());
-            if(userRequestItem.getCustomerAddress().getMapAddress()!=null)
+            if(userRequestItem.getCustomerAddress()!=null&&userRequestItem.getCustomerAddress().getMapAddress()!=null)
                 tvAddress.setText(userRequestItem.getCustomerAddress().getMapAddress());
             tvFoodName.setText(userRequestItem.getFood().getName());
             StringBuilder sb = new StringBuilder();
@@ -313,10 +313,12 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
                                 // Got last known location. In some rare situations this can be null.
                                 if (location != null) {
                                     srcLatLong=new LatLng(location.getLatitude(),location.getLongitude());
-                                    String url = getUrl(location.getLatitude(), location.getLongitude()
-                                            , userRequestItem.getCustomerAddress().getLatitude(), userRequestItem.getCustomerAddress().getLongitude());
-                                    FetchUrl fetchUrl = new FetchUrl();
-                                    fetchUrl.execute(url);
+                                    if(userRequestItem.getCustomerAddress()!=null) {
+                                        String url = getUrl(location.getLatitude(), location.getLongitude()
+                                                , userRequestItem.getCustomerAddress().getLatitude(), userRequestItem.getCustomerAddress().getLongitude());
+                                        FetchUrl fetchUrl = new FetchUrl();
+                                        fetchUrl.execute(url);
+                                    }
                                 }
                             }
                         });
@@ -332,10 +334,12 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
                                 srcLatLong=new LatLng(location.getLatitude(),location.getLongitude());
-                                String url = getUrl(location.getLatitude(), location.getLongitude()
-                                        , userRequestItem.getCustomerAddress().getLatitude(), userRequestItem.getCustomerAddress().getLongitude());
-                                FetchUrl fetchUrl = new FetchUrl();
-                                fetchUrl.execute(url);
+                                if(userRequestItem.getCustomerAddress()!=null) {
+                                    String url = getUrl(location.getLatitude(), location.getLongitude()
+                                            , userRequestItem.getCustomerAddress().getLatitude(), userRequestItem.getCustomerAddress().getLongitude());
+                                    FetchUrl fetchUrl = new FetchUrl();
+                                    fetchUrl.execute(url);
+                                }
                             }
                         }
                     });

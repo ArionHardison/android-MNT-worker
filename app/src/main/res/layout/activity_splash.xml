@@ -3,16 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorWhite"
     tools:context="com.dietmanager.chef.activities.Splash">
 
 
     <ImageView
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_150sdp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_centerInParent="true"
         android:contentDescription="@string/image_view"
-        android:src="@drawable/logo_app"
-        android:tint="@color/colorWhite"/>
+        android:src="@drawable/logo_app"/>
 
 </RelativeLayout>

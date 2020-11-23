@@ -6,8 +6,19 @@ import com.google.gson.annotations.SerializedName;
 
 public class OrderRequestResponse implements Serializable {
 
-	@SerializedName("orderRequest")
+	@SerializedName("orders")
 	private List<OrderRequestItem> orderRequest;
+
+	@SerializedName("chef_status")
+	private String chefStatus;
+
+	public String getChefStatus() {
+		return chefStatus;
+	}
+
+	public void setChefStatus(String chefStatus) {
+		this.chefStatus = chefStatus;
+	}
 
 	public void setOrderRequest(List<OrderRequestItem> orderRequest){
 		this.orderRequest = orderRequest;

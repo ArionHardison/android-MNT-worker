@@ -234,6 +234,8 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
 
     }
 
+
+
     File imgFile;
 
     private int PICK_IMAGE_REQUEST = 1;
@@ -275,11 +277,38 @@ if(imageViewPurchase!=null) {
             Toast.makeText(this, getResources().getString(R.string.dont_pick_image),
                     Toast.LENGTH_SHORT).show();
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(userRequestItem!=null)
+            getOrderById(userRequestItem.getId());
+    }
     public void goToImageIntent() {
         Intent intent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
+
+    private void getOrderById(int id) {
+        String header = SharedHelper.getKey(this, "token_type") + " " + SharedHelper.getKey(this, "access_token");
+        System.out.println("getProfile Header " + header);
+        Call<OrderRequestItem> call = GlobalData.api.getOrderDetailById(header, id);
+        call.enqueue(new Callback<OrderRequestItem>() {
+            @Override
+            public void onResponse(@NonNull Call<OrderRequestItem> call, @NonNull Response<OrderRequestItem> response) {
+                if (response.isSuccessful()) {
+                    GlobalData.selectedOrder = response.body();
+                    userRequestItem=response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<OrderRequestItem> call, @NonNull Throwable t) {
+                Toast.makeText(OrderRequestDetailActivity.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     @OnClick({R.id.back_img, R.id.call_img, R.id.start_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {

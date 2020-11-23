@@ -216,7 +216,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void getUserCountryInfo() {
-        Country country = Country.getCountryByName("IN");
+        Country country = Country.getCountryByName("US");
         if (country != null) {
             countryImage.setImageResource(country.getFlag());
             countryNumber.setText(country.getDialCode());

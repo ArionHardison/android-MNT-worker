@@ -13,17 +13,17 @@ import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,8 +42,6 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -56,9 +54,8 @@ import com.dietmanager.chef.api.ApiInterface;
 import com.dietmanager.chef.fragment.CancelOrderFragment;
 import com.dietmanager.chef.fragment.PastVisitFragment;
 import com.dietmanager.chef.fragment.UpcomingVisitFragment;
-import com.dietmanager.chef.model.Otp;
 import com.dietmanager.chef.model.orderrequest.OrderRequestItem;
-import com.ethanhua.skeleton.Skeleton;
+import com.dietmanager.chef.model.orderrequest.OrderRequestResponse;
 import com.ethanhua.skeleton.SkeletonScreen;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -86,17 +83,16 @@ import com.dietmanager.chef.helper.SharedHelper;
 import com.dietmanager.chef.model.Message;
 import com.dietmanager.chef.model.Order;
 import com.dietmanager.chef.model.Profile;
-import com.dietmanager.chef.model.Shift;
 import com.dietmanager.chef.receiver.NetworkChangeReceiver;
 import com.dietmanager.chef.service.GPSTrackerService;
 
-import org.json.JSONObject;
-
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -146,7 +142,8 @@ public class Home extends AppCompatActivity
     ViewPager viewPager;
     CircleImageView userAvatar;
     TextView name;
-    TextView userId;
+    TextView tvEdit;
+
     @BindView(R.id.completed_task_rootview)
     LinearLayout completedTaskRootview;
     @BindView(R.id.internet_error_layout)
@@ -159,6 +156,7 @@ public class Home extends AppCompatActivity
 
     ScheduledExecutorService scheduler;
     private Location mylocation;
+    private String address="";
     private GoogleApiClient googleApiClient;
     private final static int REQUEST_CHECK_SETTINGS_GPS=0x1;
     private final static int REQUEST_ID_MULTIPLE_PERMISSIONS=0x2;
@@ -229,15 +227,19 @@ public class Home extends AppCompatActivity
         //View headerView = navigationView.inflateHeaderView(R.layout.nav_header_home);
         userAvatar = navigationView.getHeaderView(0).findViewById(R.id.user_avatar);
         LinearLayout nav_header = navigationView.getHeaderView(0).findViewById(R.id.nav_header);
-        nav_header.setOnClickListener(new View.OnClickListener() {
+/*        nav_header.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(Home.this, ProfileActivity.class));
+            }
+        });*/
+        name = navigationView.getHeaderView(0).findViewById(R.id.name);
+        tvEdit = navigationView.getHeaderView(0).findViewById(R.id.tvEdit);
+        navigationView.setNavigationItemSelectedListener(this);
+        tvEdit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(Home.this, ProfileActivity.class));
             }
         });
-        name = navigationView.getHeaderView(0).findViewById(R.id.name);
-        userId = navigationView.getHeaderView(0).findViewById(R.id.user_id);
-        navigationView.setNavigationItemSelectedListener(this);
-
 /*        orders = new ArrayList<>();
         newTaskAdapter = new TaskAdapter(orders, this, true);
         newTaskRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -320,6 +322,16 @@ public class Home extends AppCompatActivity
         mylocation = location;
         if (mylocation != null) {
             mLastKnownLocation=location;
+            Geocoder geocoder;
+            List<Address> addresses;
+            geocoder = new Geocoder(this, Locale.getDefault());
+            try {
+                addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                address = addresses.get(0).getAddressLine(0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -645,18 +657,32 @@ public class Home extends AppCompatActivity
         }
 
         String header = SharedHelper.getKey(this, "token_type") + " " + SharedHelper.getKey(this, "access_token");
-        Call<List<OrderRequestItem>> call = GlobalData.api.getIncomingRequest(header,mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
-        call.enqueue(new Callback<List<OrderRequestItem>>() {
+        Call<OrderRequestResponse> call = GlobalData.api.getIncomingRequest(header,mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude(),address);
+        call.enqueue(new Callback<OrderRequestResponse>() {
             @Override
-            public void onResponse(@NonNull Call<List<OrderRequestItem>> call, @NonNull Response<List<OrderRequestItem>> response) {
+            public void onResponse(@NonNull Call<OrderRequestResponse> call, @NonNull Response<OrderRequestResponse> response) {
                 Log.d("getOrder", response.toString());
                 if (response.isSuccessful()) {
-                    if (response.body().size() > 0) {
-                        if(!isIncomingDialogShowing)
-                        {
-                            incomingReqDialog(response.body().get(0));
+                    if (response.body()!=null) {
+                        if (response.body().getOrderRequest().size() > 0) {
+                            if (!isIncomingDialogShowing) {
+                                incomingReqDialog(response.body().getOrderRequest().get(0));
+                            }
                         }
-                    }
+                        if (response.body().getChefStatus().equalsIgnoreCase("ACTIVE")) {
+                            if (isWaitingForAdminShowing) {
+                                startActivity(new Intent(Home.this,Home.class));
+                                finishAffinity();
+                            }
+                        }
+                        else {
+                            if (!isWaitingForAdminShowing) {
+                                waitingForAdminPopup();
+                            }
+                        }
+
+
+                }
                     /*handler.removeCallbacks(runnable);
                     handler.postDelayed(runnable, 5000);*/
                 } else {
@@ -670,7 +696,7 @@ public class Home extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<OrderRequestItem>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<OrderRequestResponse> call, @NonNull Throwable t) {
                 Toast.makeText(Home.this, "Something wrong.", Toast.LENGTH_SHORT).show();
             }
         });
@@ -771,7 +797,7 @@ public class Home extends AppCompatActivity
     private void initProfileView() {
         if (GlobalData.profile != null) {
             name.setText(GlobalData.profile.getName());
-            userId.setText(String.valueOf(GlobalData.profile.getId()));
+           // userId.setText(String.valueOf(GlobalData.profile.getId()));
             Glide.with(this)
                     .load(GlobalData.profile.getAvatar())
                     .apply(new RequestOptions()
@@ -914,6 +940,23 @@ public class Home extends AppCompatActivity
         }
     }
 
+    public void waitingForAdminPopup() {
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(Home.this);
+            final FrameLayout frameView = new FrameLayout(Home.this);
+            builder.setView(frameView);
+            final AlertDialog purchasedDialog = builder.create();
+            purchasedDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            purchasedDialog.setCancelable(false);
+            LayoutInflater inflater = purchasedDialog.getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.waiting_for_admin_approval_popup, frameView);
+            purchasedDialog.show();
+            isWaitingForAdminShowing=true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void logout() {
         if (customDialog != null)
             customDialog.show();
@@ -992,13 +1035,13 @@ public class Home extends AppCompatActivity
     }
 
     private boolean isIncomingDialogShowing=false;
+    private boolean isWaitingForAdminShowing=false;
     public void incomingReqDialog(OrderRequestItem orderRequestItem){
         try {
             AlertDialog.Builder builder = new AlertDialog.Builder(Home.this);
             final FrameLayout frameView = new FrameLayout(Home.this);
             builder.setView(frameView);
             final AlertDialog incomingDialog = builder.create();
-            incomingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
             incomingDialog.setCancelable(false);
             LayoutInflater inflater = incomingDialog.getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.incoming_popup, frameView);

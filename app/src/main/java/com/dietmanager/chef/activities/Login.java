@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dietmanager.chef.utils.Utils;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.dietmanager.chef.Application;
 import com.dietmanager.chef.CountryPicker.Country;
@@ -52,6 +53,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.dietmanager.chef.utils.TextUtils.isValidEmail;
+
 public class Login extends AppCompatActivity {
 
     private static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE = 0;
@@ -62,6 +65,9 @@ public class Login extends AppCompatActivity {
     TextView countryNumber;
     /*@BindView(R.id.tv_terms_policy)
     TextView tvTermsAndPolicy;*/
+
+    @BindView(R.id.et_email)
+    EditText etEmail;
     @BindView(R.id.et_mobile_number)
     EditText mobileNo;
     @BindView(R.id.next_btn)
@@ -230,17 +236,25 @@ public class Login extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.next_btn:
                 String mobileNumber = country_code + mobileNo.getText().toString();
-                if (!isValidMobile(mobileNumber)) {
+                String email = etEmail.getText().toString();
+
+                /*if (!isValidMobile(mobileNumber)) {
                     Toast.makeText(this, getResources().getString(R.string.please_enter_valid_number), Toast.LENGTH_SHORT).show();
 //                    startActivity(new Intent(this,OtpActivity.class));
-                } else if (etCurrentPassword.getText().toString().isEmpty()) {
+                }*/
+                if (email.isEmpty())
+                    Utils.displayMessage(Login.this, getResources().getString(R.string.please_enter_mail_id));
+                else if (!isValidEmail(email))
+                    Utils.displayMessage(Login.this, getResources().getString(R.string.please_enter_valid_mail_id));
+                else if (etCurrentPassword.getText().toString().isEmpty()) {
                     Toast.makeText( this, getResources().getString(R.string.please_enter_password),Toast.LENGTH_LONG).show();
                 } else if (etCurrentPassword.getText().toString().length() < 6) {
                     Toast.makeText( this, getResources().getString(R.string.please_enter_minimum_length_password),Toast.LENGTH_LONG).show();
                 } else {
                     HashMap<String, String> map = new HashMap<>();
-                    map.put("mobile", mobileNo.getText().toString());
-                    map.put("dial_code", country_code);
+                    /*map.put("mobile", mobileNo.getText().toString());
+                    map.put("dial_code", country_code);*/
+                    map.put("username",email);
                     map.put("password", etCurrentPassword.getText().toString());
                     //map.put("grant_type", GRANT_TYPE);
                     //map.put("client_id", BuildConfigure.CLIENT_ID);
