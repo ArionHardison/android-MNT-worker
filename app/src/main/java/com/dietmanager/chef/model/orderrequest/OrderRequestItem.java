@@ -72,6 +72,16 @@ public class OrderRequestItem implements Serializable {
 
 	@SerializedName("payable")
 	private String payable;
+	@SerializedName("tax")
+	private String tax;
+
+	public String getTax() {
+		return tax;
+	}
+
+	public void setTax(String tax) {
+		this.tax = tax;
+	}
 
 	@SerializedName("user_id")
 	private Integer userId;

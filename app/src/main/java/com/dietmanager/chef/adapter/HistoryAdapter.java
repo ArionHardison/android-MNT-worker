@@ -55,8 +55,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             if (order.getShop().getMapsAddress() != null) {
                 holder.address.setText(order.getShop().getMapsAddress());
             }
+
         }*/
-        holder.price.setText(/*context.getString(R.string.currency_value)*/GlobalData.profile.getCurrency() + "" + order.getPayable());
+        holder.price.setText(/*context.getString(R.string.currency_value)*/GlobalData.profile.getCurrency() + "" + order.getTotal());
 
         if (order.getUser() != null) {
             String name = Utils.toFirstCharUpperAll(order.getUser().getName());

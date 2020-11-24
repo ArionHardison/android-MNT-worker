@@ -75,6 +75,8 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
     TextView food_item_price;
     @BindView(R.id.item_total)
     TextView item_total;
+    @BindView(R.id.service_tax)
+    TextView service_tax;
     @BindView(R.id.llAssignChef)
     LinearLayout llAssignChef;
     @BindView(R.id.total)
@@ -120,7 +122,8 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
             food_item_name.setText(userRequestItem.getFood().getName());
             food_item_price.setText(GlobalData.profile.getCurrency() + userRequestItem.getFood().getPrice());
             item_total.setText(GlobalData.profile.getCurrency() + userRequestItem.getPayable());
-            total.setText(GlobalData.profile.getCurrency() + userRequestItem.getPayable());
+            service_tax.setText(GlobalData.profile.getCurrency() + userRequestItem.getTax());
+            total.setText(GlobalData.profile.getCurrency() + userRequestItem.getTotal());
             tv_payment_mode.setText(userRequestItem.getPaymentMode());
 
             if(userRequestItem.getStatus().equalsIgnoreCase("Completed"))

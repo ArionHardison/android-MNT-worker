@@ -946,7 +946,6 @@ public class Home extends AppCompatActivity
             final FrameLayout frameView = new FrameLayout(Home.this);
             builder.setView(frameView);
             final AlertDialog purchasedDialog = builder.create();
-            purchasedDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
             purchasedDialog.setCancelable(false);
             LayoutInflater inflater = purchasedDialog.getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.waiting_for_admin_approval_popup, frameView);
@@ -1042,6 +1041,7 @@ public class Home extends AppCompatActivity
             final FrameLayout frameView = new FrameLayout(Home.this);
             builder.setView(frameView);
             final AlertDialog incomingDialog = builder.create();
+            incomingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
             incomingDialog.setCancelable(false);
             LayoutInflater inflater = incomingDialog.getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.incoming_popup, frameView);

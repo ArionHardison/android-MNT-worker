@@ -216,15 +216,15 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void getUserCountryInfo() {
-        Country country = Country.getCountryByName("US");
+        Country country = Country.getCountryByName("United States");
         if (country != null) {
             countryImage.setImageResource(country.getFlag());
             countryNumber.setText(country.getDialCode());
             country_code = country.getDialCode();
         } else {
-            countryImage.setImageResource(R.drawable.flag_in);
-            countryNumber.setText("IN");
-            country_code = "+91";
+            countryImage.setImageResource(R.drawable.flag_us);
+            countryNumber.setText("US");
+            country_code = "+1";
         }
     }
 
@@ -296,8 +296,9 @@ public class SignUpActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<RegisterResponse> call, @NonNull Response<RegisterResponse> response) {
                 if (response.body() != null) {
                     HashMap<String, String> map = new HashMap<>();
-                    map.put("mobile",etMobileNumber.getText().toString());
-                    map.put("dial_code",country_code);
+                   /* map.put("mobile",etMobileNumber.getText().toString());
+                    map.put("dial_code",country_code);*/
+                    map.put("username",email);
                     map.put("password", password);
                     //map.put("grant_type", "password");
                     //map.put("client_id", AppConfigure.CLIENT_ID);
@@ -312,11 +313,13 @@ public class SignUpActivity extends AppCompatActivity {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         if (jObjError.has("email"))
-                            Toast.makeText(context, jObjError.optString("email"), Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, jObjError.optJSONArray("email").get(0).toString(), Toast.LENGTH_LONG).show();
+                        else if (jObjError.has("phone"))
+                            Toast.makeText(context, jObjError.optJSONArray("phone").get(0).toString(), Toast.LENGTH_LONG).show();
                         else if (jObjError.has("password"))
-                            Toast.makeText(context, jObjError.optString("password"), Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, jObjError.optJSONArray("password").get(0).toString(), Toast.LENGTH_LONG).show();
                         else if (jObjError.has("error"))
-                            Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, jObjError.optJSONArray("error").get(0).toString(), Toast.LENGTH_LONG).show();
                         else
                             Toast.makeText(context, "Invalid", Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
