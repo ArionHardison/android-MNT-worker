@@ -18,6 +18,9 @@
             android:id="@+id/nav_earning"
             android:title="@string/earning" />
         <item
+            android:id="@+id/nav_wallet"
+            android:title="@string/wallet" />
+        <item
             android:id="@+id/nav_shift_status"
             android:icon="@drawable/ic_shop"
             android:title="@string/shift_status"

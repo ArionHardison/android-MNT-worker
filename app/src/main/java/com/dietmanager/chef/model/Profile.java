@@ -11,6 +11,9 @@ public class Profile {
     @SerializedName("id")
     @Expose
     private Integer id;
+    @SerializedName("wallet_balance")
+    @Expose
+    private String walletBalance;
     @SerializedName("terms")
     @Expose
     private String terms;
@@ -111,6 +114,14 @@ public class Profile {
     public Profile withName(String name) {
         this.name = name;
         return this;
+    }
+
+    public String getWalletBalance() {
+        return walletBalance;
+    }
+
+    public void setWalletBalance(String walletBalance) {
+        this.walletBalance = walletBalance;
     }
 
     public String getEmail() {

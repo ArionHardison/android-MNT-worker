@@ -316,6 +316,8 @@ public class SignUpActivity extends AppCompatActivity {
                             Toast.makeText(context, jObjError.optJSONArray("email").get(0).toString(), Toast.LENGTH_LONG).show();
                         else if (jObjError.has("phone"))
                             Toast.makeText(context, jObjError.optJSONArray("phone").get(0).toString(), Toast.LENGTH_LONG).show();
+                        else if (jObjError.has("mobile"))
+                            Toast.makeText(context, jObjError.optJSONArray("mobile").get(0).toString(), Toast.LENGTH_LONG).show();
                         else if (jObjError.has("password"))
                             Toast.makeText(context, jObjError.optJSONArray("password").get(0).toString(), Toast.LENGTH_LONG).show();
                         else if (jObjError.has("error"))

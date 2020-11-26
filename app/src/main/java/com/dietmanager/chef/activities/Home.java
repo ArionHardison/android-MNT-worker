@@ -669,6 +669,12 @@ public class Home extends AppCompatActivity
                                 incomingReqDialog(response.body().getOrderRequest().get(0));
                             }
                         }
+                        else {
+                            if (isIncomingDialogShowing) {
+                                startActivity(new Intent(Home.this,Home.class));
+                                finishAffinity();
+                            }
+                        }
                         if (response.body().getChefStatus().equalsIgnoreCase("ACTIVE")) {
                             if (isWaitingForAdminShowing) {
                                 startActivity(new Intent(Home.this,Home.class));
@@ -701,7 +707,6 @@ public class Home extends AppCompatActivity
             }
         });
     }
-
     private void getProfile() {
         if (!getNetworkStatus()) {
             return;
@@ -858,6 +863,8 @@ public class Home extends AppCompatActivity
             startActivity(new Intent(Home.this, OrderRequestActivity.class));
         } else if (id == R.id.nav_home) {
             onBackPressed();
+        }else if (id == R.id.nav_wallet) {
+            startActivity(new Intent(Home.this, WalletActivity.class));
         } else if (id == R.id.nav_order_request) {
             startActivity(new Intent(Home.this, OrderRequestActivity.class));
         } else if (id == R.id.nav_earning) {

@@ -4,6 +4,7 @@ package com.dietmanager.chef.api;
  * Created by santhosh@appoets.com on 03-10-17.
  */
 
+import com.dietmanager.chef.model.ForgotPasswordResponse;
 import com.dietmanager.chef.model.Message;
 import com.dietmanager.chef.model.Notice;
 import com.dietmanager.chef.model.Order;
@@ -13,6 +14,7 @@ import com.dietmanager.chef.model.Shift;
 import com.dietmanager.chef.model.Token;
 import com.dietmanager.chef.model.Otp;
 import com.dietmanager.chef.model.Vehicle;
+import com.dietmanager.chef.model.WalletHistory;
 import com.dietmanager.chef.model.orderrequest.OrderRequestItem;
 import com.dietmanager.chef.model.orderrequest.OrderRequestResponse;
 
@@ -44,6 +46,11 @@ public interface ApiInterface {
     @GET("api/chef/profile")
     Call<Profile> getProfile(@Header("Authorization") String authorization, @QueryMap HashMap<String, String> params);
 
+
+    @GET("api/chef/wallet/transaction")
+    Call<List<WalletHistory>> getWalletHistory(@Header("Authorization") String authorization);
+
+
     @FormUrlEncoded
     @POST("api/chef/order/{id}")
     Call<OrderRequestItem> updateOrder(@Header("Authorization") String authorization, @Path("id") int id,@FieldMap HashMap<String, String> params);
@@ -53,6 +60,9 @@ public interface ApiInterface {
     @POST("api/chef/order/{id}")
     Call<OrderRequestItem> updateOrderWithImage(@Header("Authorization") String authorization, @Path("id") int id, @PartMap() Map<String, RequestBody> partMap, @Part MultipartBody.Part filename);
 
+    @FormUrlEncoded
+    @POST("api/chef/forgot/password")
+    Call<ForgotPasswordResponse> forgotPassword(@FieldMap HashMap<String, String> params);
 
     @FormUrlEncoded
     @POST("api/chef/register/otp")

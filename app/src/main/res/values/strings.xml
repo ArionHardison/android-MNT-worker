@@ -14,9 +14,21 @@
     <string name="connect_to_network">Connect to network or quit</string>
     <string name="connect_to_wifi">Connect to WIFI</string>
     <string name="quit">Quit</string>
+    <string name="ok">Ok</string>
+    <string name="history">History</string>
+    <string name="no_result">No search results</string>
+
+    <string name="wallet_amount">DietManager Credit Amount</string>
+    <string name="walletHistory">DietManager Credit</string>
+    <string name="wallet">Wallet</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="invalid_email">Invalid Email</string>
+
+    <string name="enter_email_id">Enter Email ID</string>
+    <string name="next">Next</string>
+    <string name="oops_no_internet">Oops! No internet connection</string>
 
     <string name="new_order_request">"New &order; Request"</string>
     <string name="order_request">Order Request</string>

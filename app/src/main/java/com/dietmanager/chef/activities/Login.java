@@ -231,7 +231,7 @@ public class Login extends AppCompatActivity {
     private boolean isValidMobile(String phone) {
         return !(phone == null || phone.length() < 6 || phone.length() > 13) && android.util.Patterns.PHONE.matcher(phone).matches();
     }
-    @OnClick({R.id.next_btn,R.id.et_current_password_eye_img,R.id.donnot_have_account})
+    @OnClick({R.id.next_btn,R.id.et_current_password_eye_img,R.id.donnot_have_account,R.id.forgot_password})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.next_btn:
@@ -265,7 +265,9 @@ public class Login extends AppCompatActivity {
                     login(map);
                 }
                 break;
-
+            case R.id.forgot_password:
+            startActivity(new Intent(Login.this, ForgotPassword.class));
+            break;
             case R.id.donnot_have_account:
                 startActivity(new Intent(Login.this, SignUpActivity.class));
                 break;
