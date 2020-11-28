@@ -19,6 +19,7 @@
             android:title="@string/earning" />
         <item
             android:id="@+id/nav_wallet"
+            android:visible="false"
             android:title="@string/wallet" />
         <item
             android:id="@+id/nav_shift_status"

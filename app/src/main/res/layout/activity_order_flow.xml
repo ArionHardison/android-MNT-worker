@@ -151,8 +151,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:singleLine="true"
-                android:text="Tarc Coloney, Megberg winson road, united status- 100987"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:text="Tarc Coloney,  Coloney"
                 android:textAllCaps="false"
                 android:textSize="@dimen/_14sdp" />
 

@@ -19,7 +19,7 @@ public class User implements Serializable {
 	private double latitude;
 
 	@SerializedName("wallet_balance")
-	private Integer walletBalance;
+	private Double walletBalance;
 
 	@SerializedName("device_type")
 	private String deviceType;
@@ -104,11 +104,11 @@ public class User implements Serializable {
 		return latitude;
 	}
 
-	public void setWalletBalance(Integer walletBalance){
+	public void setWalletBalance(Double walletBalance){
 		this.walletBalance = walletBalance;
 	}
 
-	public Integer getWalletBalance(){
+	public Double getWalletBalance(){
 		return walletBalance;
 	}
 

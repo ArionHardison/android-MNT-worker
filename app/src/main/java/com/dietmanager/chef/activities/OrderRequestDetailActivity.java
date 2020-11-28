@@ -118,7 +118,12 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
             if (userRequestItem.getFood().getAvatar() != null)
                 Glide.with(this).load(BuildConfigure.BASE_URL + userRequestItem.getFood().getAvatar())
                         .apply(new RequestOptions().centerCrop().placeholder(R.drawable.man).error(R.drawable.man).dontAnimate()).into(userImg);
-
+            if (userRequestItem.getCustomerAddress() != null) {
+                if (userRequestItem.getCustomerAddress().getMapAddress() != null) {
+                    tvUserAddress.setText((userRequestItem.getCustomerAddress().getBuilding() != null ? userRequestItem.getCustomerAddress().getBuilding() + ", " : "") +
+                            userRequestItem.getCustomerAddress().getMapAddress());
+                }
+            }
             food_item_name.setText(userRequestItem.getFood().getName());
             food_item_price.setText(GlobalData.profile.getCurrency() + userRequestItem.getFood().getPrice());
             item_total.setText(GlobalData.profile.getCurrency() + userRequestItem.getPayable());

@@ -868,6 +868,7 @@ public class Home extends AppCompatActivity
         } else if (id == R.id.nav_order_request) {
             startActivity(new Intent(Home.this, OrderRequestActivity.class));
         } else if (id == R.id.nav_earning) {
+            startActivity(new Intent(Home.this, WalletActivity.class));
         } else if (id == R.id.nav_terms_conditions) {
             startActivity(new Intent(Home.this, TermsAndConditions.class));
         } else if (id == R.id.nav_language) {
