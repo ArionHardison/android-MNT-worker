@@ -57,6 +57,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="8dp"
+                android:visibility="gone"
                 android:background="@drawable/round"
                 android:contentDescription="@string/reached_restaurant"
                 android:padding="8dp"

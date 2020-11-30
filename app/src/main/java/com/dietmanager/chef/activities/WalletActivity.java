@@ -132,7 +132,7 @@ public class WalletActivity extends AppCompatActivity {
 
         String header = SharedHelper.getKey(WalletActivity.this, "token_type") + " "
                 + SharedHelper.getKey(WalletActivity.this, "access_token");
-        Call<Profile> getprofile = apiInterface.getProfile(header,map);
+        Call<Profile> getprofile = apiInterface.getProfile(header, map);
         getprofile.enqueue(new Callback<Profile>() {
             @Override
             public void onResponse(@NonNull Call<Profile> call, @NonNull Response<Profile> response) {
@@ -183,9 +183,10 @@ public class WalletActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<List<WalletHistory>> call, @NonNull Response<List<WalletHistory>> response) {
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
+                    walletHistoryHistoryList.clear();
+                    walletHistoryHistoryList.addAll(response.body());
+                    walletHistoryRecyclerView.getAdapter().notifyDataSetChanged();
                     if (response.body() != null && response.body().size() > 0) {
-                        walletHistoryHistoryList.addAll(response.body());
-                        walletHistoryRecyclerView.getAdapter().notifyDataSetChanged();
                         errorLayout.setVisibility(View.GONE);
                     } else {
                         errorLayout.setVisibility(View.VISIBLE);

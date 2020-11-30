@@ -191,18 +191,19 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
         if (userRequestItem != null) {
             nextStatus = GlobalData.getNextOrderStatus(userRequestItem.getStatus());
                 if (userRequestItem.getStatus().equalsIgnoreCase("ASSIGNED")) {
-                    iconStartedTowardsRestaurant.setBackgroundResource(R.drawable.round_accent);
-                    iconStartedTowardsRestaurant.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
-                            R.color.colorWhite), PorterDuff.Mode.SRC_IN);
-                    iconReachedRestaurant.setBackgroundResource(R.drawable.round_grey);
+                    /*iconReachedRestaurant.setBackgroundResource(R.drawable.round_grey);
                     iconReachedRestaurant.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
-                            R.color.colorWhite), PorterDuff.Mode.SRC_IN);
+                            R.color.colorWhite), PorterDuff.Mode.SRC_IN);*/
                     updateStatusBtn.setText("Started toward location");
                 }
                 if (userRequestItem.getStatus().equalsIgnoreCase("PICKEDUP")) {
-                    iconReachedRestaurant.setBackgroundResource(R.drawable.round_accent);
-                    iconReachedRestaurant.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
+
+                    iconStartedTowardsRestaurant.setBackgroundResource(R.drawable.round_accent);
+                    iconStartedTowardsRestaurant.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
                             R.color.colorWhite), PorterDuff.Mode.SRC_IN);
+                    /*iconReachedRestaurant.setBackgroundResource(R.drawable.round_accent);
+                    iconReachedRestaurant.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
+                            R.color.colorWhite), PorterDuff.Mode.SRC_IN);*/
                     iconOrderPickedUp.setBackgroundResource(R.drawable.round_grey);
                     iconOrderPickedUp.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
                             R.color.colorWhite), PorterDuff.Mode.SRC_IN);
