@@ -156,12 +156,13 @@ public class Home extends AppCompatActivity
 
     ScheduledExecutorService scheduler;
     private Location mylocation;
-    private String address="";
+    private String address = "";
     private GoogleApiClient googleApiClient;
-    private final static int REQUEST_CHECK_SETTINGS_GPS=0x1;
-    private final static int REQUEST_ID_MULTIPLE_PERMISSIONS=0x2;
+    private final static int REQUEST_CHECK_SETTINGS_GPS = 0x1;
+    private final static int REQUEST_ID_MULTIPLE_PERMISSIONS = 0x2;
 
     public Location mLastKnownLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -294,7 +295,7 @@ public class Home extends AppCompatActivity
             }
         }, intentFilter);
 
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(),BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.addFragment(new UpcomingVisitFragment(), getString(R.string.ongoing_order));
         adapter.addFragment(new PastVisitFragment(), getString(R.string.past_order));
         adapter.addFragment(new CancelOrderFragment(), getString(R.string.cancelled_order));
@@ -321,7 +322,7 @@ public class Home extends AppCompatActivity
     public void onLocationChanged(Location location) {
         mylocation = location;
         if (mylocation != null) {
-            mLastKnownLocation=location;
+            mLastKnownLocation = location;
             Geocoder geocoder;
             List<Address> addresses;
             geocoder = new Geocoder(this, Locale.getDefault());
@@ -351,8 +352,8 @@ public class Home extends AppCompatActivity
         //You can display a message here
     }
 
-    private void getMyLocation(){
-        if(googleApiClient!=null) {
+    private void getMyLocation() {
+        if (googleApiClient != null) {
             if (googleApiClient.isConnected()) {
                 int permissionLocation = ContextCompat.checkSelfPermission(Home.this,
                         Manifest.permission.ACCESS_FINE_LOCATION);
@@ -431,7 +432,7 @@ public class Home extends AppCompatActivity
         }
     }
 
-    private void checkPermissions(){
+    private void checkPermissions() {
         int permissionLocation = ContextCompat.checkSelfPermission(Home.this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION);
         List<String> listPermissionsNeeded = new ArrayList<>();
@@ -441,7 +442,7 @@ public class Home extends AppCompatActivity
                 ActivityCompat.requestPermissions(this,
                         listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), REQUEST_ID_MULTIPLE_PERMISSIONS);
             }
-        }else{
+        } else {
             getMyLocation();
         }
 
@@ -462,6 +463,7 @@ public class Home extends AppCompatActivity
             customDialog.show();
         }
     }
+
     private void changeTabsFont() {
         ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
         int tabsCount = vg.getChildCount();
@@ -477,10 +479,12 @@ public class Home extends AppCompatActivity
             }
         }
     }
+
     public static void dismissDialog() {
         if (customDialog != null & customDialog.isShowing())
             customDialog.dismiss();
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -498,7 +502,6 @@ public class Home extends AppCompatActivity
         getInComingRequest();
         //errorLayout.setVisibility(View.GONE);
         //newTaskRv.setVisibility(View.VISIBLE);
-
 
 
         getNetworkStatus();
@@ -528,25 +531,24 @@ public class Home extends AppCompatActivity
 
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
 
-    public void updateOrder(boolean isAccept,int id,HashMap<String, String> map) {
+    public void updateOrder(boolean isAccept, int id, HashMap<String, String> map) {
         customDialog.show();
 
         String header = SharedHelper.getKey(Home.this, "token_type") + " "
                 + SharedHelper.getKey(Home.this, "access_token");
-        Call<OrderRequestItem> call = apiInterface.updateOrder(header,id,map);
+        Call<OrderRequestItem> call = apiInterface.updateOrder(header, id, map);
         call.enqueue(new Callback<OrderRequestItem>() {
             @Override
             public void onResponse(@NonNull Call<OrderRequestItem> call, @NonNull Response<OrderRequestItem> response) {
                 customDialog.dismiss();
-                isIncomingDialogShowing=false;
+                isIncomingDialogShowing = false;
                 if (response.isSuccessful()) {
-                    if(isAccept){
+                    if (isAccept) {
                         GlobalData.selectedOrder = response.body();
                         Intent intent = new Intent(Home.this, OrderRequestDetailActivity.class);
-                        intent.putExtra("userRequestItem", (Serializable)response.body());
+                        intent.putExtra("userRequestItem", (Serializable) response.body());
                         startActivity(intent);
-                    }
-                    else {
+                    } else {
                         Toast.makeText(Home.this, "Cancelled", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -651,44 +653,42 @@ public class Home extends AppCompatActivity
         if (!getNetworkStatus())
             return;
 
-        if(mLastKnownLocation==null) {
+        if (mLastKnownLocation == null) {
             checkPermissions();
             return;
         }
 
         String header = SharedHelper.getKey(this, "token_type") + " " + SharedHelper.getKey(this, "access_token");
-        Call<OrderRequestResponse> call = GlobalData.api.getIncomingRequest(header,mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude(),address);
+        Call<OrderRequestResponse> call = GlobalData.api.getIncomingRequest(header, mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude(), address);
         call.enqueue(new Callback<OrderRequestResponse>() {
             @Override
             public void onResponse(@NonNull Call<OrderRequestResponse> call, @NonNull Response<OrderRequestResponse> response) {
                 Log.d("getOrder", response.toString());
                 if (response.isSuccessful()) {
-                    if (response.body()!=null) {
+                    if (response.body() != null) {
                         if (response.body().getOrderRequest().size() > 0) {
                             if (!isIncomingDialogShowing) {
                                 incomingReqDialog(response.body().getOrderRequest().get(0));
                             }
-                        }
-                        else {
+                        } else {
                             if (isIncomingDialogShowing) {
-                                startActivity(new Intent(Home.this,Home.class));
+                                startActivity(new Intent(Home.this, Home.class));
                                 finishAffinity();
                             }
                         }
                         if (response.body().getChefStatus().equalsIgnoreCase("ACTIVE")) {
                             if (isWaitingForAdminShowing) {
-                                startActivity(new Intent(Home.this,Home.class));
+                                startActivity(new Intent(Home.this, Home.class));
                                 finishAffinity();
                             }
-                        }
-                        else {
+                        } else {
                             if (!isWaitingForAdminShowing) {
                                 waitingForAdminPopup();
                             }
                         }
 
 
-                }
+                    }
                     /*handler.removeCallbacks(runnable);
                     handler.postDelayed(runnable, 5000);*/
                 } else {
@@ -707,6 +707,7 @@ public class Home extends AppCompatActivity
             }
         });
     }
+
     private void getProfile() {
         if (!getNetworkStatus()) {
             return;
@@ -802,7 +803,7 @@ public class Home extends AppCompatActivity
     private void initProfileView() {
         if (GlobalData.profile != null) {
             name.setText(GlobalData.profile.getName());
-           // userId.setText(String.valueOf(GlobalData.profile.getId()));
+            // userId.setText(String.valueOf(GlobalData.profile.getId()));
             Glide.with(this)
                     .load(GlobalData.profile.getAvatar())
                     .apply(new RequestOptions()
@@ -863,7 +864,7 @@ public class Home extends AppCompatActivity
             startActivity(new Intent(Home.this, OrderRequestActivity.class));
         } else if (id == R.id.nav_home) {
             onBackPressed();
-        }else if (id == R.id.nav_wallet) {
+        } else if (id == R.id.nav_wallet) {
             startActivity(new Intent(Home.this, WalletActivity.class));
         } else if (id == R.id.nav_order_request) {
             startActivity(new Intent(Home.this, OrderRequestActivity.class));
@@ -958,7 +959,7 @@ public class Home extends AppCompatActivity
             LayoutInflater inflater = purchasedDialog.getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.waiting_for_admin_approval_popup, frameView);
             purchasedDialog.show();
-            isWaitingForAdminShowing=true;
+            isWaitingForAdminShowing = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1041,9 +1042,10 @@ public class Home extends AppCompatActivity
         getNetworkStatus();
     }
 
-    private boolean isIncomingDialogShowing=false;
-    private boolean isWaitingForAdminShowing=false;
-    public void incomingReqDialog(OrderRequestItem orderRequestItem){
+    private boolean isIncomingDialogShowing = false;
+    private boolean isWaitingForAdminShowing = false;
+
+    public void incomingReqDialog(OrderRequestItem orderRequestItem) {
         try {
             AlertDialog.Builder builder = new AlertDialog.Builder(Home.this);
             final FrameLayout frameView = new FrameLayout(Home.this);
@@ -1053,30 +1055,32 @@ public class Home extends AppCompatActivity
             incomingDialog.setCancelable(false);
             LayoutInflater inflater = incomingDialog.getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.incoming_popup, frameView);
-            ((TextView)dialogView.findViewById(R.id.tvName)).setText(orderRequestItem.getUser().getName());
-            ((TextView)dialogView.findViewById(R.id.tvAddress)).setText(orderRequestItem.getCustomerAddress().getMapAddress());
-            ((TextView)dialogView.findViewById(R.id.tvFoodName)).setText(orderRequestItem.getFood().getName());
-            StringBuilder sb = new StringBuilder();
-            boolean foundOne = false;
-
-            for (int i = 0; i < orderRequestItem.getOrderingredient().size(); ++i) {
+            ((TextView) dialogView.findViewById(R.id.tvName)).setText(orderRequestItem.getUser().getName());
+            ((TextView) dialogView.findViewById(R.id.tvAddress)).setText(orderRequestItem.getCustomerAddress().getMapAddress());
+            ((TextView) dialogView.findViewById(R.id.tvFoodName)).setText(orderRequestItem.getFood().getName());
+            if (orderRequestItem.getOrderingredient().size() > 0) {
+                StringBuilder sb = new StringBuilder();
+                boolean foundOne = false;
+                for (int i = 0; i < orderRequestItem.getOrderingredient().size(); ++i) {
                     if (foundOne) {
                         sb.append(", ");
                     }
-
                     foundOne = true;
                     sb.append(orderRequestItem.getOrderingredient().get(i).getFoodingredient().getIngredient().getName());
+                }
+                ((TextView) dialogView.findViewById(R.id.tvIngredients)).setText(sb.toString());
+            } else {
+                ((LinearLayout) dialogView.findViewById(R.id.llIngredient)).setVisibility(View.GONE);
             }
-            ((TextView)dialogView.findViewById(R.id.tvIngredients)).setText(sb.toString());
             Button acceptBtn = dialogView.findViewById(R.id.accept_btn);
             acceptBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     incomingDialog.dismiss();
                     HashMap<String, String> map = new HashMap<>();
-                    map.put("_method","PATCH");
+                    map.put("_method", "PATCH");
                     map.put("status", "ASSIGNED");
-                    updateOrder(true,orderRequestItem.getId(),map);
+                    updateOrder(true, orderRequestItem.getId(), map);
                 }
             });
             Button reject_btn = dialogView.findViewById(R.id.reject_btn);
@@ -1085,13 +1089,13 @@ public class Home extends AppCompatActivity
                 public void onClick(View v) {
                     incomingDialog.dismiss();
                     HashMap<String, String> map = new HashMap<>();
-                    map.put("_method","PATCH");
+                    map.put("_method", "PATCH");
                     map.put("status", "CANCELLED");
-                    updateOrder(false,orderRequestItem.getId(),map);
+                    updateOrder(false, orderRequestItem.getId(), map);
                 }
             });
             incomingDialog.show();
-            isIncomingDialogShowing=true;
+            isIncomingDialogShowing = true;
         } catch (Exception e) {
             e.printStackTrace();
         }

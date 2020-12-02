@@ -87,6 +87,8 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
     ImageView userImg;
     @BindView(R.id.start_btn)
     Button start_btn;
+    @BindView(R.id.tv_order_id)
+    TextView tvOrderId;
     @BindView(R.id.ingredients_rv)
     RecyclerView ingredients_rv;
     Context context;
@@ -113,7 +115,7 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
             title.setText(getString(R.string.order_request));
         }
         if (userRequestItem != null) {
-
+            tvOrderId.setText("#"+userRequestItem.getId());
             tvUserName.setText(userRequestItem.getUser().getName());
             if (userRequestItem.getFood().getAvatar() != null)
                 Glide.with(this).load(BuildConfigure.BASE_URL + userRequestItem.getFood().getAvatar())

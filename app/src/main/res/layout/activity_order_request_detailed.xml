@@ -127,7 +127,7 @@
                             android:maxLines="1"
                             android:paddingTop="@dimen/_4sdp"
                             android:singleLine="true"
-                            android:text="@string/cash"
+                            android:text="Card"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp" />
 
@@ -172,7 +172,14 @@
                         android:paddingTop="@dimen/_12sdp"
                         android:paddingEnd="@dimen/_12sdp"
                         android:paddingBottom="@dimen/_12sdp">
-
+                        <TextView
+                            android:id="@+id/tv_order_id"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:fontFamily="@font/nunito_bold"
+                            android:textColor="@color/colorAccent" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

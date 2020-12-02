@@ -24,6 +24,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -115,6 +116,8 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
 
     @BindView(R.id.icon_started_towards_restaurant)
     ImageView iconStartedTowardsRestaurant;
+    @BindView(R.id.llIngredient)
+    LinearLayout llIngredient;
     @BindView(R.id.icon_reached_restaurant)
     ImageView iconReachedRestaurant;
     @BindView(R.id.icon_order_picked_up)
@@ -159,22 +162,27 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
         if (bundle != null) {
             userRequestItem = (OrderRequestItem) bundle.getSerializable("userRequestItem");
             tvName.setText(userRequestItem.getUser().getName());
-            if(userRequestItem.getCustomerAddress()!=null&&userRequestItem.getCustomerAddress().getMapAddress()!=null)
+            if (userRequestItem.getCustomerAddress() != null && userRequestItem.getCustomerAddress().getMapAddress() != null)
                 tvAddress.setText(userRequestItem.getCustomerAddress().getMapAddress());
             tvFoodName.setText(userRequestItem.getFood().getName());
-            StringBuilder sb = new StringBuilder();
-            boolean foundOne = false;
 
-            for (int i = 0; i < userRequestItem.getOrderingredient().size(); ++i) {
-                if (foundOne) {
-                    sb.append(", ");
+            if (userRequestItem.getOrderingredient().size() > 0) {
+                StringBuilder sb = new StringBuilder();
+                boolean foundOne = false;
+
+                for (int i = 0; i < userRequestItem.getOrderingredient().size(); ++i) {
+                    if (foundOne) {
+                        sb.append(", ");
+                    }
+
+                    foundOne = true;
+                    sb.append(userRequestItem.getOrderingredient().get(i).getFoodingredient().getIngredient().getName());
                 }
-
-                foundOne = true;
-                sb.append(userRequestItem.getOrderingredient().get(i).getFoodingredient().getIngredient().getName());
+                tvIngredients.setText(sb.toString());
+                tvDate.setText(userRequestItem.getCreatedAt());
+            } else {
+                llIngredient.setVisibility(View.GONE);
             }
-            tvIngredients.setText(sb.toString());
-            tvDate.setText(userRequestItem.getCreatedAt());
             initFlowIcons();
         }
         context = OrderFlowActivity.this;
@@ -186,66 +194,68 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
 
     }
-    String nextStatus="";
+
+    String nextStatus = "";
+
     private void initFlowIcons() {
         if (userRequestItem != null) {
             nextStatus = GlobalData.getNextOrderStatus(userRequestItem.getStatus());
-                if (userRequestItem.getStatus().equalsIgnoreCase("ASSIGNED")) {
+            if (userRequestItem.getStatus().equalsIgnoreCase("ASSIGNED")) {
                     /*iconReachedRestaurant.setBackgroundResource(R.drawable.round_grey);
                     iconReachedRestaurant.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
                             R.color.colorWhite), PorterDuff.Mode.SRC_IN);*/
-                    updateStatusBtn.setText("Started toward location");
-                }
-                if (userRequestItem.getStatus().equalsIgnoreCase("PICKEDUP")) {
+                updateStatusBtn.setText("Started toward location");
+            }
+            if (userRequestItem.getStatus().equalsIgnoreCase("PICKEDUP")) {
 
-                    iconStartedTowardsRestaurant.setBackgroundResource(R.drawable.round_accent);
-                    iconStartedTowardsRestaurant.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
-                            R.color.colorWhite), PorterDuff.Mode.SRC_IN);
+                iconStartedTowardsRestaurant.setBackgroundResource(R.drawable.round_accent);
+                iconStartedTowardsRestaurant.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
+                        R.color.colorWhite), PorterDuff.Mode.SRC_IN);
                     /*iconReachedRestaurant.setBackgroundResource(R.drawable.round_accent);
                     iconReachedRestaurant.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
                             R.color.colorWhite), PorterDuff.Mode.SRC_IN);*/
-                    iconOrderPickedUp.setBackgroundResource(R.drawable.round_grey);
-                    iconOrderPickedUp.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
-                            R.color.colorWhite), PorterDuff.Mode.SRC_IN);
-                    updateStatusBtn.setText("Reached location");
-                }
-                if (userRequestItem.getStatus().equalsIgnoreCase("ARRIVED")) {
-                    iconOrderPickedUp.setBackgroundResource(R.drawable.round_accent);
-                    iconOrderPickedUp.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
-                            R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
-                    iconOrderDelivered.setBackgroundResource(R.drawable.round_grey);
-                    iconOrderDelivered.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
-                            R.color.colorWhite), PorterDuff.Mode.SRC_IN);
-                    updateStatusBtn.setText("Food preparation in progress");
-                }
-                if (userRequestItem.getStatus().equalsIgnoreCase("PROCESSING")) {
-                    iconOrderDelivered.setBackgroundResource(R.drawable.round_accent);
-                    iconOrderDelivered.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
-                            R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
-                    iconPaymentReceived.setBackgroundResource(R.drawable.round_grey);
-                    iconPaymentReceived.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
-                            R.color.colorWhite), PorterDuff.Mode.SRC_IN);
-                    updateStatusBtn.setText("Food prepared");
-                }
-                if (userRequestItem.getStatus().equalsIgnoreCase("PREPARED")) {
-                    iconPaymentReceived.setBackgroundResource(R.drawable.round_accent);
-                    iconPaymentReceived.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
-                            R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
-                    updateStatusBtn.setText("Waiting for user approval");
-                    waitingForUserPopup();
-                    scheduler.scheduleWithFixedDelay(new Runnable() {
-                        @Override
-                        public void run() {
-                            getOrderById(userRequestItem.getId());
-                        }
-                    }, 0, 5, TimeUnit.SECONDS);
-                }
-                if (userRequestItem.getStatus().equalsIgnoreCase("COMPLETED")) {
-                    iconPaymentReceived.setBackgroundResource(R.drawable.round_accent);
-                    iconPaymentReceived.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
-                            R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
-                    updateStatusBtn.setVisibility(View.GONE);
-                }
+                iconOrderPickedUp.setBackgroundResource(R.drawable.round_grey);
+                iconOrderPickedUp.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
+                        R.color.colorWhite), PorterDuff.Mode.SRC_IN);
+                updateStatusBtn.setText("Reached location");
+            }
+            if (userRequestItem.getStatus().equalsIgnoreCase("ARRIVED")) {
+                iconOrderPickedUp.setBackgroundResource(R.drawable.round_accent);
+                iconOrderPickedUp.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
+                        R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+                iconOrderDelivered.setBackgroundResource(R.drawable.round_grey);
+                iconOrderDelivered.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
+                        R.color.colorWhite), PorterDuff.Mode.SRC_IN);
+                updateStatusBtn.setText("Food preparation in progress");
+            }
+            if (userRequestItem.getStatus().equalsIgnoreCase("PROCESSING")) {
+                iconOrderDelivered.setBackgroundResource(R.drawable.round_accent);
+                iconOrderDelivered.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
+                        R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+                iconPaymentReceived.setBackgroundResource(R.drawable.round_grey);
+                iconPaymentReceived.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
+                        R.color.colorWhite), PorterDuff.Mode.SRC_IN);
+                updateStatusBtn.setText("Food prepared");
+            }
+            if (userRequestItem.getStatus().equalsIgnoreCase("PREPARED")) {
+                iconPaymentReceived.setBackgroundResource(R.drawable.round_accent);
+                iconPaymentReceived.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
+                        R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+                updateStatusBtn.setText("Waiting for user approval");
+                waitingForUserPopup();
+                scheduler.scheduleWithFixedDelay(new Runnable() {
+                    @Override
+                    public void run() {
+                        getOrderById(userRequestItem.getId());
+                    }
+                }, 0, 5, TimeUnit.SECONDS);
+            }
+            if (userRequestItem.getStatus().equalsIgnoreCase("COMPLETED")) {
+                iconPaymentReceived.setBackgroundResource(R.drawable.round_accent);
+                iconPaymentReceived.setColorFilter(ContextCompat.getColor(OrderFlowActivity.this,
+                        R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+                updateStatusBtn.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -256,27 +266,26 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
 
     private void getOrderById(int id) {
 
-            String header = SharedHelper.getKey(this, "token_type") + " " + SharedHelper.getKey(this, "access_token");
-            System.out.println("getProfile Header " + header);
-            Call<OrderRequestItem> call = GlobalData.api.getOrderDetailById(header, id);
-            call.enqueue(new Callback<OrderRequestItem>() {
-                @Override
-                public void onResponse(@NonNull Call<OrderRequestItem> call, @NonNull Response<OrderRequestItem> response) {
-                    if (response.isSuccessful()) {
-                        GlobalData.selectedOrder = response.body();
-                        if(response.body().getStatus().equalsIgnoreCase("COMPLETED"))
-                        {
-                            userApprovedPopup();
-                            scheduler.shutdown();
-                        }
+        String header = SharedHelper.getKey(this, "token_type") + " " + SharedHelper.getKey(this, "access_token");
+        System.out.println("getProfile Header " + header);
+        Call<OrderRequestItem> call = GlobalData.api.getOrderDetailById(header, id);
+        call.enqueue(new Callback<OrderRequestItem>() {
+            @Override
+            public void onResponse(@NonNull Call<OrderRequestItem> call, @NonNull Response<OrderRequestItem> response) {
+                if (response.isSuccessful()) {
+                    GlobalData.selectedOrder = response.body();
+                    if (response.body().getStatus().equalsIgnoreCase("COMPLETED")) {
+                        userApprovedPopup();
+                        scheduler.shutdown();
                     }
                 }
+            }
 
-                @Override
-                public void onFailure(@NonNull Call<OrderRequestItem> call, @NonNull Throwable t) {
-                    Toast.makeText(OrderFlowActivity.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
-                }
-            });
+            @Override
+            public void onFailure(@NonNull Call<OrderRequestItem> call, @NonNull Throwable t) {
+                Toast.makeText(OrderFlowActivity.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -313,8 +322,8 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
                             public void onSuccess(Location location) {
                                 // Got last known location. In some rare situations this can be null.
                                 if (location != null) {
-                                    srcLatLong=new LatLng(location.getLatitude(),location.getLongitude());
-                                    if(userRequestItem.getCustomerAddress()!=null) {
+                                    srcLatLong = new LatLng(location.getLatitude(), location.getLongitude());
+                                    if (userRequestItem.getCustomerAddress() != null) {
                                         String url = getUrl(location.getLatitude(), location.getLongitude()
                                                 , userRequestItem.getCustomerAddress().getLatitude(), userRequestItem.getCustomerAddress().getLongitude());
                                         FetchUrl fetchUrl = new FetchUrl();
@@ -334,8 +343,8 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
                         public void onSuccess(Location location) {
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
-                                srcLatLong=new LatLng(location.getLatitude(),location.getLongitude());
-                                if(userRequestItem.getCustomerAddress()!=null) {
+                                srcLatLong = new LatLng(location.getLatitude(), location.getLongitude());
+                                if (userRequestItem.getCustomerAddress() != null) {
                                     String url = getUrl(location.getLatitude(), location.getLongitude()
                                             , userRequestItem.getCustomerAddress().getLatitude(), userRequestItem.getCustomerAddress().getLongitude());
                                     FetchUrl fetchUrl = new FetchUrl();
@@ -358,6 +367,7 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
                 .build();
         mGoogleApiClient.connect();
     }
+
     private String getUrl(double source_latitude, double source_longitude, double dest_latitude, double dest_longitude) {
         // Origin of route
         String str_origin = "origin=" + source_latitude + "," + source_longitude;
@@ -516,20 +526,19 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
     }
 
 
-    @OnClick({R.id.back,R.id.update_status_btn})
+    @OnClick({R.id.back, R.id.update_status_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back:
                 onBackPressed();
                 break;
             case R.id.update_status_btn:
-                if(!userRequestItem.getStatus().equalsIgnoreCase("PROCESSING")) {
+                if (!userRequestItem.getStatus().equalsIgnoreCase("PROCESSING")) {
                     HashMap<String, String> map = new HashMap<>();
                     map.put("_method", "PATCH");
                     map.put("status", nextStatus);
                     updateOrder(userRequestItem.getId(), map);
-                }
-                else {
+                } else {
                     preparedAlert();
                 }
                 break;
@@ -552,7 +561,7 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
             View dialogView = inflater.inflate(R.layout.food_prepared_popop, frameView);
             Button upload_btn = dialogView.findViewById(R.id.upload_btn);
 
-            imgPrepared=dialogView.findViewById(R.id.imgPrepared);
+            imgPrepared = dialogView.findViewById(R.id.imgPrepared);
             dialogView.findViewById(R.id.imgPrepared).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -571,15 +580,14 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
             upload_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(imgFile==null){
+                    if (imgFile == null) {
                         Toast.makeText(OrderFlowActivity.this, getResources().getString(R.string.please_upload_image), Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                    } else {
                         purchasedDialog.dismiss();
                         HashMap<String, RequestBody> map = new HashMap<>();
-                        map.put("_method",RequestBody.create(MediaType.parse("text/plain"),"PATCH"));
-                        map.put("status", RequestBody.create(MediaType.parse("text/plain"),nextStatus));
-                        updateOrderWithImage(userRequestItem.getId(),map);
+                        map.put("_method", RequestBody.create(MediaType.parse("text/plain"), "PATCH"));
+                        map.put("status", RequestBody.create(MediaType.parse("text/plain"), nextStatus));
+                        updateOrderWithImage(userRequestItem.getId(), map);
                     }
                 }
             });
@@ -618,7 +626,7 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
             dialogView.findViewById(R.id.done_btn).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(OrderFlowActivity.this,Home.class));
+                    startActivity(new Intent(OrderFlowActivity.this, Home.class));
                     finishAffinity();
                 }
             });
@@ -639,14 +647,14 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
 
         String header = SharedHelper.getKey(OrderFlowActivity.this, "token_type") + " "
                 + SharedHelper.getKey(OrderFlowActivity.this, "access_token");
-        Call<OrderRequestItem> call = apiInterface.updateOrderWithImage(header,id,map,filePart);
+        Call<OrderRequestItem> call = apiInterface.updateOrderWithImage(header, id, map, filePart);
         call.enqueue(new Callback<OrderRequestItem>() {
             @Override
             public void onResponse(@NonNull Call<OrderRequestItem> call, @NonNull Response<OrderRequestItem> response) {
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
                     userRequestItem.setStatus(response.body().getStatus());
-                    nextStatus=GlobalData.getNextOrderStatus(userRequestItem.getStatus());
+                    nextStatus = GlobalData.getNextOrderStatus(userRequestItem.getStatus());
                     initFlowIcons();
                 }
 
@@ -664,6 +672,7 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
     File imgFile;
 
     private int PICK_IMAGE_REQUEST = 1;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -682,7 +691,7 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String imgDecodableString = cursor.getString(columnIndex);
             cursor.close();
-            if(imgPrepared!=null) {
+            if (imgPrepared != null) {
                 Glide.with(this)
                         .load(imgDecodableString)
                         .apply(new RequestOptions()
@@ -702,24 +711,26 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
             Toast.makeText(this, getResources().getString(R.string.dont_pick_image),
                     Toast.LENGTH_SHORT).show();
     }
+
     public void goToImageIntent() {
         Intent intent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
-    public void updateOrder(int id,HashMap<String, String> map) {
+
+    public void updateOrder(int id, HashMap<String, String> map) {
         customDialog.show();
 
         String header = SharedHelper.getKey(OrderFlowActivity.this, "token_type") + " "
                 + SharedHelper.getKey(OrderFlowActivity.this, "access_token");
-        Call<OrderRequestItem> call = apiInterface.updateOrder(header,id,map);
+        Call<OrderRequestItem> call = apiInterface.updateOrder(header, id, map);
         call.enqueue(new Callback<OrderRequestItem>() {
             @Override
             public void onResponse(@NonNull Call<OrderRequestItem> call, @NonNull Response<OrderRequestItem> response) {
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
                     userRequestItem.setStatus(response.body().getStatus());
-                    nextStatus=GlobalData.getNextOrderStatus(userRequestItem.getStatus());
+                    nextStatus = GlobalData.getNextOrderStatus(userRequestItem.getStatus());
                     initFlowIcons();
                 }
             }
@@ -764,6 +775,7 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
                 e.printStackTrace();
             }
         }
+
         private String downloadUrl(String strUrl) throws IOException {
             String data = "";
             InputStream iStream = null;
