@@ -33,6 +33,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.dietmanager.chef.BuildConfigure;
 import com.dietmanager.chef.R;
+import com.dietmanager.chef.activities.fcm_chat.ChatActivity;
 import com.dietmanager.chef.adapter.GroceryIngredientAdapter;
 import com.dietmanager.chef.adapter.IngredientsInvoiceAdapter;
 import com.dietmanager.chef.api.ApiClient;
@@ -319,11 +320,20 @@ if(imageViewPurchase!=null) {
         });
     }
 
-    @OnClick({R.id.back_img, R.id.call_img, R.id.start_btn})
+    @OnClick({R.id.back_img, R.id.call_img, R.id.start_btn, R.id.message_img})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_img:
                 onBackPressed();
+                break;
+
+            case R.id.message_img:
+                Intent intentMessage = new Intent(this, ChatActivity.class);
+                intentMessage.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intentMessage.putExtra("channel_name", "" + userRequestItem.getId());
+                intentMessage.putExtra("channel_sender_id", "" + userRequestItem.getChefId());
+                intentMessage.putExtra("is_push", false);
+                startActivity(intentMessage);
                 break;
             case R.id.start_btn:
                 if(userRequestItem.getOrderingredient().size()>0 && userRequestItem.getIngredientImage()==null)

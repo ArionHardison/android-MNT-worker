@@ -47,6 +47,10 @@ public interface ApiInterface {
     Call<Profile> getProfile(@Header("Authorization") String authorization, @QueryMap HashMap<String, String> params);
 
 
+    @FormUrlEncoded
+    @POST("api/chef/chat/push")
+    Call<Object> chatPost(@FieldMap HashMap<String, String> paramss);
+
     @GET("api/chef/wallet/transaction")
     Call<List<WalletHistory>> getWalletHistory(@Header("Authorization") String authorization);
 

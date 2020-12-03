@@ -137,15 +137,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/call_img"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/_16sdp"
+                            android:layout_marginTop="@dimen/_6sdp"
                             android:src="@drawable/ic_call_24px"
                             android:tint="@color/colorAccent" />
+
+                        <ImageView
+                            android:id="@+id/message_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tint="@color/colorAccent"
+                            android:layout_marginTop="@dimen/_6sdp"
+                            android:src="@drawable/ic_chat_outline"/>
                     </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>
