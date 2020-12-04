@@ -117,7 +117,7 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
         }
         if (userRequestItem != null) {
             tvOrderId.setText("#"+userRequestItem.getId());
-            tvUserName.setText(userRequestItem.getUser().getName());
+            tvUserName.setText(Utils.toFirstCharUpperAll(userRequestItem.getUser().getName()));
             if (userRequestItem.getFood().getAvatar() != null)
                 Glide.with(this).load(BuildConfigure.BASE_URL + userRequestItem.getFood().getAvatar())
                         .apply(new RequestOptions().centerCrop().placeholder(R.drawable.man).error(R.drawable.man).dontAnimate()).into(userImg);
@@ -132,7 +132,7 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
             item_total.setText(GlobalData.profile.getCurrency() + userRequestItem.getPayable());
             service_tax.setText(GlobalData.profile.getCurrency() + userRequestItem.getTax());
             total.setText(GlobalData.profile.getCurrency() + userRequestItem.getTotal());
-            tv_payment_mode.setText(userRequestItem.getPaymentMode());
+            tv_payment_mode.setText(Utils.toFirstCharUpperAll(userRequestItem.getPaymentMode().toLowerCase()));
 
             if(userRequestItem.getStatus().equalsIgnoreCase("Completed"))
                 start_btn.setText("Completed");

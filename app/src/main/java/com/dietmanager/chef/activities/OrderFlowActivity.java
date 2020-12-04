@@ -179,10 +179,10 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
                     sb.append(userRequestItem.getOrderingredient().get(i).getFoodingredient().getIngredient().getName());
                 }
                 tvIngredients.setText(sb.toString());
-                tvDate.setText(userRequestItem.getCreatedAt());
             } else {
                 llIngredient.setVisibility(View.GONE);
             }
+            tvDate.setText(userRequestItem.getCreatedAt());
             initFlowIcons();
         }
         context = OrderFlowActivity.this;
