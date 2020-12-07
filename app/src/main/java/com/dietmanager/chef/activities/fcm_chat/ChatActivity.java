@@ -133,6 +133,7 @@ public class ChatActivity extends AppCompatActivity {
         chat.setRead(0);
         chat.setReadedMembers(readedMembers);
         chat.setType("text");
+        chat.setName(GlobalData.profile.getName());
         chat.setText(messageStr);
         myRef.push().setValue(chat);
         sendMessageToServer(messageStr);
