@@ -88,6 +88,8 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
     ImageView userImg;
     @BindView(R.id.start_btn)
     Button start_btn;
+    @BindView(R.id.llContactUser)
+    LinearLayout llContactUser;
     @BindView(R.id.tv_order_id)
     TextView tvOrderId;
     @BindView(R.id.ingredients_rv)
@@ -127,6 +129,9 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
                             userRequestItem.getCustomerAddress().getMapAddress());
                 }
             }
+
+            if(userRequestItem.getStatus().equalsIgnoreCase("COMPLETED"))
+                llContactUser.setVisibility(View.GONE);
             food_item_name.setText(userRequestItem.getFood().getName());
             food_item_price.setText(GlobalData.profile.getCurrency() + userRequestItem.getFood().getPrice());
             item_total.setText(GlobalData.profile.getCurrency() + userRequestItem.getPayable());
@@ -135,7 +140,7 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
             tv_payment_mode.setText(Utils.toFirstCharUpperAll(userRequestItem.getPaymentMode().toLowerCase()));
 
             if(userRequestItem.getStatus().equalsIgnoreCase("Completed"))
-                start_btn.setText("Completed");
+                llAssignChef.setVisibility(View.GONE);
 
         }
         context = OrderRequestDetailActivity.this;

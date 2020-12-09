@@ -899,7 +899,6 @@ public class ServiceFlow extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         handler.removeCallbacks(runnable);
-
     }
 
     public void onDestroy() {

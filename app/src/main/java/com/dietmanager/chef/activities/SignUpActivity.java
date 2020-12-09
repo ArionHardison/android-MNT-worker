@@ -384,7 +384,7 @@ public class SignUpActivity extends AppCompatActivity {
         } else {
 
                     HashMap<String, String> map1 = new HashMap<>();
-                    map1.put("dial_code",country_code );
+                    map1.put("dial_code",country_code);
             map1.put("mobile", etMobileNumber.getText().toString());
                     //map1.put("login_by", GlobalData.loginBy);
                     //map1.put("accessToken", GlobalData.access_token);
@@ -400,7 +400,7 @@ public class SignUpActivity extends AppCompatActivity {
         map.put("mobile", etMobileNumber.getText().toString());
         map.put("password", password);
         map.put("password_confirmation", strConfirmPassword);
-        map.put("dial_code",country_code);
+        map.put("country_code",country_code);
         map.put("device_id", device_UDID);
         map.put("device_token", device_token);
         map.put("device_type", AppConstants.DEVICE_TYPE);
