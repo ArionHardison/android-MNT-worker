@@ -10,6 +10,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import androidx.annotation.NonNull;
+
+import com.dietmanager.chef.BuildConfigure;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -116,7 +118,7 @@ public class ProfileActivity extends AppCompatActivity {
             mobileNo.setText(GlobalData.profile.getPhone());
             userId.setText(String.valueOf(GlobalData.profile.getId()));
             Glide.with(this)
-                    .load(GlobalData.profile.getAvatar())
+                    .load(BuildConfigure.BASE_URL+GlobalData.profile.getAvatar())
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.man)

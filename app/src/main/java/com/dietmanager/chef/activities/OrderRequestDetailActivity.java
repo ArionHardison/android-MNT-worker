@@ -130,18 +130,16 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
                 }
             }
 
-            if(userRequestItem.getStatus().equalsIgnoreCase("COMPLETED"))
+            if(userRequestItem.getStatus().equalsIgnoreCase("COMPLETED") ||userRequestItem.getStatus().equalsIgnoreCase("CANCELLED")){
+                llAssignChef.setVisibility(View.GONE);
                 llContactUser.setVisibility(View.GONE);
+            }
             food_item_name.setText(userRequestItem.getFood().getName());
             food_item_price.setText(GlobalData.profile.getCurrency() + userRequestItem.getFood().getPrice());
             item_total.setText(GlobalData.profile.getCurrency() + userRequestItem.getPayable());
             service_tax.setText(GlobalData.profile.getCurrency() + userRequestItem.getTax());
             total.setText(GlobalData.profile.getCurrency() + userRequestItem.getTotal());
             tv_payment_mode.setText(Utils.toFirstCharUpperAll(userRequestItem.getPaymentMode().toLowerCase()));
-
-            if(userRequestItem.getStatus().equalsIgnoreCase("Completed"))
-                llAssignChef.setVisibility(View.GONE);
-
         }
         context = OrderRequestDetailActivity.this;
         activity = OrderRequestDetailActivity.this;

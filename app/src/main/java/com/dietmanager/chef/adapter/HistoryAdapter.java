@@ -58,7 +58,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         if (order.getUser() != null) {
             String name = Utils.toFirstCharUpperAll(order.getUser().getName());
             holder.userName.setText(name);
-            Glide.with(context).load(order.getUser().getAvatar())
+            Glide.with(context).load(BuildConfigure.BASE_URL+order.getUser().getAvatar())
                     .apply(new RequestOptions().placeholder(R.drawable.man).error(R.drawable.man).dontAnimate()).into(holder.userImg);
         }
         String payment_mode="Card";

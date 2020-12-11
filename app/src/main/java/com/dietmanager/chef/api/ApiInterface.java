@@ -72,9 +72,9 @@ public interface ApiInterface {
     @POST("api/chef/register/otp")
     Call<Otp> postOtp(@FieldMap HashMap<String, String> params);
 
-    @FormUrlEncoded
+    @Multipart
     @POST("api/chef/register")
-    Call<RegisterResponse> postRegister(@FieldMap HashMap<String, String> params);
+    Call<RegisterResponse> postRegister(@PartMap() Map<String, RequestBody> partMap, @Part MultipartBody.Part filename);
 
 
     @FormUrlEncoded

@@ -1,5 +1,6 @@
 package com.dietmanager.chef.activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -7,7 +8,11 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Base64;
@@ -27,6 +32,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.dietmanager.chef.CountryPicker.Country;
 import com.dietmanager.chef.CountryPicker.CountryPicker;
 import com.dietmanager.chef.CountryPicker.CountryPickerListener;
@@ -48,6 +56,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
@@ -59,6 +69,10 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -74,8 +88,8 @@ public class SignUpActivity extends AppCompatActivity {
     @BindView(R.id.sign_up)
     Button signUpBtn;
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
-    @BindView(R.id.app_logo)
-    ImageView appLogo;
+/*    @BindView(R.id.app_logo)
+    ImageView appLogo;*/
 
     String name, email, password, strConfirmPassword;
     String GRANT_TYPE = "password";
@@ -114,8 +128,14 @@ public class SignUpActivity extends AppCompatActivity {
     private static final int REQUEST_LOCATION = 1450;
     GoogleApiClient mGoogleApiClient;
     private String hashcode = "";
+    @BindView(R.id.user_avatar)
+    CircleImageView userAvatar;
 
-
+    private static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE = 0;
+    private int PICK_IMAGE_REQUEST = 145;
+    @BindView(R.id.upload_profile)
+    ImageView uploadProfile;
+    File imgFile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -189,7 +209,11 @@ public class SignUpActivity extends AppCompatActivity {
         getDeviceToken();
 
     }
-
+    public void goToImageIntent() {
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
     private void setListener() {
         mCountryPicker.setListener(new CountryPickerListener() {
             @Override
@@ -253,7 +277,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.sign_up, R.id.back_img, R.id.password_eye_img, R.id.confirm_password_eye_img})
+    @OnClick({R.id.sign_up, R.id.back_img, R.id.password_eye_img, R.id.confirm_password_eye_img,R.id.upload_profile})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.sign_up:
@@ -261,6 +285,18 @@ public class SignUpActivity extends AppCompatActivity {
                 break;
             case R.id.back_img:
                 onBackPressed();
+                break;
+                case R.id.upload_profile:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                        goToImageIntent();
+                    } else {
+                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
+                    }
+                } else {
+                    goToImageIntent();
+                }
                 break;
             case R.id.password_eye_img:
                 if (passwordEyeImg.getTag().equals(1)) {
@@ -288,9 +324,9 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    public void signup(HashMap<String, String> map) {
+    public void signup(HashMap<String, RequestBody> map, MultipartBody.Part filename) {
         customDialog.show();
-        Call<RegisterResponse> call = apiInterface.postRegister(map);
+        Call<RegisterResponse> call = apiInterface.postRegister(map,filename);
         call.enqueue(new Callback<RegisterResponse>() {
             @Override
             public void onResponse(@NonNull Call<RegisterResponse> call, @NonNull Response<RegisterResponse> response) {
@@ -381,7 +417,9 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(this, getResources().getString(R.string.please_enter_your_confirm_password), Toast.LENGTH_SHORT).show();
         } else if (!strConfirmPassword.equalsIgnoreCase(password) ) {
             Toast.makeText(this, getResources().getString(R.string.password_and_confirm_password_doesnot_match), Toast.LENGTH_SHORT).show();
-        } else {
+        } else if (imgFile == null) {
+            Toast.makeText(this, getResources().getString(R.string.please_upload_profile_picture), Toast.LENGTH_SHORT).show();
+        }  else {
 
                     HashMap<String, String> map1 = new HashMap<>();
                     map1.put("dial_code",country_code);
@@ -394,17 +432,22 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     private void signUp(){
-        HashMap<String, String> map = new HashMap<>();
-        map.put("name", name);
-        map.put("email", email);
-        map.put("mobile", etMobileNumber.getText().toString());
-        map.put("password", password);
-        map.put("password_confirmation", strConfirmPassword);
-        map.put("country_code",country_code);
-        map.put("device_id", device_UDID);
-        map.put("device_token", device_token);
-        map.put("device_type", AppConstants.DEVICE_TYPE);
-        signup(map);
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("name", RequestBody.create(MediaType.parse("text/plain"), name));
+        map.put("email", RequestBody.create(MediaType.parse("text/plain"), email));
+        map.put("mobile", RequestBody.create(MediaType.parse("text/plain"), etMobileNumber.getText().toString()));
+        map.put("password", RequestBody.create(MediaType.parse("text/plain"), password));
+        map.put("password_confirmation", RequestBody.create(MediaType.parse("text/plain"), strConfirmPassword));
+        map.put("country_code",RequestBody.create(MediaType.parse("text/plain"), country_code));
+        map.put("device_id", RequestBody.create(MediaType.parse("text/plain"), device_UDID));
+        map.put("device_token", RequestBody.create(MediaType.parse("text/plain"), device_token));
+        map.put("device_type", RequestBody.create(MediaType.parse("text/plain"), AppConstants.DEVICE_TYPE));
+        MultipartBody.Part filePart = null;
+
+        if (imgFile != null)
+            filePart = MultipartBody.Part.createFormData("avatar", imgFile.getName(),
+                    RequestBody.create(MediaType.parse("image/*"), imgFile));
+        signup(map, filePart);
     }
 
     public void getOtpVerification(HashMap<String, String> map) {
@@ -503,6 +546,38 @@ public class SignUpActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == 111) {
             signUp();
+        }
+        else if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+            // Get the cursor
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            // Move to first row
+            assert cursor != null;
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String imgDecodableString = cursor.getString(columnIndex);
+            cursor.close();
+
+            Glide.with(this)
+                    .load(imgDecodableString)
+                    .apply(new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.man)
+                            .error(R.drawable.man))
+                    .into(userAvatar);
+//            imgFile = new File(imgDecodableString);
+
+            try {
+                imgFile =
+                        new id.zelory.compressor.Compressor(SignUpActivity.this).compressToFile(new File(imgDecodableString));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 

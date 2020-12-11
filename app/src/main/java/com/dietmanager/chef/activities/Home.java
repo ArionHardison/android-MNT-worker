@@ -48,6 +48,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.dietmanager.chef.BuildConfigure;
 import com.dietmanager.chef.adapter.ViewPagerAdapter;
 import com.dietmanager.chef.api.ApiClient;
 import com.dietmanager.chef.api.ApiInterface;
@@ -805,7 +806,7 @@ public class Home extends AppCompatActivity
             name.setText(GlobalData.profile.getName());
             // userId.setText(String.valueOf(GlobalData.profile.getId()));
             Glide.with(this)
-                    .load(GlobalData.profile.getAvatar())
+                    .load(BuildConfigure.BASE_URL+GlobalData.profile.getAvatar())
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.man)

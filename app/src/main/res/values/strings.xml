@@ -171,6 +171,8 @@
     <string name="please_enter_valid_mail_id">Please enter valid mail id</string>
     <string name="password_and_confirm_password_doesnot_match">Password and Confirm Password doesn\'t match!</string>
     <string name="register">Register</string>
+    <string name="please_upload_profile_picture">Please upload profile picture</string>
+
     <string name="ongoing_order">Ongoing Orders</string>
     <string name="past_order">Past Orders</string>
     <string name="cancelled_order">Cancelled Orders</string>
