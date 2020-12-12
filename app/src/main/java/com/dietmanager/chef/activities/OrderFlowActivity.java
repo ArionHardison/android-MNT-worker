@@ -484,7 +484,7 @@ public class OrderFlowActivity extends FragmentActivity implements OnMapReadyCal
                                 destinationMarker.remove();
                             MarkerOptions destMarker = new MarkerOptions()
                                     .position(destLatLong).title("Destination").draggable(true)
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker));
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_map));
                             destinationMarker = mMap.addMarker(destMarker);
                             LatLngBounds.Builder builder = new LatLngBounds.Builder();
                             builder.include(sourceMarker.getPosition());
