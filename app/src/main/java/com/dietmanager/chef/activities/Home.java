@@ -959,11 +959,30 @@ public class Home extends AppCompatActivity
             purchasedDialog.setCancelable(false);
             LayoutInflater inflater = purchasedDialog.getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.waiting_for_admin_approval_popup, frameView);
+            dialogView.findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //finish();
+                    showLogoutAlertDialog();
+                }
+            });
             purchasedDialog.show();
             isWaitingForAdminShowing = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    private void showLogoutAlertDialog() {
+        androidx.appcompat.app.AlertDialog.Builder builder =
+                new androidx.appcompat.app.AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle);
+        builder.setTitle(getString(R.string.app_name));
+        builder.setMessage(getResources().getString(R.string.alert_log_out));
+        builder.setPositiveButton(getResources().getString(R.string.okay), (dialog, which) -> {
+            dialog.dismiss();
+            logout();
+        });
+        builder.setNegativeButton(getResources().getString(R.string.cancel), (dialog, which) -> dialog.dismiss());
+        builder.show();
     }
 
     private void logout() {

@@ -172,6 +172,7 @@
     <string name="password_and_confirm_password_doesnot_match">Password and Confirm Password doesn\'t match!</string>
     <string name="register">Register</string>
     <string name="please_upload_profile_picture">Please upload profile picture</string>
+    <string name="alert_log_out">Would you like to logout ?</string>
 
     <string name="ongoing_order">Ongoing Orders</string>
     <string name="past_order">Past Orders</string>

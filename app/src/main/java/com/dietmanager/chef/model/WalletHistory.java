@@ -8,7 +8,7 @@ public class WalletHistory {
 	private Object transactionId;
 
 	@SerializedName("amount")
-	private String amount;
+	private Double amount;
 
 	@SerializedName("order_request_id")
 	private int orderRequestId;
@@ -50,7 +50,7 @@ public class WalletHistory {
 		return transactionId;
 	}
 
-	public String getAmount(){
+	public Double getAmount(){
 		return amount;
 	}
 

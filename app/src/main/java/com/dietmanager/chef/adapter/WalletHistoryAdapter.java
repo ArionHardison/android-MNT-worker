@@ -39,7 +39,7 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         WalletHistory walletHistory = list.get(position);
-        holder.amountTxt.setText(GlobalData.profile.getCurrency()+" "+walletHistory.getAmount());
+        holder.amountTxt.setText(GlobalData.profile.getCurrency()+" "+String.format("%.2f",walletHistory.getAmount()));
         holder.timeTxt.setText(getFormatTime(walletHistory.getCreatedAt()));
         holder.statusTxt.setText(walletHistory.getStatus());
     }
