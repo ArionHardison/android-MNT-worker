@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="@dimen/_110sdp"
+            android:layout_height="@dimen/_110sdp"
+            android:layout_marginTop="@dimen/_45sdp"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_wallet_history" />
+
+        <LinearLayout
+            android:id="@+id/view2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/colorWhite"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:padding="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2">
+
+            <EditText
+                android:id="@+id/edt_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_52sdp"
+                android:background="@drawable/bg_edt_curved"
+                android:hint="@string/enter_the_amount"
+                android:inputType="numberSigned"
+                android:maxLines="1"
+                android:padding="@dimen/_5sdp"
+                android:textAllCaps="true"
+                android:textSize="@dimen/_13sdp" />
+
+            <Button
+                android:id="@+id/btn_fifty"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_weight="0.5"
+                android:text="$50"
+                android:textSize="@dimen/_13sdp" />
+
+            <Button
+                android:id="@+id/btn_hundred"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_weight="0.5"
+                android:text="$100"
+                android:textSize="@dimen/_13sdp" />
+
+            <Button
+                android:id="@+id/btn_thousand"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_weight="0.5"
+                android:text="$1000"
+                android:textSize="@dimen/_13sdp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_add_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/button_curved"
+            android:text="Request"
+            android:textAllCaps="true"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="@+id/view2"
+            app:layout_constraintStart_toStartOf="@+id/view2"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

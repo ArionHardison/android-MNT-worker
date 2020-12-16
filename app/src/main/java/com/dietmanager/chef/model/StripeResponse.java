@@ -1,15 +1,14 @@
 package com.dietmanager.chef.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class MessageResponse implements Serializable {
+public class StripeResponse {
 
     @SerializedName("message")
-    @Expose
     private String message;
+
+    @SerializedName("status")
+    private boolean status;
 
     public String getMessage() {
         return message;
@@ -18,4 +17,13 @@ public class MessageResponse implements Serializable {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
 }

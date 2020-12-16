@@ -8,10 +8,13 @@ import android.os.Handler;
 import android.provider.Settings;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.dietmanager.chef.helper.AppConstants;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.dietmanager.chef.R;
 import com.dietmanager.chef.api.APIError;
@@ -106,6 +109,8 @@ public class Splash extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
                     GlobalData.profile = response.body();
+                    String stripeUrl = response.body() != null && !TextUtils.isEmpty(response.body().getStripeConnectUrl()) ? response.body().getStripeConnectUrl() : "";
+                    SharedHelper.putKey(Splash.this, AppConstants.STRIPE_URL, stripeUrl);
                     SharedHelper.putKey(Splash.this, "logged_in", "1");
                     SharedHelper.putKey(Splash.this, "currency_code",
                             GlobalData.profile.getCurrency());

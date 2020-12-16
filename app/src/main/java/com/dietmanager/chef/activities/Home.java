@@ -865,6 +865,11 @@ public class Home extends AppCompatActivity
             startActivity(new Intent(Home.this, OrderRequestActivity.class));
         } else if (id == R.id.nav_home) {
             onBackPressed();
+        } else if (id == R.id.nav_bank_details) {
+            startActivity(new Intent(Home.this, BankDetailsActivity.class));
+        }
+         else if (id == R.id.nav_payment) {
+            startActivity(new Intent(Home.this, PaymentActivity.class));
         } else if (id == R.id.nav_wallet) {
             startActivity(new Intent(Home.this, WalletActivity.class));
         } else if (id == R.id.nav_order_request) {

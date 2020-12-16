@@ -11,6 +11,10 @@ public class Profile {
     @SerializedName("id")
     @Expose
     private Integer id;
+    @SerializedName("stripe_connect_url")
+    @Expose
+    private String stripeConnectUrl;
+
     @SerializedName("wallet_balance")
     @Expose
     private String walletBalance;
@@ -215,6 +219,13 @@ public class Profile {
         return this;
     }
 
+    public String getStripeConnectUrl() {
+        return stripeConnectUrl;
+    }
+
+    public void setStripeConnectUrl(String stripeConnectUrl) {
+        this.stripeConnectUrl = stripeConnectUrl;
+    }
     public String getDeviceId() {
         return deviceId;
     }

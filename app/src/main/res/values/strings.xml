@@ -173,6 +173,9 @@
     <string name="register">Register</string>
     <string name="please_upload_profile_picture">Please upload profile picture</string>
     <string name="alert_log_out">Would you like to logout ?</string>
+    <string name="bank_details">Bank Details</string>
+    <string name="menu_payment">Payment</string>
+    <string name="enter_the_amount">Enter amount</string>
 
     <string name="ongoing_order">Ongoing Orders</string>
     <string name="past_order">Past Orders</string>

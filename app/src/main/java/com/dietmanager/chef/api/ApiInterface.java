@@ -6,17 +6,21 @@ package com.dietmanager.chef.api;
 
 import com.dietmanager.chef.model.ForgotPasswordResponse;
 import com.dietmanager.chef.model.Message;
+import com.dietmanager.chef.model.MessageResponse;
 import com.dietmanager.chef.model.Notice;
 import com.dietmanager.chef.model.Order;
 import com.dietmanager.chef.model.Profile;
 import com.dietmanager.chef.model.RegisterResponse;
 import com.dietmanager.chef.model.Shift;
+import com.dietmanager.chef.model.StripeResponse;
 import com.dietmanager.chef.model.Token;
 import com.dietmanager.chef.model.Otp;
 import com.dietmanager.chef.model.Vehicle;
 import com.dietmanager.chef.model.WalletHistory;
 import com.dietmanager.chef.model.orderrequest.OrderRequestItem;
 import com.dietmanager.chef.model.orderrequest.OrderRequestResponse;
+import com.dietmanager.chef.model.wallet.transaction.TransactionResponse;
+import com.dietmanager.chef.model.wallet.wallet.RequestAmountResponse;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +50,14 @@ public interface ApiInterface {
     @GET("api/chef/profile")
     Call<Profile> getProfile(@Header("Authorization") String authorization, @QueryMap HashMap<String, String> params);
 
+    @FormUrlEncoded
+    @POST("api/chef/wallet/request")
+    Call<MessageResponse> requestAmount(@Header("Authorization") String authorization, @Field("amount") String amount);
+
+
+    @FormUrlEncoded
+    @POST("api/chef/stripe/callback")
+    Call<StripeResponse> updateBankDetails(@Header("Authorization") String authorization, @Field("type") String type, @Field("code") String stripeToken);
 
     @FormUrlEncoded
     @POST("api/chef/chat/push")
@@ -54,6 +66,9 @@ public interface ApiInterface {
     @GET("api/chef/wallet/transaction")
     Call<List<WalletHistory>> getWalletHistory(@Header("Authorization") String authorization);
 
+
+    @GET("api/chef/wallet/request")
+    Call<TransactionResponse> fetchTransactions(@Header("Authorization") String authorization);
 
     @FormUrlEncoded
     @POST("api/chef/order/{id}")

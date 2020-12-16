@@ -17,6 +17,15 @@
         <item
             android:id="@+id/nav_earning"
             android:title="@string/earning" />
+
+        <item
+            android:id="@+id/nav_bank_details"
+            android:title="@string/bank_details" />
+
+        <item
+            android:id="@+id/nav_payment"
+            android:title="@string/menu_payment" />
+
         <item
             android:id="@+id/nav_wallet"
             android:visible="false"
