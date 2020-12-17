@@ -199,4 +199,8 @@
     <string name="pending_contact_admin">Please contact the admin.</string>
     <string name="address">Address</string>
     <string name="chat">Chat</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="comment">Comment</string>
+    <string name="wallet_money">Wallet Amount</string>
 </resources>

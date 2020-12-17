@@ -52,7 +52,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("api/chef/wallet/request")
-    Call<MessageResponse> requestAmount(@Header("Authorization") String authorization, @Field("amount") String amount);
+    Call<MessageResponse> requestAmount(@Header("Authorization") String authorization, @Field("amount") String amount, @Field("comment") String comment);
 
 
     @FormUrlEncoded

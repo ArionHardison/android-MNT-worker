@@ -141,7 +141,7 @@ public class WalletActivity extends AppCompatActivity {
                     GlobalData.profile = response.body();
 
                     if (GlobalData.profile.getWalletBalance() != null) {
-                        walletMoney = GlobalData.profile.getWalletBalance();
+                        walletMoney = GlobalData.profile.getWalletBalance().toString()  ;
                     }
                     walletAmountTxt.setText(GlobalData.profile.getCurrency() + " " + String.valueOf(walletMoney));
 

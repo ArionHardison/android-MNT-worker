@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/colorWhite">
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="Please add Bank Details. Are you sure want to continue ?"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_20sdp"
+        android:textStyle="bold"
+        android:paddingTop="@dimen/_20sdp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_13sdp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#e4e4e7" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEE" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:background="@color/colorWhite">
+
+        <TextView
+            android:id="@+id/tvNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/centerLayout"
+            android:gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:layout_margin="@dimen/_2sdp"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold"
+            android:text="@string/no"
+            android:background="@color/colorAccent"
+            android:textColor="@color/colorWhite" />
+
+        <View
+            android:id="@+id/centerLayout"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@+id/tvNo"
+            android:layout_alignBottom="@+id/tvYes"
+            android:layout_centerInParent="true"
+            android:background="#EEE" />
+
+        <TextView
+            android:id="@+id/tvYes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/centerLayout"
+            android:gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:textStyle="bold"
+            android:layout_margin="@dimen/_2sdp"
+            android:textSize="@dimen/_12sdp"
+            android:text="@string/yes"
+            android:background="@color/colorAccent"
+            android:textColor="@color/colorWhite" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

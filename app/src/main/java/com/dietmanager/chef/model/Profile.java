@@ -15,9 +15,21 @@ public class Profile {
     @Expose
     private String stripeConnectUrl;
 
+    @SerializedName("stripe_cust_id")
+    @Expose
+    private String stripe_cust_id;
+
+    public String getStripe_cust_id() {
+        return stripe_cust_id;
+    }
+
+    public void setStripe_cust_id(String stripe_cust_id) {
+        this.stripe_cust_id = stripe_cust_id;
+    }
+
     @SerializedName("wallet_balance")
     @Expose
-    private String walletBalance;
+    private Double walletBalance;
     @SerializedName("terms")
     @Expose
     private String terms;
@@ -120,11 +132,11 @@ public class Profile {
         return this;
     }
 
-    public String getWalletBalance() {
+    public Double getWalletBalance() {
         return walletBalance;
     }
 
-    public void setWalletBalance(String walletBalance) {
+    public void setWalletBalance(Double walletBalance) {
         this.walletBalance = walletBalance;
     }
 

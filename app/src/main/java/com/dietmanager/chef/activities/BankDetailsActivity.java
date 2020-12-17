@@ -105,7 +105,7 @@ public class BankDetailsActivity extends AppCompatActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 Log.e("Params Url:", "" + request.getUrl());
-                if (request.getUrl().toString().contains(BuildConfigure.BASE_URL+"chef/stripe/callback")) {
+                if (request.getUrl().toString().contains(BuildConfigure.BASE_URL+"chef/stripe/callback?code=")) {
                     tokenUrl = request.getUrl().toString();
                 }
                 if (!TextUtils.isEmpty(tokenUrl) & !isUpdating) {
@@ -126,7 +126,7 @@ public class BankDetailsActivity extends AppCompatActivity {
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
-                Toast.makeText(BankDetailsActivity.this, "Something wrong with the document url...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BankDetailsActivity.this, "Something wrong with the document url", Toast.LENGTH_SHORT).show();
             }
         });
         webView.loadUrl(url);
@@ -147,17 +147,17 @@ public class BankDetailsActivity extends AppCompatActivity {
                 }
                 if (response.isSuccessful()) {
                     String message = response.body() != null && !TextUtils.isEmpty(response.body().getMessage()) ?
-                            response.body().getMessage() : "Bank Details updated successfully...";
+                            response.body().getMessage() : "Bank Details updated successfully";
                     Toast.makeText(BankDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(BankDetailsActivity.this, "Something went wrong...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BankDetailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<StripeResponse> call, Throwable t) {
-                Toast.makeText(BankDetailsActivity.this, "Something went wrong...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BankDetailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
     }
