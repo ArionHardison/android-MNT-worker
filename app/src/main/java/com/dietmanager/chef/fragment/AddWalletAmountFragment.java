@@ -128,6 +128,7 @@ public class AddWalletAmountFragment extends BaseFragment {
     }
 
     private void getProfile() {
+        customDialog.show();
         HashMap<String, String> map = new HashMap<>();
         map.put("device_type", "android");
         map.put("device_id", device_UDID);
@@ -142,6 +143,7 @@ public class AddWalletAmountFragment extends BaseFragment {
             @Override
             public void onResponse(@NonNull Call<Profile> call,
                                    @NonNull Response<Profile> response) {
+                customDialog.cancel();
                 if (response.isSuccessful()) {
                     GlobalData.profile = response.body();
 
@@ -154,6 +156,7 @@ public class AddWalletAmountFragment extends BaseFragment {
 
             @Override
             public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
+                customDialog.cancel();
                 Toast.makeText(context, R.string.something_went_wrong,
                         Toast.LENGTH_LONG).show();
             }

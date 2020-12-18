@@ -8,10 +8,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dietmanager.chef.helper.AppConstants;
 import com.dietmanager.chef.utils.Utils;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.dietmanager.chef.R;
@@ -152,6 +155,8 @@ public class OTP extends AppCompatActivity {
                 customDialog.cancel();
                 if (response.isSuccessful()) {
                     GlobalData.profile = response.body();
+                    String stripeUrl = response.body() != null && !TextUtils.isEmpty(response.body().getStripeConnectUrl()) ? response.body().getStripeConnectUrl() : "";
+                    SharedHelper.putKey(OTP.this, AppConstants.STRIPE_URL, stripeUrl);
                     SharedHelper.putKey(OTP.this, "logged_in", "1");
                     launchActivity();
                 } else {

@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.text.util.Linkify;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dietmanager.chef.helper.AppConstants;
 import com.dietmanager.chef.utils.Utils;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.dietmanager.chef.Application;
@@ -343,6 +345,11 @@ public class Login extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     GlobalData.profile = response.body();
                     SharedHelper.putKey(Login.this, "logged_in", "1");
+                    String stripeUrl = response.body() != null && !TextUtils.isEmpty(response.body().getStripeConnectUrl()) ? response.body().getStripeConnectUrl() : "";
+                    SharedHelper.putKey(Login.this, AppConstants.STRIPE_URL, stripeUrl);
+
+                    SharedHelper.putKey(Login.this, AppConstants.STRIPE_URL, stripeUrl);
+
                     startActivity(new Intent(Login.this, Home.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();
                 } else {

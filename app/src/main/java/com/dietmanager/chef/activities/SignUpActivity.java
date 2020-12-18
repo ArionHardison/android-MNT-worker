@@ -502,6 +502,8 @@ public class SignUpActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     SharedHelper.putKey(context, "logged", "true");
                     GlobalData.profile = response.body();
+                    String stripeUrl = response.body() != null && !android.text.TextUtils.isEmpty(response.body().getStripeConnectUrl()) ? response.body().getStripeConnectUrl() : "";
+                    SharedHelper.putKey(SignUpActivity.this, AppConstants.STRIPE_URL, stripeUrl);
                     startActivity(new Intent(context, Home.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();
                 } else {
