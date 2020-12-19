@@ -178,9 +178,11 @@
     <string name="enter_the_amount">Enter amount</string>
 
     <string name="ongoing_order">Ongoing Orders</string>
+    <string name="upcoming_order">Upcoming Orders</string>
     <string name="past_order">Past Orders</string>
     <string name="cancelled_order">Cancelled Orders</string>
     <string name="no_ongoing_orders_found">No ongoing orders found</string>
+    <string name="no_upcoming_orders_found">No upcoming orders found</string>
     <string name="price">Price</string>
     <string name="no_past_orders_found">No past orders found</string>
     <string name="no_cancelled_orders_found">No cancelled orders found</string>

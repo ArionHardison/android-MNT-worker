@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 public class OrderRequestItem implements Serializable {
 
 	@SerializedName("schedule_at")
-	private Object scheduleAt;
+	private String scheduleAt;
 
 	@SerializedName("rating")
 	private List<Object> rating;
@@ -98,11 +98,11 @@ public class OrderRequestItem implements Serializable {
 	@SerializedName("status")
 	private String status;
 
-	public void setScheduleAt(Object scheduleAt){
+	public void setScheduleAt(String scheduleAt){
 		this.scheduleAt = scheduleAt;
 	}
 
-	public Object getScheduleAt(){
+	public String getScheduleAt(){
 		return scheduleAt;
 	}
 

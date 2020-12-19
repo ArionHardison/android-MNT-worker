@@ -77,7 +77,7 @@
                 android:layout_height="@dimen/_52sdp"
                 android:background="@drawable/bg_edt_curved"
                 android:hint="@string/enter_the_amount"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
                 android:maxLines="1"
                 android:padding="@dimen/_5sdp"
                 android:textAllCaps="true"

@@ -32,10 +32,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UpcomingVisitFragment extends BaseFragment {
+public class OngoingFragment extends BaseFragment {
 
-    @BindView(R.id.upcoming_rv)
-    RecyclerView upcomingRv;
+    @BindView(R.id.ongoing_rv)
+    RecyclerView ongoingRv;
 
     @BindView(R.id.llNoRecords)
     LinearLayout llNoRecords;
@@ -48,7 +48,7 @@ public class UpcomingVisitFragment extends BaseFragment {
     private List<OrderRequestItem> orderList = new ArrayList<>();
     private ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
 
-    public UpcomingVisitFragment() {
+    public OngoingFragment() {
         // Required empty public constructor
     }
 
@@ -71,7 +71,7 @@ public class UpcomingVisitFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_upcoming_visit, container, false);
+        View view = inflater.inflate(R.layout.fragment_ongoing, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -90,16 +90,16 @@ public class UpcomingVisitFragment extends BaseFragment {
 
     private void setupAdapter() {
         historyAdapter = new HistoryAdapter(orderList, context);
-        upcomingRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        upcomingRv.setHasFixedSize(true);
-        upcomingRv.setAdapter(historyAdapter);
+        ongoingRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        ongoingRv.setHasFixedSize(true);
+        ongoingRv.setAdapter(historyAdapter);
     }
 
     private void getHistory() {
         Home.showDialog();
         String header = SharedHelper.getKey(context, "token_type") + " " + SharedHelper.getKey(context, "access_token");
 
-        Call<List<OrderRequestItem>> call = apiInterface.getHistory(header,"SCHEDULED");
+        Call<List<OrderRequestItem>> call = apiInterface.getHistory(header,"");
         call.enqueue(new Callback<List<OrderRequestItem>>() {
             @Override
             public void onResponse(Call<List<OrderRequestItem>> call, Response<List<OrderRequestItem>> response) {
@@ -110,14 +110,14 @@ public class UpcomingVisitFragment extends BaseFragment {
                     if (historyModel != null) {
                         if (historyModel != null && historyModel.size() > 0) {
                             llNoRecords.setVisibility(View.GONE);
-                            upcomingRv.setVisibility(View.VISIBLE);
+                            ongoingRv.setVisibility(View.VISIBLE);
                             orderList = historyModel;
                             sortOrdersToDescending(orderList);
                             historyAdapter.setList(orderList);
                             historyAdapter.notifyDataSetChanged();
                         } else {
                             llNoRecords.setVisibility(View.VISIBLE);
-                            upcomingRv.setVisibility(View.GONE);
+                            ongoingRv.setVisibility(View.GONE);
                         }
                     }
                 }

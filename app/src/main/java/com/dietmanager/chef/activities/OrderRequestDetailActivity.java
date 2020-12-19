@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -48,7 +49,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -127,6 +131,21 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
                 if (userRequestItem.getCustomerAddress().getMapAddress() != null) {
                     tvUserAddress.setText((userRequestItem.getCustomerAddress().getBuilding() != null ? userRequestItem.getCustomerAddress().getBuilding() + ", " : "") +
                             userRequestItem.getCustomerAddress().getMapAddress());
+                }
+            }
+
+
+            if(userRequestItem.getIsScheduled()==1&&userRequestItem.getScheduleAt()!=null) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                Date dateObj = null;
+                try {
+                    dateObj = sdf.parse(userRequestItem.getScheduleAt());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(!DateUtils.isToday(dateObj.getTime())){
+                    llAssignChef.setVisibility(View.GONE);
+                    llContactUser.setVisibility(View.GONE);
                 }
             }
 

@@ -18,6 +18,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -53,6 +54,7 @@ import com.dietmanager.chef.adapter.ViewPagerAdapter;
 import com.dietmanager.chef.api.ApiClient;
 import com.dietmanager.chef.api.ApiInterface;
 import com.dietmanager.chef.fragment.CancelOrderFragment;
+import com.dietmanager.chef.fragment.OngoingFragment;
 import com.dietmanager.chef.fragment.PastVisitFragment;
 import com.dietmanager.chef.fragment.UpcomingVisitFragment;
 import com.dietmanager.chef.model.orderrequest.OrderRequestItem;
@@ -122,9 +124,9 @@ public class Home extends AppCompatActivity
     List<Order> orders;
     TaskAdapter completedTaskAdapter;
     List<Order> completedOrders;
-    Activity activity = this;/*
+    Activity activity = this;
     Handler handler;
-    Runnable runnable;*/
+    Runnable runnable;
     ConnectionHelper connectionHelper;
     public static LinearLayout errorLayout;
     @BindView(R.id.error_message)
@@ -273,13 +275,22 @@ public class Home extends AppCompatActivity
             }
         };*/
 
-        scheduler = Executors.newSingleThreadScheduledExecutor();
+        handler = new Handler();
+        runnable=new Runnable() {
+            @Override
+            public void run() {
+                getInComingRequest();
+                handler.postDelayed(this, 5000);
+            }
+        };
+
+/*        scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
                 getInComingRequest();
             }
-        }, 0, 5, TimeUnit.SECONDS);
+        }, 0, 5, TimeUnit.SECONDS);*/
 
         IntentFilter intentFilter = new IntentFilter(getApplication().getPackageName());
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
@@ -297,7 +308,8 @@ public class Home extends AppCompatActivity
         }, intentFilter);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        adapter.addFragment(new UpcomingVisitFragment(), getString(R.string.ongoing_order));
+        adapter.addFragment(new OngoingFragment(), getString(R.string.ongoing_order));
+        adapter.addFragment(new UpcomingVisitFragment(), getString(R.string.upcoming_order));
         adapter.addFragment(new PastVisitFragment(), getString(R.string.past_order));
         adapter.addFragment(new CancelOrderFragment(), getString(R.string.cancelled_order));
         viewPager.setAdapter(adapter);
@@ -500,10 +512,11 @@ public class Home extends AppCompatActivity
         } else getShift();
         */
         getProfile();
-        getInComingRequest();
+        //getInComingRequest();
         //errorLayout.setVisibility(View.GONE);
         //newTaskRv.setVisibility(View.VISIBLE);
 
+        handler.postDelayed(runnable, 500);
 
         getNetworkStatus();
     }
@@ -1042,13 +1055,15 @@ public class Home extends AppCompatActivity
 
     public void onDestroy() {
         super.onDestroy();
-        //handler.removeCallbacks(runnable);
-        scheduler.shutdown();
+        handler.removeCallbacks(runnable);
+        //scheduler.shutdown();
     }
 
-    public void onPause() {
+
+    @Override
+    protected void onPause() {
         super.onPause();
-        //handler.removeCallbacks(runnable);
+        handler.removeCallbacks(runnable);
     }
 
     private boolean isServiceRunning(Class<?> serviceClass) {
