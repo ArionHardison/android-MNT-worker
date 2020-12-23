@@ -64,6 +64,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.dietmanager.chef.utils.Utils.getTimeFromString;
+
 public class OrderRequestDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.title)
@@ -99,6 +101,9 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
     @BindView(R.id.ingredients_rv)
     RecyclerView ingredients_rv;
     Context context;
+
+    @BindView(R.id.tvOrderTime)
+    TextView tvOrderTime;
     private IngredientsInvoiceAdapter ingredientsAdapter;
     Activity activity;
     private OrderRequestItem userRequestItem = null;
@@ -123,6 +128,12 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
         }
         if (userRequestItem != null) {
             tvOrderId.setText("#"+userRequestItem.getId());
+
+            if (userRequestItem.getScheduleAt() != null)
+                tvOrderTime.setText(getTimeFromString(userRequestItem.getScheduleAt()));
+            else
+                tvOrderTime.setText(getTimeFromString(userRequestItem.getCreatedAt()));
+
             tvUserName.setText(Utils.toFirstCharUpperAll(userRequestItem.getUser().getName()));
             if (userRequestItem.getFood().getAvatar() != null)
                 Glide.with(this).load(BuildConfigure.BASE_URL + userRequestItem.getFood().getAvatar())
