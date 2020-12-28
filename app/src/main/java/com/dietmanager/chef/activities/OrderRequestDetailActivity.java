@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.format.DateUtils;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -154,7 +155,7 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if(!DateUtils.isToday(dateObj.getTime())){
+                if(!isPreviousDay(dateObj.getTime())){
                     llAssignChef.setVisibility(View.GONE);
                     llContactUser.setVisibility(View.GONE);
                 }
@@ -176,6 +177,21 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
         customDialog = new CustomDialog(context);
         setupAdapter();
     }
+
+    public boolean isPreviousDay(long when) {
+        Time time = new Time();
+        time.set(when);
+
+        int thenYear = time.year;
+        int thenMonth = time.month;
+        int thenMonthDay = time.monthDay;
+
+        time.set(System.currentTimeMillis());
+        return (thenYear <= time.year)
+                && (thenMonth <= time.month)
+                && (thenMonthDay <= time.monthDay);
+    }
+
 
     private void setupAdapter() {
         ingredientsAdapter = new IngredientsInvoiceAdapter(userRequestItem.getOrderingredient(), context);
