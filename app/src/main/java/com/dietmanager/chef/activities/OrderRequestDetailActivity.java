@@ -53,6 +53,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -112,6 +113,8 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
     String TAG = "OrderRequestDetailActivity";
 
+    int orderId=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,13 +123,57 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
         setUp();
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(OrderRequestDetailActivity.this, Home.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void setUp() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            userRequestItem = (OrderRequestItem) bundle.getSerializable("userRequestItem");
+            if(bundle.getSerializable("userRequestItem")!=null)
+                userRequestItem = (OrderRequestItem) bundle.getSerializable("userRequestItem");
+            if(bundle.getInt("order_id",0)!=0)
+                orderId=bundle.getInt("order_id",0);
             title.setText(getString(R.string.order_request));
         }
+
+        bindData();
+        if(orderId!=0){
+            getHistoryById();
+        }
+        context = OrderRequestDetailActivity.this;
+        activity = OrderRequestDetailActivity.this;
+        customDialog = new CustomDialog(context);
+    }
+
+    private void getHistoryById() {
+        String header = SharedHelper.getKey(OrderRequestDetailActivity.this, "token_type") + " " + SharedHelper.getKey(OrderRequestDetailActivity.this, "access_token");
+
+        Call<OrderRequestItem> call = apiInterface.getHistoryById(header,orderId);
+        call.enqueue(new Callback<OrderRequestItem>() {
+            @Override
+            public void onResponse(Call<OrderRequestItem> call, Response<OrderRequestItem> response) {
+                if (response.isSuccessful()) {
+                    OrderRequestItem historyModel = response.body();
+                    if (historyModel != null) {
+                        userRequestItem=historyModel;
+                        bindData();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderRequestItem> call, Throwable t) {
+                Utils.displayMessage(OrderRequestDetailActivity.this, getString(R.string.something_went_wrong));
+            }
+        });
+    }
+
+    private void bindData(){
         if (userRequestItem != null) {
             tvOrderId.setText("#"+userRequestItem.getId());
 
@@ -171,12 +218,12 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
             service_tax.setText(GlobalData.profile.getCurrency() + userRequestItem.getTax());
             total.setText(GlobalData.profile.getCurrency() + userRequestItem.getTotal());
             tv_payment_mode.setText(Utils.toFirstCharUpperAll(userRequestItem.getPaymentMode().toLowerCase()));
+
+            setupAdapter();
         }
-        context = OrderRequestDetailActivity.this;
-        activity = OrderRequestDetailActivity.this;
-        customDialog = new CustomDialog(context);
-        setupAdapter();
     }
+
+
 
     public boolean isPreviousDay(long when) {
         Time time = new Time();
@@ -200,6 +247,7 @@ public class OrderRequestDetailActivity extends AppCompatActivity {
         ingredients_rv.setAdapter(ingredientsAdapter);
         ingredientsAdapter.notifyDataSetChanged();
     }
+
     ImageView imageViewPurchase;
     private static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE = 0;
 

@@ -172,4 +172,7 @@ public interface ApiInterface {
 
     @GET("api/chef/order")
     Call<List<OrderRequestItem>> getHistory(@Header("Authorization") String authorization,@Query("status") String status);
+
+    @GET("api/chef/order/{id}")
+    Call<OrderRequestItem> getHistoryById(@Header("Authorization") String authorization,@Path("id") int id);
 }

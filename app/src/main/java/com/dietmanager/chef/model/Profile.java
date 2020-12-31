@@ -11,9 +11,13 @@ public class Profile {
     @SerializedName("id")
     @Expose
     private Integer id;
+
     @SerializedName("stripe_connect_url")
     @Expose
     private String stripeConnectUrl;
+    @SerializedName("chef_response_time")
+    @Expose
+    private int chefResponseTime;
 
     @SerializedName("stripe_cust_id")
     @Expose
@@ -25,6 +29,14 @@ public class Profile {
 
     public void setStripe_cust_id(String stripe_cust_id) {
         this.stripe_cust_id = stripe_cust_id;
+    }
+
+    public int getChefResponseTime() {
+        return chefResponseTime;
+    }
+
+    public void setChefResponseTime(int chefResponseTime) {
+        this.chefResponseTime = chefResponseTime;
     }
 
     @SerializedName("wallet_balance")

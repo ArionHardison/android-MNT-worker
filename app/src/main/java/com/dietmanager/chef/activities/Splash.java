@@ -93,6 +93,30 @@ public class Splash extends AppCompatActivity {
     }
 
 
+    private void checkActivity() {
+        Intent intent = getIntent();
+        if (intent.getStringExtra("page") == null || intent.getStringExtra("page").equalsIgnoreCase("main")|| intent.getStringExtra("page").equalsIgnoreCase("autoassign")) {
+            startActivity(new Intent(Splash.this, Home.class).putExtra("is_splash",
+                    true));
+        } else {
+            String page=intent.getStringExtra("page");
+            if (page.equalsIgnoreCase("order")) {
+                startActivity(new Intent(Splash.this, OrderRequestDetailActivity.class).putExtra("order_id",intent.getIntExtra("order_id",0))
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            }  else if (page.equalsIgnoreCase("wallet")) {
+                startActivity(new Intent(Splash.this, PaymentActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            } else {
+                startActivity(new Intent(Splash.this, Home.class).putExtra("is_splash",
+                        true));
+            }
+        }
+
+        finishAffinity();
+    }
+
+
+
     public void getProfile() {
         retryCount++;
         HashMap<String, String> map = new HashMap<>();
@@ -114,13 +138,15 @@ public class Splash extends AppCompatActivity {
                     SharedHelper.putKey(Splash.this, "logged_in", "1");
                     SharedHelper.putKey(Splash.this, "currency_code",
                             GlobalData.profile.getCurrency());
-                    //if (isNotification)
+
+                    checkActivity();
+                    /*//if (isNotification)
                         startActivity(new Intent(Splash.this, Home.class).putExtra("is_splash",
                                 true));
                     //else
                         //startActivity(new Intent(Splash.this, ShiftStatus.class).putExtra("is_splash", true));
 
-                    finish();
+                    finish();*/
                 } else {
                     if (response.code() == 401) {
                         SharedHelper.putKey(Splash.this, "logged_in", "0");

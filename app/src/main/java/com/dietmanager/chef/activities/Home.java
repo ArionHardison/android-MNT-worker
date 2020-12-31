@@ -6,6 +6,7 @@ import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
@@ -16,8 +17,10 @@ import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -147,6 +150,7 @@ public class Home extends AppCompatActivity
     TextView name;
     TextView tvEdit;
 
+    private  MediaPlayer mPlayer;
     @BindView(R.id.completed_task_rootview)
     LinearLayout completedTaskRootview;
     @BindView(R.id.internet_error_layout)
@@ -171,6 +175,8 @@ public class Home extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+
+        mPlayer = MediaPlayer.create(this, R.raw.alert_tone);
         getDeviceToken();
         Toolbar toolbar = findViewById(R.id.toolbar);
         errorLayout = findViewById(R.id.error_layout);
@@ -1057,6 +1063,9 @@ public class Home extends AppCompatActivity
         super.onDestroy();
         handler.removeCallbacks(runnable);
         //scheduler.shutdown();
+
+        if(mPlayer.isPlaying())
+            mPlayer.stop();
     }
 
 
@@ -1085,8 +1094,12 @@ public class Home extends AppCompatActivity
     private boolean isIncomingDialogShowing = false;
     private boolean isWaitingForAdminShowing = false;
 
+    boolean isRunning = false;
+
     public void incomingReqDialog(OrderRequestItem orderRequestItem) {
         try {
+
+            CountDownTimer countDownTimer;
             AlertDialog.Builder builder = new AlertDialog.Builder(Home.this);
             final FrameLayout frameView = new FrameLayout(Home.this);
             builder.setView(frameView);
@@ -1112,6 +1125,7 @@ public class Home extends AppCompatActivity
             } else {
                 ((LinearLayout) dialogView.findViewById(R.id.llIngredient)).setVisibility(View.GONE);
             }
+
             Button acceptBtn = dialogView.findViewById(R.id.accept_btn);
             acceptBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1120,6 +1134,7 @@ public class Home extends AppCompatActivity
                     HashMap<String, String> map = new HashMap<>();
                     map.put("_method", "PATCH");
                     map.put("status", "ASSIGNED");
+                    mPlayer.stop();
                     updateOrder(true, orderRequestItem.getId(), map);
                 }
             });
@@ -1131,9 +1146,34 @@ public class Home extends AppCompatActivity
                     HashMap<String, String> map = new HashMap<>();
                     map.put("_method", "PATCH");
                     map.put("status", "CANCELLED");
+                    mPlayer.stop();
                     updateOrder(false, orderRequestItem.getId(), map);
                 }
             });
+            incomingDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface dialog) {
+                    if (GlobalData.profile.getChefResponseTime() > 0) {
+                        int count = GlobalData.profile.getChefResponseTime() * 60000;
+                        new CountDownTimer(count, 1000) {
+                            public void onTick(long millisUntilFinished) {
+                                Log.d("HomeFragment", millisUntilFinished / 1000 + " sec left");
+                                ((TextView)((AlertDialog) dialog).findViewById(R.id.tvTimer)).setText(millisUntilFinished / 1000 + " secs left");
+                            }
+
+                            public void onFinish() {
+                                Log.d("HomeFragment", "Finished");
+                                mPlayer.stop();
+                                isIncomingDialogShowing = false;
+                                incomingDialog.dismiss();
+                            }
+                        }.start();
+                        mPlayer = MediaPlayer.create(Home.this, R.raw.alert_tone);
+                        mPlayer.start();
+                    }
+                }
+            });
+
             incomingDialog.show();
             isIncomingDialogShowing = true;
         } catch (Exception e) {
@@ -1141,5 +1181,11 @@ public class Home extends AppCompatActivity
         }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
 
+        if(mPlayer.isPlaying())
+            mPlayer.stop();
+    }
 }

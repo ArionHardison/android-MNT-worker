@@ -26,8 +26,11 @@ import com.dietmanager.chef.Application;
 import com.dietmanager.chef.R;
 import com.dietmanager.chef.activities.Home;
 import com.dietmanager.chef.activities.Splash;
+import com.dietmanager.chef.model.PushCustomObject;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.List;
 
@@ -36,6 +39,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMsgService";
     public static Ringtone mRingtone;
+    private String page ="main";
+    private int orderId =0;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
@@ -45,6 +50,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "From: " + remoteMessage.getFrom());
             Log.d(TAG, "Notification Message Body: " + remoteMessage.getData());
             //Calling method to generate notification
+            if(remoteMessage.getData().get("custom")!=null&&remoteMessage.getData().get("custom").contains("page")){
+                Gson gson = new Gson();
+                try {
+                    PushCustomObject pushCustomObject = gson.fromJson(remoteMessage.getData().get("custom"), PushCustomObject.class);
+                    page=pushCustomObject.getPage();
+                    orderId=pushCustomObject.getOrderId();
+                } catch (JsonSyntaxException e) {
+                }
+            }
             sendNotification(remoteMessage.getData().get("message"));
         } else {
             Log.d(TAG, "FCM Notification failed");
@@ -58,6 +72,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Intent intent = new Intent(getApplicationContext(), Splash.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("Notification", messageBody);
+        intent.putExtra("page", page);
+        if(orderId!=0)
+            intent.putExtra("order_id", orderId);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
