@@ -7,7 +7,7 @@ android {
         applicationId "com.dietmanager.chef"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 3
+        versionCode 4
         multiDexEnabled true
         versionName "1.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'

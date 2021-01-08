@@ -63,6 +63,10 @@ public interface ApiInterface {
     @POST("api/chef/chat/push")
     Call<Object> chatPost(@FieldMap HashMap<String, String> paramss);
 
+
+    @POST("api/chef/diet-order/{id}/chat")
+    Call<MessageResponse> chatPost(@Header("Authorization") String authorization,@Path("id") String id);
+
     @GET("api/chef/wallet/transaction")
     Call<List<WalletHistory>> getWalletHistory(@Header("Authorization") String authorization);
 

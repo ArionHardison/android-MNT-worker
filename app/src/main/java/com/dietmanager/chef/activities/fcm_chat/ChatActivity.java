@@ -16,10 +16,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.dietmanager.chef.R;
 import com.dietmanager.chef.activities.Splash;
+import com.dietmanager.chef.activities.WalletActivity;
 import com.dietmanager.chef.api.ApiClient;
 import com.dietmanager.chef.api.ApiInterface;
 import com.dietmanager.chef.helper.GlobalData;
 import com.dietmanager.chef.helper.SharedHelper;
+import com.dietmanager.chef.model.MessageResponse;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -141,7 +143,7 @@ public class ChatActivity extends AppCompatActivity {
         etMessage.setText("");
     }
 
-    private void sendMessageToServer(String message) {
+/*    private void sendMessageToServer(String message) {
         GlobalData.accessToken = SharedHelper.getKey(getApplicationContext(), "access_token");
         HashMap<String, String> param = new HashMap<>();
         param.put("id", senderID);
@@ -159,7 +161,26 @@ public class ChatActivity extends AppCompatActivity {
                 System.out.println(TAG + "Chat Failed");
             }
         });
+    }*/
+
+    private void sendMessageToServer(String message) {
+
+        String header = SharedHelper.getKey(ChatActivity.this, "token_type") + " "
+                + SharedHelper.getKey(ChatActivity.this, "access_token");
+        Call<MessageResponse> call = apiInterface.chatPost(header ,chatPath);
+        call.enqueue(new Callback<MessageResponse>() {
+            @Override
+            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
+                System.out.println(TAG + "Chat Success");
+            }
+
+            @Override
+            public void onFailure(Call<MessageResponse> call, Throwable t) {
+                System.out.println(TAG + "Chat Failed");
+            }
+        });
     }
+
 
     private IntentFilter filter = new IntentFilter();
     private BroadcastReceiver receiver = new BroadcastReceiver() {
